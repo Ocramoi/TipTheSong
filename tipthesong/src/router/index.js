@@ -9,7 +9,7 @@ const routes = [
   }, {
     path: '/:catchAll(.*)',
     name: 'Error404',
-    component: () => import(/* webpackChunkName: "Error404" */ '../views/NotFound')
+    component: () => import(/* webpackChunkName: "NoFound" */ '../views/NotFound')
   },
 ];
 

@@ -3,6 +3,7 @@ import App from './App.vue'
 
 import VueCookies from 'vue3-cookies';
 import router from "./router";
+import store from "./store";
 
 const app = createApp(App);
 // app.config.globalProperties.emitter = emitter;
@@ -12,5 +13,6 @@ app.use(VueCookies, {
 });
 
 app.use(router);
+app.use(store);
 
 app.mount('#app');
