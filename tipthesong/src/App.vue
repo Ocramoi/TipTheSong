@@ -1,5 +1,10 @@
 <template>
+<<<<<<< HEAD
   <Products />
+=======
+  <TopBar />
+  <router-view />
+>>>>>>> 33e49ced9853c82e7dabe5b550af31d673aad8c8
 </template>
 
 <script>
