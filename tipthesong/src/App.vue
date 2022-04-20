@@ -1,14 +1,15 @@
 <template>
-  <TopBar />
+  <Products />
 </template>
 
 <script>
- import TopBar from './components/TopBar';
+//  import TopBar from './components/TopBar';
+import Products from './views/Products'
 
  export default {
    name: 'App',
    components: {
-     TopBar,
+     Products,
    }
  }
 </script>
@@ -51,3 +52,4 @@
    outline: none;
  }
 </style>
+
