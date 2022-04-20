@@ -1,5 +1,6 @@
 <template>
   <TopBar />
+  <router-view />
 </template>
 
 <script>
