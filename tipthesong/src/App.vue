@@ -1,16 +1,17 @@
 <template>
-  <Product />
+  <CartCard></CartCard>
 </template>
 
 <script>
 //  import TopBar from './components/TopBar';
 // import Products from './views/Products'
-import Product from './views/Product'
+// import Product from './views/Product'
+import CartCard from './components/products/CartCard'
 
  export default {
    name: 'App',
    components: {
-     Product,
+     CartCard,
    }
  }
 </script>

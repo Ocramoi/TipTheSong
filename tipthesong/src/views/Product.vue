@@ -89,7 +89,6 @@ img {
     margin: 100px 0;
 }
 
-
 h2 {
     padding: 0;
 }
