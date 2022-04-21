@@ -1,20 +1,16 @@
 <template>
-<<<<<<< HEAD
-  <Products />
-=======
-  <TopBar />
-  <router-view />
->>>>>>> 33e49ced9853c82e7dabe5b550af31d673aad8c8
+  <Product />
 </template>
 
 <script>
 //  import TopBar from './components/TopBar';
-import Products from './views/Products'
+// import Products from './views/Products'
+import Product from './views/Product'
 
  export default {
    name: 'App',
    components: {
-     Products,
+     Product,
    }
  }
 </script>

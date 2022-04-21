@@ -2,7 +2,7 @@
     <div class="card">
         <img class="image" :src="product.img">
         <div class="description">
-            <h3> {{ product.title }} </h3>
+            <h3> {{ product.name }} </h3>
             <p> R$ {{ product.price.toFixed(2) }} </p>
         </div>
         <button type="button">ADD TO CART</button>            
@@ -16,7 +16,7 @@ export default {
     name: "Card",
     props: {
         product: {
-            type: String,
+            type: Object,
             required: true,
         }
     },
