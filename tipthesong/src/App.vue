@@ -1,16 +1,19 @@
 <template>
   <TopBar />
   <router-view />
+  <Footer />
 </template>
 
 <script>
  import TopBar from './components/TopBar';
+ import Footer from './components/Footer';
 
  export default {
-   name: 'App',
-   components: {
-     TopBar,
-   }
+     name: 'App',
+     components: {
+         TopBar,
+         Footer,
+     }
  }
 </script>
 
