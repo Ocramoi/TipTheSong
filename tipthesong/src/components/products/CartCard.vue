@@ -1,16 +1,13 @@
 <template>
-    <div class="cartCard">
-        <div class="flexContainer"> 
-            <img class="flexItem" :src="product.img">
-            <div class="flexItem"> 
-                <h3>{{ product.name }}</h3>
-                <p> {{ product.shortDescription }} </p>
-            </div>
-            <p class="flexItem" > {{ product.price.toFixed(2) }} </p>
-            <p class="flexItem" > {{ product.quantity }} </p>
-            <p class="flexItem" > {{ (product.quantity * product.price).toFixed(2) }} </p>
-        </div>
+    <button type="button">X</button>
+    <img :src="product.img">
+    <div class="description"> 
+        <h3>{{ product.name }}</h3>
+        <p> {{ product.shortDescription }} </p>
     </div>
+    <p> {{ product.price.toFixed(2) }} </p>            
+    <p> {{ product.quantity }} </p>        
+    <p> {{ (product.quantity * product.price).toFixed(2) }} </p>
 </template>
 
 <script>
@@ -40,28 +37,8 @@ export default {
 
 <style scoped>
 
-.cartCard {
-    background-color: whitesmoke;
-    padding: 10px;
-    max-width: 900px;
-}
-
-.flexContainer {
-    display: flex;
-    flex-direction: row;
-
-    gap: 20px;
-    flex: initial;
-    align-items: center;
-}
-
-.flexItem {
-    min-width: 50px;
-    padding: 10px;
-}
-
 img {
-    width: 50%;
+    width: 100%;
 }
 
 
