@@ -1,6 +1,8 @@
 <template>
   <TopBar />
-  <router-view />
+  <div class="contentWrapper">
+    <router-view />
+  </div>
   <Footer />
 </template>
 
@@ -27,17 +29,19 @@
  }
 
  body {
-     padding: 0;
-     margin: 0;
+    padding: 0;
+    margin: 0;
  }
 
  #app {
+     position: relative;
      background-color: var(--bg);
      padding: 0;
      margin: 0;
      box-sizing: border-box;
      width: 100%;
- }
+     min-height: 100vh;
+}
 
  #app * {
      font-family: 'Roboto', sans-serif;
@@ -88,5 +92,10 @@
      color: currentColor;
      text-decoration: none;
  }
+
+.contentWrapper {
+    padding-bottom: 7rem;
+ }
+
 </style>
 

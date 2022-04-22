@@ -39,9 +39,10 @@
 
 <style type="text/css" media="screen" scoped>
  .footer {
+     position: absolute;
+     bottom: 0;
      width: 100%;
-     padding: 5px;
-     margin-top: 3em;
+     padding: 2px;
      background-color: var(--grey);
      box-sizing: border-box;
  }
@@ -56,16 +57,16 @@
 
  .social > a {
      flex: 3rem 0 1;
-     margin: 5px 10px;
+     margin: 5px 5px;
      display: block;
-     font-size: 2.5em;
+     font-size: 1.5em;
  }
 
  .trademark {
      width: 100%;
      text-align: center;
      font-style: italic;
-     font-weight: 400;
-     font-size: 0.8em;
+     font-weight: 300;
+     font-size: 0.5em;
  }
 </style>
