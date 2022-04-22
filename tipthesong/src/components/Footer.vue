@@ -28,7 +28,7 @@
                  {
                      name: "Facebook",
                      link: "https://facebook.com/",
-                     fontAwesome: "facebook",
+                     fontAwesome: "facebook-square",
                      color: "#385395"
                  },
              ],

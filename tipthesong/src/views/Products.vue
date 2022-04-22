@@ -122,7 +122,8 @@ export default {
     flex-direction: row;
     
     flex-basis: 0;
-    justify-content: center; 
+    justify-content: center;
+    margin-top: 10px;
 }
 
 </style>

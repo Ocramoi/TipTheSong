@@ -1,12 +1,17 @@
 <template>
-    <router-link :to="`/product/${product.id}`" class="card">
-        <img class="image" :src="product.img">
-        <div class="description">
-            <h3> {{ product.name }} </h3>
-            <p> R${{ product.price.toFixed(2) }} </p>
+    <div class="card">
+        <router-link :to="`/product/${product.id}`">
+            <img class="image" :src="product.img">
+            <div class="description">
+                <h3> {{ product.name }} </h3>
+                <p> R${{ product.price.toFixed(2) }} </p>
+            </div>
+        </router-link>
+        <div class="interact">
+            <i class="fas fa-cart-plus"></i>
+            <button type="button">Comprar agora</button>
         </div>
-        <button type="button">ADD TO CART</button>
-    </router-link>
+    </div>
 </template>
 
 
@@ -34,8 +39,8 @@ export default {
     padding: 10px;
     margin: 10px;
 
-    background-color: whitesmoke;
-    box-shadow: 10px 1px 25px rgb(142, 142, 142);
+    background-color: var(--grey);
+    box-shadow: 10px 1px 15px var(--shadow);
 
     color: currentColor;
     text-decoration: none;
@@ -43,7 +48,7 @@ export default {
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
     transform-origin: center center;
 }
 
@@ -61,5 +66,28 @@ h3, p {
     margin: 5px 0px;
 }
 
+.interact {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+ .interact > * {
+     display: block;
+ }
+
+ i {
+     font-size: 2em;
+     transition: 0.4s;
+     cursor: pointer;
+ }
+
+ i:hover {
+     transform: scale(1.05);
+     transform-origin: center center;
+ }
 
 </style>

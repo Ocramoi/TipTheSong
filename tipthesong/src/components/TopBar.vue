@@ -57,11 +57,12 @@
      z-index: 100;
      top: 0;
      left: 0;
-     background-color: var(--topbar-bg);
+     background-color: var(--grey);
      padding: 0.7rem;
      transition: 0.4s;
      transition-timing-function: ease-in-out;
      box-sizing: border-box;
+     box-shadow: 0 0 5px var(--shadow);
  }
 
  .topBar.large {}
