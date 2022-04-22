@@ -1,15 +1,17 @@
 <template>
-  <TopBar />
-  <router-view />
+  <CartCard></CartCard>
 </template>
 
 <script>
- import TopBar from './components/TopBar';
+//  import TopBar from './components/TopBar';
+// import Products from './views/Products'
+// import Product from './views/Product'
+import CartCard from './components/products/CartCard'
 
  export default {
    name: 'App',
    components: {
-     TopBar,
+     CartCard,
    }
  }
 </script>
@@ -52,3 +54,4 @@
    outline: none;
  }
 </style>
+
