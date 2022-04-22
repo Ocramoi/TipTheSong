@@ -26,14 +26,14 @@ export default {
 
 <style type="text/scss" media="screen" scoped>
 .card {
-    flex: 1 1 0;
+    flex: 300px 1 1;
     display: flex;     
     flex-direction: column; 
     align-items: center;
 
-    max-width: 300px;
+    /* max-width: 300px; */
     padding: 10px;
-    margin: 30px;
+    margin: 10px;
 
     background-color: whitesmoke;
     box-shadow: 10px 1px 25px rgb(142, 142, 142);
