@@ -51,5 +51,10 @@
    padding: 5px;
    outline: none;
  }
+
+ a {
+     color: currentColor;
+     text-decoration: none;
+ }
 </style>
 

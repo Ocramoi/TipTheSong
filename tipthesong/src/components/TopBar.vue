@@ -14,14 +14,12 @@
                     alt="Logo" />
             </router-link>
             <div class="personal">
-                <div
-                    class="topbarButton">
+                <div class="topbarButton">
                     Entrar
                 </div>
-                <div
-                    class="topbarButton">
+                <router-link to="/cart" class="topbarButton">
                     Carrinho
-                </div>
+                </router-link>
             </div>
         </div>
         <div class="bottomRow">
@@ -56,6 +54,7 @@
  .topBar {
      width: 100%;
      position: sticky;
+     z-index: 100;
      top: 0;
      left: 0;
      background-color: var(--topbar-bg);
@@ -119,16 +118,16 @@
      max-width: 300px;
  }
 
- .personal > div {
+ .personal > * {
      border-left: 1px solid black;
      transition: 0.4s;
  }
 
- .personal > div:first-child {
+ .personal > *:first-child {
      border: 0 !important;
  }
 
- .personal > div:hover {
+ .personal > *:hover {
      border: 1px solid black !important;
      transform: scale(1.1);
      transform-origin: center center;
@@ -139,8 +138,6 @@
      text-align: center;
      padding: 5px;
      cursor: pointer;
-     color: currentColor;
-     text-decoration: none;
  }
 
  .personal > .topbarButton {
