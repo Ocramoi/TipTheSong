@@ -1,32 +1,33 @@
 <template>
     <div class="container">
         <ul class="cartStatus">
-            <li><h1> MY CART </h1></li>
-            <li><h1> ORDER DETAILS </h1></li>
+            <li><h1> MY CART > </h1></li>
+            <li><h1> ORDER DETAILS > </h1></li>
             <li><h1> FINISH ORDER </h1></li>
         </ul>
 
+        <button type="button" style="grid-column: span 2"> Continuar Comprando </button>
         <div class="cart">
             <div class="cartProducts">
-                <h3 style="grid-column: span 3">PRODUCT</h3>
-                <h3>PRICE</h3> 
-                <h3>AMOUNT</h3> 
-                <h3>SUBTOTAL</h3>
+                <span></span>
+                <h3 style="grid-column: span 2">Produto</h3>
+                <h3>Preço</h3>
+                <h3>Quantidade</h3>
+                <h3>Total</h3>
                 <CartCard v-for="product in products" :key="product.id" />
-            
-                <button type="button" style="grid-column: span 2"> Continuar Comprando </button>
             </div>
+
             <div class="cartTotals">
-                <h3 style="grid-column: span 2">TOTAL IN CART</h3>
+                <h3 style="grid-column: span 2">Valores totais</h3>
 
-                <p> Subtotal </p>
-                <p> {{ calcSubtotal() }}</p>
+                <p>Subtotal:</p>
+                <p>{{ calcSubtotal }}</p>
 
-                <p> Entrega </p>
-                <p> {{ calcDelivery() }}</p>
+                <p>Entrega:</p>
+                <p> {{ calcDelivery }}</p>
 
-                <p> Total </p>
-                <p> {{ calcTotal() }}</p>
+                <p>Total:</p>
+                <p>{{ calcTotal }}</p>
 
                 <button type="button" style="grid-column: span 2"> Concluir Compra </button>
             </div>
@@ -64,8 +65,7 @@ export default {
             ]
         }
     },
-
-    methods: {
+    computed: {
         calcSubtotal() {
             return 0;
         },
@@ -82,26 +82,46 @@ export default {
 
 <style scoped>
 .container {
-    width: 70%;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
     margin: 0 auto;
+    min-width: 500px;
 }
+
+ @media screen and (min-width: 850px) {
+     .container {
+         width: 80%;
+     }
+ }
 
 .cart {
     display: grid;
-    grid-template-columns: auto 20%;
-    column-gap: 10%;
+    grid-template-columns: auto minmax(150px, 20%);
+    column-gap: 20px;
 }
+
+ @media screen and (max-width: 850px) {
+     .cart {
+         grid-template-columns: 1fr;
+     }
+ }
 
 .cartProducts { 
     display: grid;
-    grid-template-columns: 4% 16% auto 10% 10% 10%;
-    column-gap: 2%;
-    row-gap: 2%;
+    grid-template-columns: auto auto auto auto auto auto;
+    column-gap: 10px;
+    row-gap: 10px;
+    align-items: center;
+    text-align: justify;
 }
 
 .cartTotals {
     display: grid;
-    grid-template-columns: 50% auto;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    column-gap: 5px;
+    align-items: center;
 }
 
 ul {
@@ -109,7 +129,7 @@ ul {
 }
 
 li {
-    padding: 0 40px;
+    padding: 0 10px;
     display: inline-block;
 }
 

@@ -3,7 +3,7 @@
         <div class="topRow">
             <div class="searchBar">
                 <label for="search">
-                    <i class="fas fa-search"></i>
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </label>
                 <input v-model="search" type="text" name="search" />
             </div>

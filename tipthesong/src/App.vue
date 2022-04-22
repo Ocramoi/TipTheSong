@@ -74,6 +74,16 @@
      transform-origin: center center;
  }
 
+ .clickableIcon {
+     transition: 0.4s !important;
+     cursor: pointer;
+ }
+
+ .clickableIcon:hover {
+     transform: scale(1.1) !important;
+     transform-origin: center center !important;
+ }
+
  a {
      color: currentColor;
      text-decoration: none;

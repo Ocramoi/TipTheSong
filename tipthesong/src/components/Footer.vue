@@ -2,9 +2,9 @@
     <div class="footer">
         <div class="social">
             <a v-for="social in socialMedia" :key="social?.name" :href="social?.link">
-                <i
+                <i class="clickableIcon"
                     :style="{ 'color': social?.color || 'currentColor' }"
-                    :class="`fab fa-${social?.fontAwesome}`"></i>
+                    :class="`fa-brands fa-${social?.fontAwesome}`"></i>
             </a>
         </div>
         <div class="trademark">
@@ -41,7 +41,7 @@
  .footer {
      width: 100%;
      padding: 5px;
-     margin-top: 10px;
+     margin-top: 3em;
      background-color: var(--grey);
      box-sizing: border-box;
  }
@@ -58,13 +58,7 @@
      flex: 3rem 0 1;
      margin: 5px 10px;
      display: block;
-     transition: 0.4s;
      font-size: 2.5em;
- }
-
- .social > a:hover {
-     transform: scale(1.1);
-     transform-origin: center center;
  }
 
  .trademark {

@@ -1,13 +1,13 @@
 <template>
-    <button type="button">X</button>
-    <img :src="product.img">
+    <i class="clickableIcon fa-solid fa-trash"></i>
+    <img :src="product?.img">
     <div class="description"> 
-        <h3>{{ product.name }}</h3>
-        <p> {{ product.shortDescription }} </p>
+        <h3>{{ product?.name }}</h3>
+        <p> {{ product?.shortDescription }} </p>
     </div>
-    <p> {{ product.price.toFixed(2) }} </p>            
-    <p> {{ product.quantity }} </p>        
-    <p> {{ (product.quantity * product.price).toFixed(2) }} </p>
+    <p> {{ product?.price.toFixed(2) }} </p>
+    <p> {{ product?.quantity }} </p>
+    <p> {{ (product?.quantity * product?.price).toFixed(2) }} </p>
 </template>
 
 <script>
@@ -39,8 +39,18 @@ export default {
 
 img {
     width: 100%;
+    max-width: 150px;
 }
 
+ i {
+     font-size: 2em;
+ }
 
-
+ .description > p {
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     overflow: hidden;
+     width: max-content;
+     max-width: 150px;
+ }
 </style>
