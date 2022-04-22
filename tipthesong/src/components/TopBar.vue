@@ -61,6 +61,7 @@
      padding: 0.7rem;
      transition: 0.4s;
      transition-timing-function: ease-in-out;
+     box-sizing: border-box;
  }
 
  .topBar.large {}
