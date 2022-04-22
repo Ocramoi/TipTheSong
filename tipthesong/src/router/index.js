@@ -8,14 +8,24 @@ const routes = [
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home')
   },
   {
+    path: '/products',
+    name: 'Products',
+    component: () => import(/* webpackChunkName: "Products" */ '../views/Products')
+  },
+  {
+    path: '/product/:idProduct',
+    name: 'Product',
+    component: () => import(/* webpackChunkName: "Products" */ '../views/Product')
+  },
+  {
     path: '/cart',
     name: 'Cart',
-    component: () => import(/* webpackChunkName: "Home" */ '../views/MyCart')
+    component: () => import(/* webpackChunkName: "Cart" */ '../views/MyCart')
   }, 
   {
     path: '/:catchAll(.*)',
     name: 'Error404',
-    component: () => import(/* webpackChunkName: "NoFound" */ '../views/NotFound')
+    component: () => import(/* webpackChunkName: "NotFound" */ '../views/NotFound')
   },
 ];
 

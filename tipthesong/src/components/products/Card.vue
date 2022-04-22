@@ -1,13 +1,12 @@
 <template>
-    <div class="card">
+    <router-link :to="`/product/${product.id}`" class="card">
         <img class="image" :src="product.img">
         <div class="description">
             <h3> {{ product.name }} </h3>
-            <p> R$ {{ product.price.toFixed(2) }} </p>
+            <p> R${{ product.price.toFixed(2) }} </p>
         </div>
-        <button type="button">ADD TO CART</button>            
-
-    </div>
+        <button type="button">ADD TO CART</button>
+    </router-link>
 </template>
 
 
@@ -38,6 +37,15 @@ export default {
 
     background-color: whitesmoke;
     box-shadow: 10px 1px 25px rgb(142, 142, 142);
+
+    color: currentColor;
+    text-decoration: none;
+    transition: 0.4s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transform-origin: center center;
 }
 
 .description {

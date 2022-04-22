@@ -7,10 +7,12 @@
                 </label>
                 <input v-model="search" type="text" name="search" />
             </div>
-            <img
-                class="topbarLogo"
-                src="../assets/Global/logo.png"
-                alt="Logo" />
+            <router-link to="/">
+                <img
+                    class="topbarLogo"
+                    src="../assets/Global/logo.png"
+                    alt="Logo" />
+            </router-link>
             <div class="personal">
                 <div
                     class="topbarButton">
@@ -26,9 +28,9 @@
             <div class="topbarButton">
                 Quem somos?
             </div>
-            <div class="topbarButton">
+            <router-link to="/products" class="topbarButton">
                 Produtos
-            </div>
+            </router-link>
             <div class="topbarButton">
                 Minha coleção
             </div>
@@ -101,6 +103,12 @@
      width: 100%;
      max-width: 6rem;
      filter: grayscale(1.0);
+     transition: 0.4s;
+ }
+
+ .topbarLogo:hover {
+     transform: scale(1.1);
+     transform-origin: center center;
  }
 
  .personal {
@@ -131,6 +139,8 @@
      text-align: center;
      padding: 5px;
      cursor: pointer;
+     color: currentColor;
+     text-decoration: none;
  }
 
  .personal > .topbarButton {
