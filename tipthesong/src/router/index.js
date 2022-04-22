@@ -6,7 +6,13 @@ const routes = [
     alias: ['/home', '/index'],
     name: 'Home',
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home')
-  }, {
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import(/* webpackChunkName: "Home" */ '../views/MyCart')
+  }, 
+  {
     path: '/:catchAll(.*)',
     name: 'Error404',
     component: () => import(/* webpackChunkName: "NoFound" */ '../views/NotFound')

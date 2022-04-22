@@ -18,8 +18,6 @@
 
         <div class="suggestions"> 
             <h2>Suggestions</h2>
-
-
         </div>
 
     </div>

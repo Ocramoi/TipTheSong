@@ -1,17 +1,15 @@
 <template>
-  <CartCard></CartCard>
+  <TopBar />
+  <router-view />
 </template>
 
 <script>
-//  import TopBar from './components/TopBar';
-// import Products from './views/Products'
-// import Product from './views/Product'
-import CartCard from './components/products/CartCard'
+ import TopBar from './components/TopBar';
 
  export default {
    name: 'App',
    components: {
-     CartCard,
+     TopBar,
    }
  }
 </script>
