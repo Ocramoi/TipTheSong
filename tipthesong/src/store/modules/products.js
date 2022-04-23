@@ -9,9 +9,8 @@ const mutations = {
 };
 
 const actions = {
-  loadProductList({ commit }, payload) {
+  loadProductList({ commit }, ) {
     commit('setProductList', []);
-    console.log(payload.page);
     commit('setProductList', [ 1, 2, 3 ]);
   }
 };
