@@ -23,9 +23,20 @@
  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
  :root {
-     --bg: #fcfcfc;
-     --grey: #E6E6E6;
-     --shadow: rgb(142, 142, 142);
+     --bg: #ECEFF1;
+     --grey: #90A4AE;
+     --shadow: #37474F;
+
+     --50: #ECEFF1;
+     --100: #CFD8DC;
+     --200: #B0BEC5;
+     --300: #90A4AE;
+     --400: #78909C;
+     --500: #607D8B;
+     --600: #546E7A;
+     --700: #455A64;
+     --800: #37474F;
+     --900: #263238;
  }
 
  body {
