@@ -13,7 +13,6 @@
      },
      async created() {
          await this.$store.dispatch("loadProductList", { page: 1 });
-         console.log(this.products);
      },
      computed: {
          products() {

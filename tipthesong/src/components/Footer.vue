@@ -2,8 +2,8 @@
     <div class="footer">
         <div class="social">
             <a v-for="social in socialMedia" :key="social?.name" :href="social?.link">
+
                 <i class="clickableIcon"
-                    :style="{ 'color': social?.color || 'currentColor' }"
                     :class="`fa-brands fa-${social?.fontAwesome}`"></i>
             </a>
         </div>
@@ -23,13 +23,11 @@
                      name: "Twitter",
                      link: "https://twitter.com/",
                      fontAwesome: "twitter",
-                     color: "#1d9bf0"
                  },
                  {
                      name: "Facebook",
                      link: "https://facebook.com/",
-                     fontAwesome: "facebook-square",
-                     color: "#385395"
+                     fontAwesome: "facebook",
                  },
              ],
          };
@@ -60,6 +58,7 @@
      margin: 5px 5px;
      display: block;
      font-size: 1.5em;
+     color: #404040;
  }
 
  .trademark {
