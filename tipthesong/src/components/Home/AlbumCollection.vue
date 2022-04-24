@@ -9,10 +9,12 @@
             effect="slide"
             draggable >
             <n-carousel-item
+                style="width: 240px;"
+                :space-between="20"
                 v-for="album in albuns"
-                :key="album?.id"
-                style="width: 100%; max-width: 200px;">
+                :key="album?.id">
                 <Card
+                    style="width: 200px;"
                     :interact="false"
                     :product="album" />
             </n-carousel-item>
@@ -97,5 +99,10 @@
  .custom-dots li.is-active {
      width: 40px;
      background: var(--white);
+ }
+
+ .cardItem {
+     display: flex;
+     width: max-content;
  }
 </style>
