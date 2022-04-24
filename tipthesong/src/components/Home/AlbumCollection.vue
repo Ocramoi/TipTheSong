@@ -9,13 +9,12 @@
             effect="slide"
             draggable >
             <n-carousel-item
-                style="width: 240px;"
-                :space-between="20"
+                :style="`width: ${cardWidth + 2*cardMargin}px;`"
+                :space-between="cardMargin"
                 v-for="album in albuns"
                 :key="album?.id">
                 <Card
-                    style="width: 200px;"
-                    :interact="false"
+                    :style="`width: ${cardWidth}px;`"
                     :product="album" />
             </n-carousel-item>
 
@@ -38,6 +37,12 @@
 
  export default {
      name: "AlbumCollection",
+     data() {
+         return {
+             cardMargin: 20,
+             cardWidth: 200,
+         };
+     },
      props: {
          title: {
              type: String,

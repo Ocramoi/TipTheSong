@@ -8,7 +8,9 @@
             </div>
         </router-link>
         <div class="interact" v-if="interact">
-            <i class="clickableIcon fa-solid fa-cart-plus"></i>
+            <button class="cartButton">
+                <i class="fa-solid fa-cart-plus"></i>
+            </button>
             <button type="button">Comprar agora</button>
         </div>
     </div>
@@ -80,9 +82,13 @@
      box-sizing: border-box;
  }
 
- .interact > .clickableIcon:hover {
-     transform: scale(1.4) !important;
-     transform-origin: center center;
+ .cartButton {
+     width: 1.5em;
+     height: 1.5em;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     border-radius: 100%;
  }
 
  .interact > * {
