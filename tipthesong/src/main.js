@@ -20,6 +20,20 @@ dom.watch();
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 app.component("font-awesome-icon", FontAwesomeIcon);
 
+import {
+    create,
+    NCarousel,
+    NCarouselItem,
+} from 'naive-ui';
+
+const naive = create({
+    components: [
+        NCarousel,
+        NCarouselItem,
+    ],
+});
+app.use(naive);
+
 // app.config.globalProperties.emitter = emitter;
 app.use(VueCookies, {
     expireTimes: 72*60*60,
