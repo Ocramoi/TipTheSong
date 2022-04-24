@@ -1,16 +1,14 @@
 <template>
     <div class="container">
-        <ul class="cartStatus">
-            <li><h1> MY CART > </h1></li>
-            <li><h1> ORDER DETAILS > </h1></li>
-            <li><h1> FINISH ORDER </h1></li>
-        </ul>
+        <div class="cartStatus">
+            <h2 class="active"> Carrinho de compras </h2>
+            <h2> Envio e pagamento </h2>
+            <h2> Finalizar pedido </h2>
+        </div>
 
-        <button type="button" style="grid-column: span 2"> Continuar Comprando </button>
         <div class="cart">
             <div class="cartProducts">
-                <span></span>
-                <h3 style="grid-column: span 2">Produto</h3>
+                <h3 style="grid-column: span 3;">Produto</h3>
                 <h3>Preço</h3>
                 <h3>Quantidade</h3>
                 <h3>Total</h3>
@@ -20,23 +18,32 @@
             <div class="cartTotals">
                 <h3 style="grid-column: span 2">Valores totais</h3>
 
-                <p>Subtotal:</p>
-                <p>{{ calcSubtotal }}</p>
+                <div class="totalRow">
+                    <span>Subtotal:</span>
+                    <span> R${{ calcSubtotal.toFixed(2) }} </span>
+                </div>
 
-                <p>Entrega:</p>
-                <p> {{ calcDelivery }}</p>
+                <div class="totalRow">
+                    <span>Entrega:</span>
+                    <span> R${{ calcDelivery.toFixed(2) }} </span>
+                </div>
 
-                <p>Total:</p>
-                <p>{{ calcTotal }}</p>
+                <div class="totalRow">
+                    <span>Total:</span>
+                    <span> R${{ calcTotal.toFixed(2) }} </span>
+                </div>
 
                 <button type="button" style="grid-column: span 2"> Concluir Compra </button>
             </div>
         </div>
+
+        <br />
+        <button class="continueShopping" type="button"> Continuar Comprando </button>
     </div>
 </template>
 
 <script>
-import CartCard from "../components/products/CartCard"
+import CartCard from "../components/products/CartCard";
 
 export default {
     name: "MyCart",
@@ -89,16 +96,10 @@ export default {
     min-width: 500px;
 }
 
- @media screen and (min-width: 850px) {
-     .container {
-         width: 80%;
-     }
- }
-
 .cart {
     display: grid;
-    grid-template-columns: auto minmax(150px, 20%);
-    column-gap: 20px;
+    grid-template-columns: auto minmax(300px, 20%);
+    column-gap: 50px;
 }
 
  @media screen and (max-width: 850px) {
@@ -109,28 +110,58 @@ export default {
 
 .cartProducts { 
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
-    column-gap: 10px;
+    grid-template-columns: repeat(2, max-content) auto repeat(3, max-content);
     row-gap: 10px;
     align-items: center;
     text-align: justify;
 }
 
-.cartTotals {
+ .cartProducts > h3 {
+     width: 100%;
+     text-align: left;
+     box-sizing: border-box;
+     margin-right: 16px;
+     color: var(--white);
+     text-transform: uppercase;
+ }
+
+ .cartTotals {
+    color: var(--white);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    text-align: center;
+    grid-auto-rows: min-content;
+     row-gap: 20px;
+     text-align: justify;
     column-gap: 5px;
-    align-items: center;
 }
 
-ul {
-    text-align: center;
-}
+ .cartTotals h3 {
+     text-transform: uppercase;
+ }
 
-li {
-    padding: 0 10px;
-    display: inline-block;
-}
+ .totalRow {
+     display: contents;
+ }
+
+ .cartStatus {
+     margin: 10px 0px;
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: space-around;
+ }
+
+ .cartStatus > h2 {
+     color: var(--black);
+ }
+
+ .active {
+     color: var(--white) !important;
+ }
+
+ button {
+     font-size: 1.2em;
+     text-transform: uppercase;
+ }
 
 </style>

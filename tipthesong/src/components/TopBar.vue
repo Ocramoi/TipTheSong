@@ -5,32 +5,33 @@
                 <label for="search">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </label>
-                <input v-model="search" type="text" name="search" />
+                <input v-model="search" type="text" name="search" placeholder="Pesquisar..." />
             </div>
-            <router-link to="/">
-                <img
-                    class="topbarLogo"
-                    src="../assets/Global/logo.png"
-                    alt="Logo" />
-            </router-link>
+            <img
+                class="topbarLogo"
+                src="../assets/Global/logo.png"
+                alt="Logo" />
             <div class="personal">
-                <div class="topbarButton">
-                    Entrar
-                </div>
-                <router-link to="/cart" class="topbarButton">
-                    Carrinho
+                <button>Entrar</button>
+                <router-link
+                    to="/cart">
+                    <button
+                        type="button"
+                        :class="{ 'active': $route.name == 'Cart' }">
+                        Carrinho
+                    </button>
                 </router-link>
             </div>
         </div>
         <div class="bottomRow">
-            <div class="topbarButton">
-                Quem somos?
-            </div>
+            <router-link to="/" class="topbarButton">
+                Início
+            </router-link>
             <router-link to="/products" class="topbarButton">
                 Produtos
             </router-link>
             <div class="topbarButton">
-                Minha coleção
+                Quem somos?
             </div>
             <div class="topbarButton">
                 Contato
@@ -57,12 +58,12 @@
      z-index: 100;
      top: 0;
      left: 0;
-     background-color: var(--grey);
-     padding: 0.7rem;
+     background-color: var(--primary);
+     padding: 5px;
      transition: 0.4s;
      transition-timing-function: ease-in-out;
      box-sizing: border-box;
-     box-shadow: 0 0 5px var(--shadow);
+     box-shadow: 0 0 5px var(--primary-dark);
  }
 
  .topBar.large {}
@@ -76,6 +77,7 @@
      flex-wrap: wrap;
      justify-content: space-between;
      align-items: center;
+     margin-top: 5px;
  }
 
  .topRow > * {
@@ -84,27 +86,37 @@
 
  .searchBar {
      width: 30%;
-     max-width: 300px;
+     height: 2rem;
+     max-width: 400px;
      display: grid;
      grid-template-columns: auto 1fr;
      grid-template-rows: auto;
      align-items: center;
      justify-content: center;
      column-gap: 10px;
-     background-color: var(--bg);
+     background-color: var(--primary-light);
      cursor: pointer;
+     border: 0;
+     border-radius: 2rem;
+     overflow: hidden;
+     color: var(--white);
+ }
+
+ .searchBar > input {
+     color: var(--white);
+     background-color: var(--primary-light);
  }
 
  .searchBar > label {
      padding: 5px;
-     color: var(--grey);
+     color: var(--white);
  }
 
  .topbarLogo {
      width: 100%;
      max-width: 6rem;
-     filter: grayscale(1.0);
      transition: 0.4s;
+     cursor: pointer;
  }
 
  .topbarLogo:hover {
@@ -113,33 +125,41 @@
  }
 
  .personal {
+     width: 30%;
+     max-width: 400px;
+     align-items: center;
      display: grid;
      grid-template-columns: 1fr 1fr;
-     grid-template-rows: auto;
-     width: 30%;
-     max-width: 300px;
+     column-gap: 10px;
  }
 
  .personal > * {
-     border-left: 1px solid black;
-     transition: 0.4s;
+     width: 100%;
  }
 
- .personal > *:first-child {
-     border: 0 !important;
+ .personal * {
+     font-size: 1.1rem;
  }
 
- .personal > *:hover {
-     border: 1px solid black !important;
-     transform: scale(1.1);
-     transform-origin: center center;
+ .personal button {
+     width: 100%;
+     background-color: var(--primary-light);
+     text-transform: none;
+     height: 2rem !important;
+     padding: 0;
+     font-size: 1.1rem;
+ }
+
+ .personal button:hover {
+     background-color: var(--primary-dark);
  }
 
  .topbarButton {
-     background-color: var(--bg);
      text-align: center;
      padding: 5px;
      cursor: pointer;
+     color: var(--white);
+     font-size: 1.1rem;
  }
 
  .personal > .topbarButton {
@@ -147,7 +167,6 @@
  }
 
  .bottomRow {
-     margin-top: 0.5em;
      display: flex;
      flex-direction: row;
      flex-wrap: wrap;
@@ -158,9 +177,8 @@
  }
 
  .bottomRow > .topbarButton {
-     margin: 5px 20px;
+     margin: 0px 20px;
      box-sizing: border-box;
-     font-size: 1.2em;
      transition: 0.4s;
      background-color: transparent;
  }
@@ -168,5 +186,13 @@
  .bottomRow > .topbarButton:hover {
      transform: scale(1.1);
      transform-origin: center center;
+ }
+
+ input[type=text] {
+     text-align: center;
+ }
+
+ .active {
+     background-color: var(--secondary-dark) !important;
  }
 </style>

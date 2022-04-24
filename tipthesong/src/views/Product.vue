@@ -99,4 +99,8 @@ button {
     width: max-content;
 }
 
+ * {
+     color: var(--white);
+ }
+
 </style>

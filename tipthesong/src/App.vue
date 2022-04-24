@@ -23,20 +23,17 @@
  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
  :root {
-     --bg: #ECEFF1;
-     --grey: #90A4AE;
-     --shadow: #37474F;
+     --white: #fcfcfc;
+     --black: #0f0f0f;
+     --bg: #39454B;
 
-     --50: #ECEFF1;
-     --100: #CFD8DC;
-     --200: #B0BEC5;
-     --300: #90A4AE;
-     --400: #78909C;
-     --500: #607D8B;
-     --600: #546E7A;
-     --700: #455A64;
-     --800: #37474F;
-     --900: #263238;
+     --primary: #263238;
+     --primary-light: #4f5b62;
+     --primary-dark: #000a12;
+
+     --secondary: #bf360c;
+     --secondary-light: #f9683a;
+     --secondary-dark: #870000;
  }
 
  body {
@@ -71,22 +68,30 @@
      font-style: italic;
      padding: 5px;
      outline: none;
+     box-sizing: border-box;
  }
 
  button {
-     border: 1px solid black;
-     background: var(--bg);
+     text-transform: uppercase;
+     border: 0;
+     background: var(--secondary-dark);
      color: currentColor;
-     padding: 5px;
-     border-radius: 10px;
+     padding: 10px;
+     border-radius: 2rem;
      font-weight: bold;
      transition: 0.4s;
      cursor: pointer;
+     width: max-content;
+     color: var(--white);
  }
 
  button:hover {
      transform: scale(1.05);
      transform-origin: center center;
+ }
+
+ button:hover, button.active {
+     background-color: var(--secondary-light);
  }
 
  .clickableIcon {
@@ -106,6 +111,14 @@
 
 .contentWrapper {
     padding-bottom: 7rem;
+ }
+
+
+ @media screen and (min-width: 850px) {
+     .contentWrapper {
+         width: 90%;
+         margin: 0 auto;
+     }
  }
 
 </style>
