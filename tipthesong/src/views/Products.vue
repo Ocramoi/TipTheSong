@@ -85,7 +85,7 @@
      },
      data() {
          return {
-             filterVisible: false,
+             filterVisible: true,
              filters: {
                  genres: [
                      { name: "RAP", selected: false },
@@ -304,6 +304,7 @@
      display: flex;
      justify-content: center;
      align-items: center;
+     z-index: 10;
  }
 
  @media screen and (max-width: 850px) {
