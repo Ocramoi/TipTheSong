@@ -25,7 +25,11 @@
              type: Object,
              required: true,
          },
-         interact:  Boolean,
+         interact:  {
+             type: Boolean,
+             required: false,
+             default: true,
+         },
      },
  }
 </script>
