@@ -1,10 +1,6 @@
 <template>
     <div class="container">
         <div class="filterPanel">
-            <button
-                @click="showPanel"
-                :class="{ 'hidden': filterVisible, }"
-                class="filterButton">>></button>
             <div
                 :class="{ 'hidden': !filterVisible }"
                 class="panel">
@@ -61,8 +57,17 @@
             </div>
         </div>
 
-        <div class="productList">
-            <ProductCard v-for="product in products" :key="product.id" :product="product"/>
+        <div class="productsContainer">
+            <button
+                @click="showPanel"
+                :class="{ 'hidden': filterVisible, }"
+                class="filterButton">
+                <span>&gt;&gt;</span>
+            </button>
+
+            <div class="productList">
+                <ProductCard v-for="product in products" :key="product.id" :product="product"/>
+            </div>
         </div>
     </div>
 </template>
@@ -232,10 +237,6 @@
      grid-template-rows: auto;
  }
 
- .filterPanel {
-     padding: 1em;
- }
-
  .panel {
      position: relative;
      padding: 15px;
@@ -244,6 +245,8 @@
      width: max-content;
      transition: 0.4s;
      box-shadow: 5px 5px 10px var(--primary-dark);
+     box-sizing: border-box;
+     margin: 1em;
  }
 
  .hidden {
@@ -291,24 +294,35 @@
  }
 
  .filterButton {
+     position: absolute;
+     top: 0;
+     left: 0;
+
      transition: 0.4s;
-     width: 100%;
+     width: min-content;
+     aspect-ratio: 1 / 1;
+     display: flex;
+     justify-content: center;
+     align-items: center;
  }
 
  @media screen and (max-width: 850px) {
      .container {
-         width: 90%;
+         width: calc(100% - 100px);
          margin: 0 auto;
      }
+ }
+
+ .productsContainer {
+     position: relative;
+     margin-top: 10px;
  }
 
 .productList {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    
-    flex-basis: 0;
+
     justify-content: center;
-    margin-top: 10px;
  }
 </style>
