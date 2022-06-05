@@ -37,6 +37,13 @@
                     :max="maxPrice"
                     :tooltip="'active'"
                     :use-keyboard="false"
+                    :railStyle="{ 'background-color': 'var(--secondary-dark)' }"
+                    :processStyle="{ 'background-color': 'var(--secondary-light)' }"
+                    :tooltipStyle="{
+                        'background-color': 'var(--secondary-light)',
+                        'border-bottom-color': 'var(--secondary-light) !important',
+                        'color': 'var(--black)'
+                    }"
                     tooltip-placement="bottom"
                     :tooltip-formatter="(v) => `R\$${v.toFixed(2)}`"
                     v-model="filters.price" />
@@ -48,6 +55,13 @@
                     :max="maxYear"
                     :tooltip="'active'"
                     :use-keyboard="false"
+                    :railStyle="{ 'background-color': 'var(--secondary-dark)' }"
+                    :processStyle="{ 'background-color': 'var(--secondary-light)' }"
+                    :tooltipStyle="{
+                        'background-color': 'var(--secondary-light)',
+                        'border-bottom-color': 'var(--secondary-light) !important',
+                        'color': 'var(--black)'
+                    }"
                     tooltip-placement="bottom"
                     v-model="filters.year" />
                 <br />
