@@ -7,6 +7,7 @@
                 <p> R${{ product?.price.toFixed(2) }} </p>
             </div>
         </router-link>
+
         <div class="interact" v-if="interact">
             <button class="cartButton">
                 <i class="fa-solid fa-cart-plus"></i>
@@ -16,7 +17,6 @@
     </div>
 </template>
 
-
 <script>
  export default {
      name: "Card",
@@ -25,10 +25,7 @@
              type: Object,
              required: true,
          },
-         interact: {
-             type: Boolean,
-             default: true,
-         },
+         interact:  Boolean,
      },
  }
 </script>
@@ -36,7 +33,7 @@
 
 <style type="text/scss" media="screen" scoped>
  .card {
-     flex: 200px 0 1;
+     flex: 0 1 200px;
      display: flex;
      flex-direction: column;
      align-items: center;
@@ -83,12 +80,12 @@
  }
 
  .cartButton {
-     width: 1.5em;
-     height: 1.5em;
      display: flex;
      justify-content: center;
      align-items: center;
      border-radius: 100%;
+     aspect-ratio: 1 / 1;
+     width: min-content;
  }
 
  .interact > * {

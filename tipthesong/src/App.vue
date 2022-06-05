@@ -1,9 +1,9 @@
 <template>
-  <TopBar />
-  <div class="contentWrapper">
-    <router-view />
-  </div>
-  <Footer />
+    <TopBar />
+    <div class="contentWrapper">
+        <router-view />
+    </div>
+    <Footer />
 </template>
 
 <script>
