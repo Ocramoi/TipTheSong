@@ -30,12 +30,12 @@
             <router-link to="/products" class="topbarButton">
                 Produtos
             </router-link>
-            <div class="topbarButton">
+            <router-link to="/" class="topbarButton">
                 Quem somos?
-            </div>
-            <div class="topbarButton">
+            </router-link>
+            <router-link to="/contact" class="topbarButton">
                 Contato
-            </div>
+            </router-link>
         </div>
     </div>
 </template>

@@ -21,6 +21,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: () => import(/* webpackChunkName: "Cart" */ '../views/MyCart')
+  },
+  {
+    path: '/contact',
+    name: 'ContactUs',
+    component: () => import(/* webpackChunkName: "ContactUs" */ '../views/ContactUs')
   }, 
   {
     path: '/:catchAll(.*)',
