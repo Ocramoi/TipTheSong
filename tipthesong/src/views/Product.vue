@@ -12,24 +12,26 @@
         </div>
 
         <div class="productExtraInfo">
-            <h2>Extra Info</h2>
+            <h2>EXTRA INFO</h2>
             <p> {{ product.extraInfo }} </p>
         </div>
-
+    
         <div class="suggestions"> 
-            <h2>Suggestions</h2>
+            <AlbumCollection
+             title="Suggestions"
+             :albuns="albuns" />
         </div>
 
     </div>
 </template>
 
 <script>
-import ProductCard from "../components/products/Card"
+import AlbumCollection from '../components/Home/AlbumCollection';
 
 export default {
     name: "Product",
-    component: {
-        ProductCard,
+    components: {
+        AlbumCollection
     },
     props: {
         // product: {
@@ -47,7 +49,45 @@ export default {
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
                 extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae."
             },
+            albuns: [
+                 {
+                     id: 1,
+                     name: 'Now, Not Yet',
+                     price: 10.0,
+                     released: 1929,
+                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
+                 },
+                 {
+                     id: 2,
+                     name: 'Now, Not Yet',
+                     price: 90.0,
+                     released: 2019,
+                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
+                 },
+                 {
+                     id: 3,
+                     name: 'Now, Not Yet',
+                     price: 90.0,
+                     released: 2019,
+                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
+                 },
+                 {
+                     id: 4,
+                     name: 'Now, Not Yet',
+                     price: 90.0,
+                     released: 2019,
+                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
+                 },
+                 {
+                     id: 5,
+                     name: 'Now, Not Yet',
+                     price: 90.0,
+                     released: 2019,
+                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
+                 },
+             ],
         };
+        
     },
 
 }
