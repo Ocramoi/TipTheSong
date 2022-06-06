@@ -12,9 +12,15 @@
                 src="../assets/Global/logo.png"
                 alt="Logo" />
             <div class="personal">
-                <button>Entrar</button>
                 <router-link
-                    to="/cart">
+                    to="/login">
+                    <button
+                        type="button"
+                        :class="{ 'active': $route.name == 'LoginSignUp' }">
+                        Entrar
+                    </button>
+                </router-link>
+                <router-link to="/cart">
                     <button
                         type="button"
                         :class="{ 'active': $route.name == 'Cart' }">
@@ -30,7 +36,7 @@
             <router-link to="/products" class="topbarButton">
                 Produtos
             </router-link>
-            <router-link to="/" class="topbarButton">
+            <router-link to="/whoweare" class="topbarButton">
                 Quem somos?
             </router-link>
             <router-link to="/contact" class="topbarButton">
@@ -103,7 +109,6 @@
  }
 
  .searchBar > input {
-     color: var(--white);
      background-color: var(--primary-light);
  }
 

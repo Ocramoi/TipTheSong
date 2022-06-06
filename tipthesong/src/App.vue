@@ -62,13 +62,17 @@
      cursor: pointer;
  }
 
- input[type="text"] {
+ input[type="text"],
+ input[type="password"],
+ input[type="email"],
+ input[type="tel"] {
      border: 0;
      background-color: var(--bg);
      font-style: italic;
      padding: 5px;
      outline: none;
      box-sizing: border-box;
+     color: var(--white);
  }
 
  button {
@@ -112,7 +116,6 @@
 .contentWrapper {
     padding-bottom: 7rem;
  }
-
 
  @media screen and (min-width: 850px) {
      .contentWrapper {
