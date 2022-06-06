@@ -30,7 +30,7 @@
             <router-link to="/products" class="topbarButton">
                 Produtos
             </router-link>
-            <router-link to="/" class="topbarButton">
+            <router-link to="/whoweare" class="topbarButton">
                 Quem somos?
             </router-link>
             <router-link to="/contact" class="topbarButton">
