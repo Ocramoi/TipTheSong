@@ -109,7 +109,6 @@
  }
 
  .searchBar > input {
-     color: var(--white);
      background-color: var(--primary-light);
  }
 
