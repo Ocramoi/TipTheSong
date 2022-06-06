@@ -1,0 +1,157 @@
+<template>
+    <div class="container">
+        <div class="cartStatus">
+            <h2> Carrinho de compras </h2>
+            <h2 class="active"> Envio e pagamento </h2>
+            <h2> Finalizar pedido </h2>
+        </div>
+        
+        <div class="paymentInfo">
+            <div class="paymentCard">
+                <h2>FORMA DE PAGAMENTO</h2>
+                <form class="methodsGrid">
+                    <h3 style="grid-column: span 4">Seus Cartões</h3>
+                    <p v-if="mycards != null && mycards.lenght > 0"></p>
+                    <p v-if="mycards != null && mycards.lenght > 0"></p>
+                    <p v-if="mycards != null && mycards.lenght > 0">Nome no cartão</p>
+                    <p v-if="mycards != null && mycards.lenght > 0">Data de vencimento</p>
+                    <template v-for="card in mycards" :key="card.id">
+                        <input type="radio" v-model="selectedPaymentMethod" :name="card.name" v-bind:value="card.id">
+                        <p class="mycardInfo"> {{card.name}}</p>
+                        <p class="mycardInfo"> {{card.owner}}</p>
+                        <p class="mycardInfo"> {{card.dueDate}} </p>
+                    </template>
+                    <a href="#" style="grid-column: span 4">+ Adicionar um cartão</a>
+                    
+                    <h3 style="grid-column: span 4"> Boleto </h3>
+                        <input type="radio" v-model="selectedPaymentMethod" name="boleto" v-bind:value="'Boleto'">
+                        <p style="grid-column: span 3">Vencimento em 1 dia útil. A data de entrega será alterada devido ao tempo de processamento do Boleto. Veja mais na próxima página.</p>
+
+
+                    <h3 style="grid-column: span 4"> Pix </h3>
+                        <input type="radio" v-model="selectedPaymentMethod" name="pix" v-bind:value="'Pix'">
+                        <p style="grid-column: span 3">Vencimento em 30 minutos. Após o pagamento seu pedido será processado.</p>
+                </form>
+
+            </div>
+
+            <div class="paymentCard">
+                <h2>ENDEREÇO DE ENTREGA</h2>
+                <form class="addressGrid">
+                    <h3 style="grid-column: span 3">Seus Endereços</h3>
+                    <p v-if="myaddresses != null && myaddresses.lenght > 0"></p>
+                    <p v-if="myaddresses != null && myaddresses.lenght > 0">Nome</p>
+                    <p v-if="myaddresses != null && myaddresses.lenght > 0">Telefone</p>
+                    <template v-for="address in myaddresses" :key="address.id">
+                        <input type="radio" v-model="selectedPaymentMethod" :name="address.info" v-bind:value="address.id">
+                        <p class="mycardInfo"> {{address.info}}</p>
+                        <p class="mycardInfo"> {{address.refName}}</p>
+                        <p class="mycardInfo"> {{address.refPhone}} </p>
+                    </template>
+                    <a href="#" style="grid-column: span 3">+ Adicionar um endereço de entrega</a>
+                </form>
+            </div>
+            <button type="button"> CONTINUAR </button>
+        </div>
+
+
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            selectedPaymentMethod: null,
+            mycards: [
+                {
+                    id: '111',
+                    name: "(Crédito) Mastercard terminando em 1234",
+                    owner: "MILENA C SILVA",
+                    dueDate: "12/22",
+                },
+                {
+                    id: '121',
+                    name: "(Crédito) Mastercard terminando em 1234",
+                    owner: "MILENA C SILVA",
+                    dueDate: "12/22",
+                }
+            ]
+        }
+    },
+}
+</script>
+
+<style scoped>
+.container {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    min-width: 500px;
+    color: var(--white);
+}
+
+.cartStatus {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.cartStatus > h2 {
+    color: var(--black);
+ }
+
+.active {
+    color: var(--white) !important;
+}
+
+.paymentInfo {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    align-items: center;
+}
+
+.paymentCard {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-light);
+}
+
+.paymentCard > * {
+    margin: 0;
+}
+
+.methodsGrid {
+    display: grid;
+    grid-template-columns: 1.25rem repeat(3, auto);
+    column-gap: 1.5rem;
+}
+
+.addressGrid {
+    display: grid;
+    grid-template-columns: 1.25rem repeat(2, auto);
+    column-gap: 1rem;
+}
+
+button {
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+a:link, a:visited, a:active {
+    color: var(--secondary-dark);
+}
+
+a:hover {
+    color: var(--secondary-light);
+}
+
+input[type='radio'] {
+    color: var(--secondary-primary);
+}
+
+</style>
