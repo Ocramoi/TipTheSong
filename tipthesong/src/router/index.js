@@ -21,7 +21,12 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: () => import(/* webpackChunkName: "Cart" */ '../views/MyCart')
-  }, 
+  },
+  {
+    path: '/login',
+    name: 'LoginSignUp',
+    component: () => import(/* webpackChunkName: "LoginSignUp" */ '../views/LoginSignUp')
+  },
   {
     path: '/:catchAll(.*)',
     name: 'Error404',

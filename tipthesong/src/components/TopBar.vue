@@ -12,9 +12,15 @@
                 src="../assets/Global/logo.png"
                 alt="Logo" />
             <div class="personal">
-                <button>Entrar</button>
                 <router-link
-                    to="/cart">
+                    to="/login">
+                    <button
+                        type="button"
+                        :class="{ 'active': $route.name == 'LoginSignUp' }">
+                        Entrar
+                    </button>
+                </router-link>
+                <router-link to="/cart">
                     <button
                         type="button"
                         :class="{ 'active': $route.name == 'Cart' }">

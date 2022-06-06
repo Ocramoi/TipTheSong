@@ -62,7 +62,10 @@
      cursor: pointer;
  }
 
- input[type="text"] {
+ input[type="text"],
+ input[type="password"],
+ input[type="email"],
+ input[type="tel"] {
      border: 0;
      background-color: var(--bg);
      font-style: italic;
