@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+
+    <div class="container">                    
         <div class="cartStatus">
             <h2> Carrinho de compras </h2>
             <h2 class="active"> Envio e pagamento </h2>
@@ -21,8 +22,9 @@
                         <p class="mycardInfo"> {{card.owner}}</p>
                         <p class="mycardInfo"> {{card.dueDate}} </p>
                     </template>
-                    <a href="#" style="grid-column: span 4">+ Adicionar um cartão</a>
-                    
+                    <a href="#" style="grid-column: span 4" v-on:click="cardPopup = true">+ Adicionar um cartão</a>
+                    <NewCardPopup v-if="cardPopup" :TriggerCardPopup="() => TriggerCardPopup()"></NewCardPopup>
+              
                     <h3 style="grid-column: span 4"> Boleto </h3>
                         <input type="radio" v-model="selectedPaymentMethod" name="boleto" v-bind:value="'Boleto'">
                         <p style="grid-column: span 3">Vencimento em 1 dia útil. A data de entrega será alterada devido ao tempo de processamento do Boleto. Veja mais na próxima página.</p>
@@ -48,7 +50,9 @@
                         <p class="mycardInfo"> {{address.refName}}</p>
                         <p class="mycardInfo"> {{address.refPhone}} </p>
                     </template>
-                    <a href="#" style="grid-column: span 3">+ Adicionar um endereço de entrega</a>
+                    <a href="#" style="grid-column: span 3" v-on:click="addressPopup = true">+ Adicionar um endereço de entrega</a>
+                    <NewAddressPopup v-if="addressPopup" :TriggerAddressPopup="() => TriggerAddressPopup()"></NewAddressPopup>
+
                 </form>
             </div>
             <button type="button"> CONTINUAR </button>
@@ -59,9 +63,18 @@
 </template>
 
 <script>
+import NewCardPopup from '../components/Payment/NewCardPopup.vue'
+import NewAddressPopup from '../components/Payment/NewAddressPopup.vue'
+
 export default {
+    components: {
+        NewCardPopup,
+        NewAddressPopup
+    },
     data() {
         return {
+            cardPopup: false,
+            addressPopup: false,
             selectedPaymentMethod: null,
             mycards: [
                 {
@@ -76,7 +89,13 @@ export default {
                     owner: "MILENA C SILVA",
                     dueDate: "12/22",
                 }
-            ]
+            ],
+            TriggerCardPopup: function() {
+               this.cardPopup = !this.cardPopup;
+            },
+            TriggerAddressPopup: function() {
+               this.addressPopup = !this.addressPopup;
+            }
         }
     },
 }
