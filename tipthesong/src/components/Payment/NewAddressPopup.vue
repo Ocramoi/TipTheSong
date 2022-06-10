@@ -12,6 +12,7 @@
                 <input 
                     type="text"
                     name="fullName"
+                    class="inputFill"
                     v-model="fullName"
                     required
                     placeholder="Nome"/>
@@ -22,6 +23,7 @@
                 <input 
                     type="text"
                     name="phone"
+                    class="inputFill"
                     v-model="phone"
                     required
                     placeholder="(dd) 9xxxx-xxxx"/>
@@ -32,6 +34,7 @@
                 <input 
                     type="text"
                     name="county"
+                    class="inputFill"
                     v-model="county"
                     required
                     placeholder=""/>
@@ -42,6 +45,7 @@
                 <input 
                     type="text"
                     name="postalCode"
+                    class="inputFill"
                     v-model="postalCode"
                     required
                     placeholder=""/>
@@ -54,6 +58,7 @@
                 <input 
                     type="text"
                     name="address"
+                    class="inputFill"
                     v-model="address"
                     required
                     placeholder=""/>
@@ -64,6 +69,7 @@
                 <input 
                     type="text"
                     name="houseNum"
+                    class="inputFill"
                     v-model="houseNum"
                     required
                     placeholder=""/>
@@ -74,6 +80,7 @@
                 <input 
                     type="text"
                     name="extra"
+                    class="inputFill"
                     v-model="extra"
                     required
                     placeholder=""/>
@@ -86,6 +93,7 @@
                 <input 
                     type="text"
                     name="estate"
+                    class="inputFill"
                     v-model="estate"
                     required
                     placeholder=""/>
@@ -96,6 +104,7 @@
                 <input 
                     type="text"
                     name="city"
+                    class="inputFill"
                     v-model="city"
                     required
                     placeholder=""/>
@@ -166,10 +175,10 @@ form {
     gap: 1rem;
 }
 
-input {
+.inputFill {
     border-radius: 5px;
     width: 100%;
- }
+}
 
 label {
     margin-bottom: 10px;

@@ -40,7 +40,12 @@ const routes = [
   {
     path: '/payment',
     name: 'Payment',
-    component: () => import(/* webpackChunkName: "ContactUs" */ '../views/Payment')
+    component: () => import(/* webpackChunkName: "Payment" */ '../views/Payment')
+  }, 
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import(/* webpackChunkName: "Admin" */ '../views/AdminLogin')
   }, 
   {
     path: '/:catchAll(.*)',

@@ -12,6 +12,7 @@
             <input 
                 type="text"
                 name="cardNumber"
+                class="inputFill"    
                 v-model="cardNumber"
                 required
                 placeholder="xxxx xxxx xxxx xxxx"/>
@@ -23,6 +24,7 @@
             <input 
                 type="text"
                 name="dueDate"
+                class="inputFill"    
                 v-model="dueDate"
                 required
                 placeholder="mm/yyyy"/>
@@ -34,6 +36,7 @@
             <input 
                 type="text"
                 name="ownerName"
+                class="inputFill"    
                 v-model="ownerName"
                 required
                 placeholder="Nome no Cartão"/>
@@ -45,6 +48,7 @@
             <input 
                 type="text"
                 name="securityCode"
+                class="inputFill"    
                 v-model="securityCode"
                 required
                 placeholder="xxx"/>
@@ -108,7 +112,7 @@ form {
     gap: 1rem;
 }
 
-input {
+.inputFill {
     border-radius: 5px;
     width: 100%;
  }
