@@ -45,7 +45,12 @@ const routes = [
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import(/* webpackChunkName: "Admin" */ '../views/AdminLogin')
+    component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Login')
+  }, 
+  {
+    path: '/admin/homepage',
+    name: 'Homepage',
+    component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Homepage')
   }, 
   {
     path: '/order',
