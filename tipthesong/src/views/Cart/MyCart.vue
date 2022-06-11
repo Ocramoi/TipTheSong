@@ -32,13 +32,16 @@
                     <span>Total:</span>
                     <span> R${{ calcTotal.toFixed(2) }} </span>
                 </div>
-
-                <button type="button" style="grid-column: span 2"> Concluir Compra </button>
+                <router-link to="/payment" custom v-slot="{ navigate }"> 
+                    <button  v-on:click="navigate" role="link" style="grid-column: span 2"> Concluir Compra </button>
+                </router-link>
             </div>
         </div>
 
         <br />
-        <button class="continueShopping" type="button"> Continuar Comprando </button>
+        <router-link to="/products" custom v-slot="{ navigate }"> 
+            <button v-on:click="navigate" role="link" type="button"> Continuar Comprando </button>
+        </router-link>
     </div>
 </template>
 

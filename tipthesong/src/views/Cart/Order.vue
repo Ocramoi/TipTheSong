@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="card">
-            <h3> Pedido concluído com sucesso </h3>
+            <h2> Pedido concluído com sucesso </h2>
             <div>
                 <p> Obrigado por comprar conosco!</p>
                 <p> Seu pedido de número #{{order.number}} foi concluído com sucesso. Você pode acompanhá-lo em seu perfil na aba de pedidos.</p>
@@ -41,13 +41,15 @@ export default {
 }
 
 .card {
-    width: 50%;
+    width: 500px;
+    height: 300px;
     margin: 1rem auto;
     padding: 1rem;
     background-color: var(--primary-light);
 
     box-shadow: 5px 5px 10px var(--primary-dark);
     box-sizing: border-box;
+    border-radius: 5px;
     
     display:flex;
     flex-direction: column;
@@ -56,7 +58,7 @@ export default {
 
 }
 
-.card > h3 {
+.card > h2 {
     text-align: center;
     padding: 0;
 }

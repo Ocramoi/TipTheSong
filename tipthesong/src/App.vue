@@ -26,7 +26,7 @@
      --white: #fcfcfc;
      --black: #0f0f0f;
      --bg: #39454B;
-     --bg-popup: #000a12b4;
+     --bg-popup: #000a12f1;
 
      --primary: #263238;
      --primary-light: #4f5b62;

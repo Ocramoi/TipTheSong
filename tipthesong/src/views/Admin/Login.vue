@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="card">
-            <h3> ÁREA DO ADMINISTRADOR </h3>
+            <h2> ÁREA DO ADMINISTRADOR </h2>
             <form method="POST" action="">
                 <label for="username">Nome de usuário</label>
                 <br />
@@ -61,18 +61,28 @@ export default {
 }
 
 .container {
+    position: relative;
     width: 100%;
+    min-height: 60vh;
     background-color: var(--bg);
 }
 
 .card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
     width: 40%;
-    margin: 1rem auto;
     padding: 1rem;
     background-color: var(--primary-light);
+
+    box-shadow: 5px 5px 10px var(--primary-dark);
+    box-sizing: border-box;
+    border-radius: 5px;
 }
 
-.card > h3 {
+.card > h2 {
     text-align: center;
     margin: 0 0 20px 0;
     padding: 0;

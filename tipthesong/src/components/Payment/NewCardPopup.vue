@@ -86,6 +86,7 @@ export default {
     left: 25%;
     z-index: 99;
     background-color: var(--bg-popup);
+    border-radius: 5px;
 }
 
 .popupHeader {
@@ -101,8 +102,8 @@ export default {
 }
 
 .popupCloseBtn {
-    width: 2rem;
-    height: 2rem;
+    width: 1.9rem;
+    height: 1.9rem;
     border-radius: 999px;
 }
 

@@ -71,7 +71,7 @@
 
  h2 {
      margin: 1em 0 0 1em;
-     text-transform: uppercase;
+     /* text-transform: uppercase; */
      color: var(--white);
  }
 

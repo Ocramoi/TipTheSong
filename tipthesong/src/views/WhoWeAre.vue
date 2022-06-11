@@ -1,7 +1,7 @@
 <template>
-    <h3>
+    <h2>
         Quem Somos?
-    </h3>
+    </h2>
     <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, eveniet! Laborum suscipit labore, aperiam dolor, quidem nesciunt blanditiis rerum enim modi voluptatibus ut, sunt et pariatur nulla sit provident quo sint explicabo similique vero amet! Eligendi, repudiandae placeat. Provident in excepturi autem magni iure quos natus, aliquid et eligendi, dolorem inventore ab! Doloribus magni consectetur aperiam alias at laudantium. Soluta in commodi eligendi blanditiis ut, labore quam neque sed. Dolores quaerat minima odio voluptate aliquam voluptas repellendus nisi, at inventore molestiae iste accusamus laborum maiores sunt ex odit magni expedita qui quibusdam? In voluptas delectus natus fuga voluptatem, ut eligendi.
     </p>
@@ -28,7 +28,7 @@
 </script>
 
 <style text="text/sccs" media="screen" scoped>
-    p, h3 {
+    * {
         color: var(--white);
     }
 
@@ -47,7 +47,7 @@
         width: 140px;
         height: 140px;
         justify-content: space-between;
-        border-radius: 75%;
+        border-radius: 999px;
         box-shadow: 5px 5px 10px var(--primary-dark);
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h3>GERENCIAMENTO DE DADOS</h3>
+        <h2>GERENCIAMENTO DE DADOS</h2>
         <div class="inner-container">
             <div class="card">
                 <p> Administradores </p>
@@ -32,7 +32,6 @@ export default {
 
 .container {
     width: 100%;
-    margin-top: 1rem;
 
     display: flex;
     flex-direction: column;
@@ -54,6 +53,7 @@ export default {
     
     box-shadow: 5px 5px 10px var(--primary-dark);
     box-sizing: border-box;
+    border-radius: 5px;
     
     display: flex;
     flex-direction: column;

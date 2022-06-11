@@ -7,10 +7,10 @@
             <h2> Finalizar pedido </h2>
         </div>
         
-        <div class="paymentInfo">
-            <div class="paymentCard">
+        <div class="innerContainer">
+            <div class="card">
                 <h2>FORMA DE PAGAMENTO</h2>
-                <form class="methodsGrid">
+                <form id="paymentMethods">
                     <h3 style="grid-column: span 4">Seus Cartões</h3>
                     <p v-if="mycards != null && mycards.lenght > 0"></p>
                     <p v-if="mycards != null && mycards.lenght > 0"></p>
@@ -18,9 +18,9 @@
                     <p v-if="mycards != null && mycards.lenght > 0">Data de vencimento</p>
                     <template v-for="card in mycards" :key="card.id">
                         <input type="radio" v-model="selectedPaymentMethod" :name="card.name" v-bind:value="card.id">
-                        <p class="mycardInfo"> {{card.name}}</p>
-                        <p class="mycardInfo"> {{card.owner}}</p>
-                        <p class="mycardInfo"> {{card.dueDate}} </p>
+                        <p> {{card.name}}</p>
+                        <p> {{card.owner}}</p>
+                        <p> {{card.dueDate}} </p>
                     </template>
                     <a href="#" style="grid-column: span 4" v-on:click="cardPopup = true">+ Adicionar um cartão</a>
                     <NewCardPopup v-if="cardPopup" :TriggerCardPopup="() => TriggerCardPopup()"></NewCardPopup>
@@ -37,18 +37,18 @@
 
             </div>
 
-            <div class="paymentCard">
+            <div class="card">
                 <h2>ENDEREÇO DE ENTREGA</h2>
-                <form class="addressGrid">
+                <form id="addresses">
                     <h3 style="grid-column: span 3">Seus Endereços</h3>
                     <p v-if="myaddresses != null && myaddresses.lenght > 0"></p>
                     <p v-if="myaddresses != null && myaddresses.lenght > 0">Nome</p>
                     <p v-if="myaddresses != null && myaddresses.lenght > 0">Telefone</p>
                     <template v-for="address in myaddresses" :key="address.id">
-                        <input type="radio" v-model="selectedPaymentMethod" :name="address.info" v-bind:value="address.id">
-                        <p class="mycardInfo"> {{address.info}}</p>
-                        <p class="mycardInfo"> {{address.refName}}</p>
-                        <p class="mycardInfo"> {{address.refPhone}} </p>
+                        <input type="radio" v-model="selectedAddress" :name="address.info" v-bind:value="address.id">
+                        <p> {{address.info}}</p>
+                        <p> {{address.refName}}</p>
+                        <p> {{address.refPhone}} </p>
                     </template>
                     <a href="#" style="grid-column: span 3" v-on:click="addressPopup = true">+ Adicionar um endereço de entrega</a>
                     <NewAddressPopup v-if="addressPopup" :TriggerAddressPopup="() => TriggerAddressPopup()"></NewAddressPopup>
@@ -76,6 +76,7 @@ export default {
             cardPopup: false,
             addressPopup: false,
             selectedPaymentMethod: null,
+            selectedAddress: null,
             mycards: [
                 {
                     id: '111',
@@ -127,30 +128,30 @@ export default {
     color: var(--white) !important;
 }
 
-.paymentInfo {
+.innerContainer {
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
     align-items: center;
 }
 
-.paymentCard {
+.card {
     width: 100%;
     padding: 1rem;
     background-color: var(--primary-light);
+
+    box-shadow: 5px 5px 10px var(--primary-dark);
+    box-sizing: border-box;
+    border-radius: 5px;       
 }
 
-.paymentCard > * {
-    margin: 0;
-}
 
-.methodsGrid {
+#paymentMethods {
     display: grid;
     grid-template-columns: 1.25rem repeat(3, auto);
     column-gap: 1.5rem;
 }
-
-.addressGrid {
+#addresses {
     display: grid;
     grid-template-columns: 1.25rem repeat(2, auto);
     column-gap: 1rem;
@@ -162,7 +163,7 @@ button {
 }
 
 a:link, a:visited, a:active {
-    color: var(--secondary-dark);
+   color: var(--secondary-dark);
 }
 
 a:hover {
@@ -171,6 +172,11 @@ a:hover {
 
 input[type='radio'] {
     color: var(--secondary-primary);
+}
+
+form > p {
+    padding: 0;
+    margin: 0;
 }
 
 </style>
