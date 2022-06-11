@@ -1,4 +1,5 @@
 <template>
+    <AdminTopBar v-if="$route.path.match('/admin/')"/>
     <TopBar v-if="!$route.path.match('/admin')"/>
     <div class="contentWrapper">
         <router-view />
@@ -8,12 +9,14 @@
 
 <script>
  import TopBar from './components/TopBar';
+ import AdminTopBar from './components/Admin/TopBar.vue'
  import Footer from './components/Footer';
 
  export default {
      name: 'App',
      components: {
          TopBar,
+         AdminTopBar,
          Footer,
      }
  }

@@ -49,7 +49,7 @@ const routes = [
   }, 
   {
     path: '/admin/homepage',
-    name: 'Homepage',
+    name: 'AdminHomepage',
     component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Homepage')
   }, 
   {

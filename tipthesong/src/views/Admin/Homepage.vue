@@ -32,7 +32,8 @@ export default {
 
 .container {
     width: 100%;
-
+    margin-top: 1rem;
+    
     display: flex;
     flex-direction: column;
     gap: 2rem;
