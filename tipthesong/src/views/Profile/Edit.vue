@@ -121,8 +121,9 @@ export default {
 
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    gap: 3rem;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 1rem;
 }
 
 .formBox {

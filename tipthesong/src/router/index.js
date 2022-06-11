@@ -59,7 +59,7 @@ const routes = [
   }, 
   {
     path: '/profile/edit',
-    name: 'Profile',
+    name: 'ProfileEdit',
     component: () => import(/* webpackChunkName: "Order" */ '../views/Profile/Edit')
   }, 
   {

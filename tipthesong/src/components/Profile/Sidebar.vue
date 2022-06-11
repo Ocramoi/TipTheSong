@@ -5,10 +5,10 @@
             <p> {{user.name }}#{{user.id}} </p>
         </div>
         <div class="profileMenu">
-            <a v-bind:class="{'active': editProfile}"> EDITAR DADOS </a>
-            <a v-bind:class="{'active': order}"> PEDIDOS </a>
-            <a v-bind:class="{'active': paymentMethods}"> METODOS DE PAGAMENTO </a>
-            <a v-bind:class="{'active': addresses}"> ENDEREÇOS </a>
+            <a :class="{ 'active': $route.name == 'ProfileEdit' }"> EDITAR DADOS </a>
+            <a :class="{ 'active': $route.name == 'ProfileOrders' }"> PEDIDOS </a>
+            <a :class="{ 'active': $route.name == 'ProfileCards' }"> METODOS DE PAGAMENTO </a>
+            <a :class="{ 'active': $route.name == 'Addresses' }"> ENDEREÇOS </a>
             <a> SAIR </a>
         </div>
     </div>
@@ -22,10 +22,6 @@ export default {
                 name: "milena",
                 id: 111,
             },
-            editProfile: true,
-            order: false,
-            paymentMethods: false,
-            addresses: false,
         }
     },
 }
@@ -38,14 +34,13 @@ export default {
 
 .sidebar {
     width: fit-content;
-    padding: 1rem;
+    padding: 3rem 0.5rem 9em 0.5rem;
     background-color: var(--primary-light);
     
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 3rem;
+    gap: 1rem;
 }
 
 
@@ -58,12 +53,15 @@ export default {
     align-items: center;
 }
 
+.profilePhoto > p {
+    font-style: italic;
+}
+
 img {
-    width: 150px;
+    width: 100px;
 }
 
 .profileMenu {
-    
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -71,10 +69,16 @@ img {
 }
 
 
-a, a:link, a:hover, a:visited, a:active {
+a, a:link, a:visited, a:active {
     text-decoration: none;
     font-size: 1rem;
     padding: 0.25rem 1rem;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+a:hover {
+    background-color: var(--secondary-light);
 }
 
 .active {
