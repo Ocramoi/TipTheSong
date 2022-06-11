@@ -68,7 +68,7 @@
  input[type="email"],
  input[type="tel"] {
      border: 0;
-     background-color: var(--bg);
+     background-color: var(--primary);
      font-style: italic;
      padding: 5px;
      outline: none;

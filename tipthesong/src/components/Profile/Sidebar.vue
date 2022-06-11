@@ -63,7 +63,6 @@ img {
 }
 
 .profileMenu {
-    text-align: center;
     
     display: flex;
     flex-direction: column;
