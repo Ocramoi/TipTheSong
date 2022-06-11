@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import CartCard from "../components/products/CartCard";
+import CartCard from "../../components/products/CartCard";
 
 export default {
     name: "MyCart",

@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import(/* webpackChunkName: "Cart" */ '../views/MyCart')
+    component: () => import(/* webpackChunkName: "Cart" */ '../views/Cart/MyCart')
   },
   {
     path: '/login',
@@ -40,7 +40,7 @@ const routes = [
   {
     path: '/payment',
     name: 'Payment',
-    component: () => import(/* webpackChunkName: "Payment" */ '../views/Payment')
+    component: () => import(/* webpackChunkName: "Payment" */ '../views/Cart/Payment')
   }, 
   {
     path: '/admin',
@@ -55,7 +55,7 @@ const routes = [
   {
     path: '/order',
     name: 'Order',
-    component: () => import(/* webpackChunkName: "Order" */ '../views/Order')
+    component: () => import(/* webpackChunkName: "Order" */ '../views/Cart/Order')
   }, 
   {
     path: '/:catchAll(.*)',

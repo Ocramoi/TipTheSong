@@ -63,8 +63,8 @@
 </template>
 
 <script>
-import NewCardPopup from '../components/Payment/NewCardPopup.vue'
-import NewAddressPopup from '../components/Payment/NewAddressPopup.vue'
+import NewCardPopup from '../../components/Payment/NewCardPopup.vue'
+import NewAddressPopup from '../../components/Payment/NewAddressPopup.vue'
 
 export default {
     components: {
