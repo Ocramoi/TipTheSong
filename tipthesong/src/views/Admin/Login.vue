@@ -62,24 +62,30 @@ export default {
 
 .container {
     position: relative;
+    top: 10vh;    
+
     width: 100%;
-    min-height: 60vh;
+    min-height: inherit;   
     background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.card {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 40%;
+.card { 
+    width: 500px;
+    height: 350px;
     padding: 1rem;
     background-color: var(--primary-light);
 
     box-shadow: 5px 5px 10px var(--primary-dark);
     box-sizing: border-box;
     border-radius: 5px;
+
+    display: flex;
+    flex-direction:column;
+    justify-content: space-evenly;
 }
 
 .card > h2 {

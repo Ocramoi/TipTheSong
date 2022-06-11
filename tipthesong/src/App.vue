@@ -1,5 +1,5 @@
 <template>
-    <TopBar />
+    <TopBar v-if="!$route.path.match('/admin')"/>
     <div class="contentWrapper">
         <router-view />
     </div>
@@ -40,6 +40,7 @@
  body {
     padding: 0;
     margin: 0;
+    min-height: 100vh;
  }
 
  #app {
@@ -49,7 +50,7 @@
      margin: 0;
      box-sizing: border-box;
      width: 100%;
-     min-height: 100vh;
+     min-height: inherit;
 }
 
  #app * {
