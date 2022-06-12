@@ -3,7 +3,7 @@
         <div class="topRow">
             <div class="topbarLogo">
                 <img
-                    src="../../assets/Global/logo2.png"
+                    src="../../assets/Global/logo-v2.svg"
                     alt="Logo" />
                 <p> ÁREA DO ADMINISTRADOR </p>
             </div>

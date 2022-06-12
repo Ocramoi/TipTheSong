@@ -9,7 +9,7 @@
             </div>
             <img
                 class="topbarLogo"
-                src="../assets/Global/logo.png"
+                src="../assets/Global/logo-v1.svg"
                 alt="Logo" />
             <div class="personal">
                 <router-link
@@ -119,7 +119,7 @@
 
  .topbarLogo {
      width: 100%;
-     max-width: 6rem;
+     max-width: 7rem;
      transition: 0.4s;
      cursor: pointer;
  }
