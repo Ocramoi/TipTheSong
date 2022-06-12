@@ -63,6 +63,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "Order" */ '../views/Profile/Edit')
   }, 
   {
+    path: '/admin/products',
+    name: 'AdminManageProducts',
+    component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/ManageProducts')
+  }, 
+  {
     path: '/:catchAll(.*)',
     name: 'Error404',
     component: () => import(/* webpackChunkName: "NotFound" */ '../views/NotFound')
