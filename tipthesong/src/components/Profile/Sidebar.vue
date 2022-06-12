@@ -7,7 +7,7 @@
         <div class="profileMenu">
             <a :class="{ 'active': $route.name == 'ProfileEdit' }"> EDITAR DADOS </a>
             <a :class="{ 'active': $route.name == 'ProfileOrders' }"> PEDIDOS </a>
-            <a :class="{ 'active': $route.name == 'ProfileCards' }"> METODOS DE PAGAMENTO </a>
+            <a :class="{ 'active': $route.name == 'ProfilePayment' }"> METODOS DE PAGAMENTO </a>
             <a :class="{ 'active': $route.name == 'Addresses' }"> ENDEREÇOS </a>
             <a> SAIR </a>
         </div>
@@ -33,17 +33,19 @@ export default {
 }
 
 .sidebar {
-    width: fit-content;
-    padding: 3rem 0.5rem 9em 0.5rem;
+    flex: 1 0 max-content;
+    width: 100%;
+    max-width: max-content;
+    padding: 2rem 0.5rem 2em 0.5rem;
     background-color: var(--primary-light);
     
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
+    margin: 0 auto;
 }
-
-
 
 .profilePhoto {
     text-align: center;
@@ -75,6 +77,7 @@ a, a:link, a:visited, a:active {
     padding: 0.25rem 1rem;
     box-sizing: border-box;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 a:hover {

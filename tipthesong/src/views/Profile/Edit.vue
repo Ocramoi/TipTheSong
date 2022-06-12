@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <div class="innerContainer">
+        <div class="innerProfileContainer">
             <Sidebar></Sidebar>
-            <div class="formBox">
+            <div class="profileBox">
                 <form class="formGrid">
                     <div>
                         <label for="username">Nome de usuário</label>
@@ -114,23 +114,6 @@ export default {
 <style scoped>
 * {
     color: var(--white);
-}
-
-.innerContainer {
-    margin-top: 3rem;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 1rem;
-}
-
-.formBox {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
 }
 
 .formGrid {
