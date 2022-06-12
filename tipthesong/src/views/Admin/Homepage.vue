@@ -8,9 +8,11 @@
             <div class="card">
                <p> Usuários </p> 
             </div>
-            <div class="card">
-                <p> Produtos </p>
-            </div>
+            <router-link to="/admin/products" custom v-slot="{ navigate }">
+                <div v-on:click="navigate" class="card">
+                    <p> Produtos </p>
+                </div>
+            </router-link>
         </div>
     </div>
 </template>
@@ -32,7 +34,8 @@ export default {
 
 .container {
     width: 100%;
-
+    margin-top: 1rem;
+    
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -59,10 +62,18 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+    transition: 0.4s;
 }
 
 .card > p {
     font-size: 1.25rem;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transform-origin: center center;
+    cursor: pointer;
 }
 
 </style>

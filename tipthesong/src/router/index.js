@@ -54,7 +54,7 @@ const routes = [
   }, 
   {
     path: '/admin/homepage',
-    name: 'Homepage',
+    name: 'AdminHomepage',
     component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Homepage')
   }, 
   {
@@ -66,6 +66,11 @@ const routes = [
     path: '/profile/edit',
     name: 'ProfileEdit',
     component: () => import(/* webpackChunkName: "Order" */ '../views/Profile/Edit')
+  }, 
+  {
+    path: '/admin/products',
+    name: 'AdminManageProducts',
+    component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/ManageProducts')
   }, 
   {
     path: '/:catchAll(.*)',

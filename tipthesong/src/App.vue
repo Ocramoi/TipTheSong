@@ -1,4 +1,5 @@
 <template>
+    <AdminTopBar v-if="$route.path.match('/admin/')"/>
     <TopBar v-if="!$route.path.match('/admin')"/>
     <div class="contentWrapper">
         <router-view />
@@ -8,12 +9,14 @@
 
 <script>
  import TopBar from './components/TopBar';
+ import AdminTopBar from './components/Admin/TopBar.vue'
  import Footer from './components/Footer';
 
  export default {
      name: 'App',
      components: {
          TopBar,
+         AdminTopBar,
          Footer,
      }
  }
@@ -35,6 +38,8 @@
      --secondary: #bf360c;
      --secondary-light: #f9683a;
      --secondary-dark: #870000;
+
+     --min-profile-width: 400px;
  }
 
  body {
@@ -123,6 +128,34 @@
      .contentWrapper {
          width: 90%;
          margin: 0 auto;
+     }
+ }
+
+ .innerProfileContainer {
+     margin-top: 3rem;
+
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     flex-wrap: wrap;
+     align-items: stretch;
+     gap: 1rem;
+ }
+
+ .profileBox {
+     margin: 0;
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     gap: 2rem;
+     min-width: var(--min-profile-width);
+     padding: 15px;
+ }
+
+ @media screen and (max-width: var(--min-profile-width)) {
+     .profileBox {
+         min-width: none;
+         padding: 5px;
      }
  }
 
