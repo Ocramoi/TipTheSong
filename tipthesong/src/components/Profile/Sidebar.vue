@@ -7,29 +7,33 @@
         <div class="profileMenu">
             <router-link
                 :class="{ 'active': $route.name == 'ProfileEdit' }"
-                to="{ name: 'ProfileEdit', }">
+                :to="{ name: 'ProfileEdit', }">
                 Editar dados
             </router-link>
 
             <router-link
                 :class="{ 'active': $route.name == 'ProfileOrders' }"
-                to="{ name: 'ProfilePayment', }">
+                :to="{ name: 'ProfileOrders', }">
                 Pedidos
             </router-link>
 
             <router-link
                 :class="{ 'active': $route.name == 'ProfilePayment' }"
-                to="{ name: 'ProfilePayment', }">
+                :to="{ name: 'ProfilePayment', }">
                 Métodos de pagamento
             </router-link>
 
             <router-link
                 :class="{ 'active': $route.name == 'ProfileAddresses' }"
-                to="{ name: 'ProfilePayment', }">
+                :to="{ name: 'ProfilePayment', }">
                 Endereços
             </router-link>
 
-            <a> SAIR </a>
+
+            <router-link
+                :to="{ name: 'Home', }">
+                Sair
+            </router-link>
         </div>
     </div>
 </template>
