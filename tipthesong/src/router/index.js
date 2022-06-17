@@ -79,8 +79,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/ManageProducts')
   }, 
   {
-    path: '/profile/address',
-    name: 'ProfileAddress',
+    path: '/profile/addresses',
+    name: 'ProfileAddresses',
     component: () => import(/* webpackChunkName: "Order" */ '../views/Profile/Address')
   },
   {
