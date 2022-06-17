@@ -59,9 +59,15 @@ const routes = [
   }, 
   {
     path: '/profile/edit',
+    alias: "/profile",
     name: 'ProfileEdit',
-    component: () => import(/* webpackChunkName: "Order" */ '../views/Profile/Edit')
-  }, 
+    component: () => import(/* webpackChunkName: "ProfileEdit" */ '../views/Profile/Edit')
+  },
+  {
+    path: '/profile/payment',
+    name: 'ProfilePayment',
+    component: () => import('../views/Profile/Payment'),
+  },
   {
     path: '/:catchAll(.*)',
     name: 'Error404',
