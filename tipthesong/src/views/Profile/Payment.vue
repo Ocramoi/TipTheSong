@@ -38,12 +38,12 @@
                  [
                      "(Crédito) Mastercard terminando em 1234",
                      "Milena C. Silva",
-                     "12/22"
+                     "12/22",
                  ],
                  [
                      "(Crédito) Mastercard terminando em 1234",
                      "Milena C. Silva",
-                     "12/22"
+                     "12/22",
                  ],
              ];
          },

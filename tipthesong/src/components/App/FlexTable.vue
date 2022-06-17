@@ -19,7 +19,7 @@
             v-for="(entry, idx) in values"
             :key="idx" >
             <div v-for="(value, idx) in entry" :key="idx">
-                <span v-html="value" />
+                <span :class="{ 'centerElement': center }" v-html="value" />
             </div>
         </template>
     </div>
@@ -46,6 +46,11 @@
              type: String,
              required: false,
              default: "1em",
+         },
+         center: {
+             type: Boolean,
+             required: false,
+             default: false,
          },
      },
      data() {
@@ -84,6 +89,10 @@
      white-space: nowrap;
      width: 100%;
      overflow: hidden;
+
+
+     line-height: var(--row-height);
+     vertical-align: middle;
  }
 
  .flexTable > span {
@@ -97,12 +106,17 @@
      box-sizing: border-box;
      text-overflow: ellipsis;
      white-space: nowrap;
-     width: 100%;
      overflow: hidden;
      padding: 0 5px 0 5px;
+     height: 100%;
  }
 
- .flexTable img {
+ .elementCenter {
+     margin: 0 auto;
+     display: block;
+ }
+
+ :deep(img) {
      height: 100%;
  }
 
