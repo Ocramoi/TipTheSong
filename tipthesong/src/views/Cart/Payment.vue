@@ -55,7 +55,9 @@
 
                 </form>
             </div>
-            <button type="button"> CONTINUAR </button>
+            <router-link to="/endpurchase" custom v-slot="{ navigate }"> 
+                <button v-on:click="navigate" role="link" type="button"> CONTINUAR </button>
+            </router-link>
         </div>
 
 

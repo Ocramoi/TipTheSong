@@ -43,6 +43,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "Payment" */ '../views/Cart/Payment')
   }, 
   {
+    path: '/endpurchase',
+    name: 'EndPurchase',
+    component: () => import(/* webpackChunkName: "Payment" */ '../views/Cart/EndPurchase')
+  },
+  {
     path: '/admin',
     name: 'Admin',
     component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Login')
@@ -68,6 +73,11 @@ const routes = [
     name: 'ProfilePayment',
     component: () => import('../views/Profile/Payment'),
   },
+  {
+    path: '/admin/products',
+    name: 'AdminManageProducts',
+    component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/ManageProducts')
+  }, 
   {
     path: '/:catchAll(.*)',
     name: 'Error404',
