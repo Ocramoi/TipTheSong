@@ -5,10 +5,30 @@
             <p> {{user.name }}#{{user.id}} </p>
         </div>
         <div class="profileMenu">
-            <a :class="{ 'active': $route.name == 'ProfileEdit' }"> EDITAR DADOS </a>
-            <a :class="{ 'active': $route.name == 'ProfileOrders' }"> PEDIDOS </a>
-            <a :class="{ 'active': $route.name == 'ProfilePayment' }"> METODOS DE PAGAMENTO </a>
-            <a :class="{ 'active': $route.name == 'Addresses' }"> ENDEREÇOS </a>
+            <router-link
+                :class="{ 'active': $route.name == 'ProfileEdit' }"
+                to="{ name: 'ProfileEdit', }">
+                Editar dados
+            </router-link>
+
+            <router-link
+                :class="{ 'active': $route.name == 'ProfileOrders' }"
+                to="{ name: 'ProfilePayment', }">
+                Pedidos
+            </router-link>
+
+            <router-link
+                :class="{ 'active': $route.name == 'ProfilePayment' }"
+                to="{ name: 'ProfilePayment', }">
+                Métodos de pagamento
+            </router-link>
+
+            <router-link
+                :class="{ 'active': $route.name == 'ProfileAddresses' }"
+                to="{ name: 'ProfilePayment', }">
+                Endereços
+            </router-link>
+
             <a> SAIR </a>
         </div>
     </div>
@@ -78,6 +98,7 @@ a, a:link, a:visited, a:active {
     box-sizing: border-box;
     border-radius: 5px;
     cursor: pointer;
+    text-transform: uppercase;
 }
 
 a:hover {
