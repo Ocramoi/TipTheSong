@@ -112,9 +112,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-    color: var(--white);
-}
+@import url('../../css/Profile.css');
 
 .formGrid {
     display: grid;
