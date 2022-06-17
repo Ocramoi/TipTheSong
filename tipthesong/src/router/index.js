@@ -80,8 +80,8 @@ const routes = [
   },
   {
     path: '/admin/products',
-    name: 'AdminManageProducts',
-    component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/ManageProducts')
+    name: 'AdminProducts',
+    component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/AdminProducts')
   }, 
   {
     path: '/profile/addresses',

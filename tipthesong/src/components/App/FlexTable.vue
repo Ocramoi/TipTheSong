@@ -18,8 +18,8 @@
         <template
             v-for="(entry, idx) in values"
             :key="idx" >
-            <div v-for="(value, idx) in entry" :key="idx">
-                <span :class="{ 'centerElement': center }" v-html="value" />
+            <div class="innerRow" v-for="(value, idx) in entry" :key="idx">
+                <span :class="{ 'elementCenter': center }" v-html="value" />
             </div>
         </template>
     </div>
@@ -60,7 +60,7 @@
      },
      computed: {
          nthStyle() {
-             return `<style> .flexTable div:nth-child(${this.nGrid}n + 1):before { content: ''; height: var(--row-height); width: 100%; position: absolute; box-shadow: 5px 5px 10px var(--primary-dark); } </style>`;
+             return `<style> .flexTable div.innerRow:nth-child(${this.nGrid}n + 1):before { content: ''; height: var(--row-height); width: 100%; position: absolute; box-shadow: 5px 5px 10px var(--primary-dark); } </style>`;
          },
      }
  };
@@ -75,10 +75,11 @@
      grid-auto-rows: var(--row-height);
      grid-row-gap: var(--row-gap);
      position: relative;
+     gap: 10px;
      width: 100%;
  }
 
- .flexTable div {
+ .flexTable div.innerRow {
      height: var(--row-height);
      box-sizing: border-box;
 
@@ -102,13 +103,15 @@
      overflow: hidden;
  }
 
- .flexTable div > span {
+ .flexTable div.innerRow > span {
      box-sizing: border-box;
      text-overflow: ellipsis;
      white-space: nowrap;
      overflow: hidden;
      padding: 0 5px 0 5px;
      height: 100%;
+     display: flex;
+     justify-content: center;
  }
 
  .elementCenter {
