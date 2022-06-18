@@ -109,11 +109,14 @@
  }
 
  .searchBar > input {
+     padding: 0;
      background-color: var(--primary-light);
  }
 
  .searchBar > label {
-     padding: 5px;
+     padding: 0;
+     margin: 0;
+     margin-left: 0.5rem;
      color: var(--white);
  }
 
