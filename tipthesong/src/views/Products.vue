@@ -247,6 +247,7 @@
      display: grid;
      grid-template-columns: min-content 1fr;
      grid-template-rows: auto;
+     overflow-x: hidden;
  }
 
  .panel {
