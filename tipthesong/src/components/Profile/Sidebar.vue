@@ -25,7 +25,7 @@
 
             <router-link
                 :class="{ 'active': $route.name == 'ProfileAddresses' }"
-                :to="{ name: 'ProfilePayment', }">
+                :to="{ name: 'ProfileAddresses', }">
                 Endereços
             </router-link>
 

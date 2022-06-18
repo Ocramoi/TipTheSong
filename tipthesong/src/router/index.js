@@ -96,7 +96,7 @@ const routes = [
   {
     path: '/profile/addresses',
     name: 'ProfileAddresses',
-    component: () => import(/* webpackChunkName: "Order" */ '../views/Profile/Address')
+    component: () => import(/* webpackChunkName: "Order" */ '../views/Profile/Addresses')
   },
   {
     path: '/:catchAll(.*)',

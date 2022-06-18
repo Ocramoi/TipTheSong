@@ -13,9 +13,6 @@
             <router-link :to="{ name: 'AdminHomepage'}">
                 <button class="backBtn">VOLTAR</button>
             </router-link>
-            <button class="addBtn">
-                <span>+</span>
-            </button>
         </div>
     </div>
 </template>
@@ -83,14 +80,6 @@ export default {
      box-sizing: border-box;
      padding: 0.25rem;
  }
- .addBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    aspect-ratio: 1 / 1;
-    width: min-content;
-}
 
 .bts {
     margin-top: 1rem;

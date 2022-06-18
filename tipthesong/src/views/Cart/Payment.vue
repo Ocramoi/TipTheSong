@@ -23,7 +23,8 @@
                         <p> {{card.dueDate}} </p>
                     </template>
                     <a href="#" style="grid-column: span 4" v-on:click="cardPopup = true">+ Adicionar um cartão</a>
-                    <NewCardPopup v-if="cardPopup" :TriggerCardPopup="() => TriggerCardPopup()"></NewCardPopup>
+                    <NewCardPopup v-if="cardPopup" @togglePopup="TriggerCardPopup"></NewCardPopup>
+
               
                     <h3 style="grid-column: span 4"> Boleto </h3>
                         <input type="radio" v-model="selectedPaymentMethod" name="boleto" v-bind:value="'Boleto'">

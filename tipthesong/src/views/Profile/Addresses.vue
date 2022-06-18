@@ -22,7 +22,7 @@ import FlexTable from '../../components/App/FlexTable.vue'
 import NewAddressPopup from '../../components/Payment/NewAddressPopup.vue'
 
 export default {
-    "name": "Address",
+    name: "ProfileAddresses",
     data() {
         return {
             addressPopup: false,

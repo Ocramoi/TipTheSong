@@ -2,7 +2,7 @@
     <div class="popup">
         <div class="popupHeader">
             <h3>Adicionar Cartão</h3>
-            <button type="button" class="popupCloseBtn" v-on:click="TriggerCardPopup">x</button>
+            <button type="button" class="popupCloseBtn" @click="$emit('togglePopup')">x</button>
         </div>
 
         <form action="POST">
@@ -62,9 +62,6 @@
 
 <script>
 export default {
-    props: [
-        'TriggerCardPopup'
-    ],
     data() {
         return {
             cardNumber: null,
@@ -83,7 +80,9 @@ export default {
     width: 50%;
     
     position: fixed;
-    left: 25%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     z-index: 99;
     background-color: var(--bg-popup);
     border-radius: 5px;

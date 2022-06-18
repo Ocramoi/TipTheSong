@@ -7,7 +7,8 @@
                 <FlexTable
                     :titles="tableTitles"
                     :values="cards" />
-                <button>Adicionar cartão</button>
+                <button v-on:click="cardPopup = true">Adicionar cartão</button>
+                <NewCardPopup v-if="cardPopup" @togglePopup="TriggerCardPopup"></NewCardPopup>
             </div>
         </div>
     </div>
@@ -16,6 +17,8 @@
 <script type="text/javascript">
  import Sidebar from '../../components/Profile/Sidebar.vue';
  import FlexTable from '../../components/App/FlexTable.vue';
+ import NewCardPopup from '../../components/Payment/NewCardPopup.vue'
+
 
  export default {
      name: "ProfilePayment",
@@ -26,11 +29,18 @@
                  "Titular",
                  "Vencimento",
              ],
+             cardPopup: false,
          };
      },
      components: {
          Sidebar,
          FlexTable,
+         NewCardPopup
+     },
+     methods: {
+        TriggerCardPopup() {
+            this.cardPopup = !this.cardPopup;
+        },
      },
      computed: {
          cards() {
