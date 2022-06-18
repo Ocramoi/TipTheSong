@@ -75,7 +75,6 @@
      grid-auto-rows: var(--row-height);
      grid-row-gap: var(--row-gap);
      position: relative;
-     gap: 10px;
      width: 100%;
  }
 
@@ -91,16 +90,17 @@
      width: 100%;
      overflow: hidden;
 
-
      line-height: var(--row-height);
      vertical-align: middle;
+     background-color: var(--primary-light);
  }
 
  .flexTable > span {
      text-overflow: ellipsis;
      white-space: nowrap;
-     width: 100%;
      overflow: hidden;
+     padding: 0 5px;
+     box-sizing: border-box;
  }
 
  .flexTable div.innerRow > span {
