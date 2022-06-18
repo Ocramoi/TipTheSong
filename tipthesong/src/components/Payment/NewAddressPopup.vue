@@ -1,117 +1,119 @@
 <template>
-    <div class="popup">
-        <div class="popupHeader">
-            <h3>Adicionar Endereço</h3>
-            <button type="button" class="popupCloseBtn" @click="$emit('togglePopup')">x</button>
+    <div class="popupContainer">
+        <div class="popup">
+            <div class="popupHeader">
+                <h3>Adicionar Endereço</h3>
+                <button type="button" class="popupCloseBtn" @click="$emit('togglePopup')" />
+            </div>
+
+            <form action="POST">
+                <div style="grid-column: span 2">
+                    <label for="fullName">Nome Completo</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="fullName"
+                        class="inputFill"
+                        v-model="fullName"
+                        required
+                        placeholder="Nome"/>
+                </div>
+                <div>
+                    <label for="phone">Telefone</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="phone"
+                        class="inputFill"
+                        v-model="phone"
+                        required
+                        placeholder="(dd) 9xxxx-xxxx"/>
+                </div>
+                <div>
+                    <label for="county">País/Região</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="county"
+                        class="inputFill"
+                        v-model="county"
+                        required
+                        placeholder=""/>
+                </div>
+                <div>
+                    <label for="postalCode">CEP</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="postalCode"
+                        class="inputFill"
+                        v-model="postalCode"
+                        required
+                        placeholder=""/>
+                </div>
+                <div></div>
+
+                <div style="grid-column: span 2">
+                    <label for="address">Endereço</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="address"
+                        class="inputFill"
+                        v-model="address"
+                        required
+                        placeholder=""/>
+                </div>
+                <div>
+                    <label for="houseNum">Número da Residência</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="houseNum"
+                        class="inputFill"
+                        v-model="houseNum"
+                        required
+                        placeholder=""/>
+                </div>
+                <div style="grid-column: span 2">
+                    <label for="extra">Complemento</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="extra"
+                        class="inputFill"
+                        v-model="extra"
+                        required
+                        placeholder=""/>
+                </div>
+                <div></div>
+
+                <div>
+                    <label for="estate">Estado</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="estate"
+                        class="inputFill"
+                        v-model="estate"
+                        required
+                        placeholder=""/>
+                </div>
+                <div>
+                    <label for="city">Cidade</label>
+                    <br>
+                    <input
+                        type="text"
+                        name="city"
+                        class="inputFill"
+                        v-model="city"
+                        required
+                        placeholder=""/>
+                </div>
+
+                <button type="button"> Adicionar </button>
+            </form>
         </div>
-
-        <form action="POST">
-            <div style="grid-column: span 2">
-                <label for="fullName">Nome Completo</label>
-                <br>
-                <input 
-                    type="text"
-                    name="fullName"
-                    class="inputFill"
-                    v-model="fullName"
-                    required
-                    placeholder="Nome"/>
-            </div>
-             <div>
-                <label for="phone">Telefone</label>
-                <br>
-                <input 
-                    type="text"
-                    name="phone"
-                    class="inputFill"
-                    v-model="phone"
-                    required
-                    placeholder="(dd) 9xxxx-xxxx"/>
-            </div>
-             <div>
-                <label for="county">País/Região</label>
-                <br>
-                <input 
-                    type="text"
-                    name="county"
-                    class="inputFill"
-                    v-model="county"
-                    required
-                    placeholder=""/>
-            </div>
-             <div>
-                <label for="postalCode">CEP</label>
-                <br>
-                <input 
-                    type="text"
-                    name="postalCode"
-                    class="inputFill"
-                    v-model="postalCode"
-                    required
-                    placeholder=""/>
-            </div>
-            <div></div>
-
-             <div style="grid-column: span 2">
-                <label for="address">Endereço</label>
-                <br>
-                <input 
-                    type="text"
-                    name="address"
-                    class="inputFill"
-                    v-model="address"
-                    required
-                    placeholder=""/>
-            </div>
-             <div>
-                <label for="houseNum">Número da Residência</label>
-                <br>
-                <input 
-                    type="text"
-                    name="houseNum"
-                    class="inputFill"
-                    v-model="houseNum"
-                    required
-                    placeholder=""/>
-            </div>
-             <div style="grid-column: span 2">
-                <label for="extra">Complemento</label>
-                <br>
-                <input 
-                    type="text"
-                    name="extra"
-                    class="inputFill"
-                    v-model="extra"
-                    required
-                    placeholder=""/>
-            </div>
-            <div></div>
-             
-            <div>
-                <label for="estate">Estado</label>
-                <br>
-                <input 
-                    type="text"
-                    name="estate"
-                    class="inputFill"
-                    v-model="estate"
-                    required
-                    placeholder=""/>
-            </div>
-             <div>
-                <label for="city">Cidade</label>
-                <br>
-                <input 
-                    type="text"
-                    name="city"
-                    class="inputFill"
-                    v-model="city"
-                    required
-                    placeholder=""/>
-            </div>
-
-            <button type="button"> Adicionar </button>
-        </form>
     </div>
 </template>
 
@@ -136,36 +138,7 @@ export default {
 
 
 <style scoped>
-.popup {
-    padding: 1rem;
-    width: 50%;
-    
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 101;
-    background-color: var(--bg-popup);
-    border-radius: 5px;
-}
-
-.popupHeader {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.popupHeader > * {
-    padding: 0px;
-    margin: 0px;
-}
-
-.popupCloseBtn {
-    width: 1.9rem;
-    height: 1.9rem;
-    border-radius: 999px;
-}
+@import url("../../css/Popup.css");
 
 form {
     display: grid;
