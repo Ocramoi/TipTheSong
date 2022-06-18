@@ -7,12 +7,13 @@
             <div class="productInfoText">
                 <h2> R$ {{ product.price.toFixed(2) }} </h2>
                 <p> {{ product.description }} </p>
+                <br/>
                 <button type="button"> COMPRAR </button>
             </div>
         </div>
 
         <div class="productExtraInfo">
-            <h2>EXTRA INFO</h2>
+            <h2>Informações Adicionais</h2>
             <p> {{ product.extraInfo }} </p>
         </div>
     
@@ -95,8 +96,6 @@ export default {
 
 <style scoped>
 .container {
-    width: 90%;
-    margin: 0 auto;
     text-align: justify;
 }
 
@@ -107,40 +106,28 @@ h1 {
 .productInfoBox {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
 } 
 
 img {
-    display: flex;
-    flex: initial;
-    width: 100%;
+    min-width: 200px;
+    flex: 0 1 300px;
 }
 
 .productInfoText {
+    flex: 1 0 200px;
     padding: 0 50px;
-    display: flex;
-    flex: initial;    
-    flex-direction: column;
 }
 
-.productExtraInfo {
-    margin: 100px 0;
-}
-
-h2 {
+.productInfoText > h2, .productInfoText > p {
     padding: 0;
 }
 
-p {
-    margin: 20px 0;
+.productExtraInfo {
+    padding: 1rem;
+    margin: 100px 0;
 }
-
-button {
-    width: max-content;
-}
-
- * {
-     color: var(--white);
- }
 
 </style>

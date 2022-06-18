@@ -91,13 +91,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
-    margin: 0 auto;
-    min-width: 500px;
-}
+@import url('../../css/Cart.css');
 
 .cart {
     display: grid;
@@ -145,26 +139,4 @@ export default {
  .totalRow {
      display: contents;
  }
-
- .cartStatus {
-     margin: 10px 0px;
-     display: flex;
-     flex-direction: row;
-     flex-wrap: wrap;
-     justify-content: space-around;
- }
-
- .cartStatus > h2 {
-     color: var(--black);
- }
-
- .active {
-     color: var(--white) !important;
- }
-
- button {
-     font-size: 1.2em;
-     text-transform: uppercase;
- }
-
 </style>

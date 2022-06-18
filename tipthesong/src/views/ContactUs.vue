@@ -30,17 +30,9 @@ export default {
 }
 </script>
 
-<style type="text/css" media="screen" scoped>
-    * {
-        color: var(--white);
-    }
-    
-    .container {
-        width: 100%;
-        margin-top: 1rem;
-    }
-
+<style type="text/css" media="screen" scoped> 
     .cardBox {
+        margin-top: 1rem;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-around;

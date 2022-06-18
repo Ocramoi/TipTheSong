@@ -1,5 +1,4 @@
 <template>
-
     <div class="container">                    
         <div class="cartStatus">
             <h2> Carrinho de compras </h2>
@@ -99,44 +98,15 @@
 </script>
 
 <style scoped>
-    .container {
-        width: 100%;
-        padding: 0 20px;
-        box-sizing: border-box;
-        margin: 0 auto;
-        min-width: 500px;
-        color: var(--white);
-    }
-
+@import url('../../css/Cart.css');
+    
     .cart {
         display: grid;
         grid-template-columns: auto minmax(300px, 20%);
         column-gap: 50px;
     }
 
-    .cartStatus {
-        margin: 10px 0px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-
-    .cartStatus > h2 {
-        color: var(--black);
-    }
-
-    .active {
-        color: var(--white) !important;
-    }
-    
-    button {
-        font-size: 1.2em;
-        text-transform: uppercase;
-    }
-
     .cartTotals {
-        color: var(--white);
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-auto-rows: min-content;

@@ -31,15 +31,6 @@ export default {
 
 
 <style scoped>
-* {
-    color: var(--white);
-}
-
-.container {
-    width: 100%;
-    background-color: var(--bg);
-}
-
 .card {
     width: 500px;
     height: 300px;
