@@ -15,12 +15,6 @@
 
 <script>
 export default {
-    // props: {
-    //     order: {
-    //         type: Object,
-    //         required: true,
-    //     },
-    // }
     data () {
         return {
             order: {
@@ -34,8 +28,8 @@ export default {
 
 <style scoped>
 .card {
-    width: 500px;
-    height: 300px;
+    max-width: 500px;
+    min-height: 300px;
     margin: 1rem auto;
     padding: 1rem;
     background-color: var(--primary-light);
