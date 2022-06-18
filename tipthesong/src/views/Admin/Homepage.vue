@@ -1,15 +1,20 @@
 <template>
     <div class="container">
         <h2>GERENCIAMENTO DE DADOS</h2>
+        
         <div class="inner-container">
-            <div class="card">
-                <p> Administradores </p>
-            </div>
-            <div class="card">
-               <p> Usuários </p> 
-            </div>
-            <router-link to="/admin/products" custom v-slot="{ navigate }">
-                <div v-on:click="navigate" class="card">
+            <router-link :to="{ name: 'AdminAdmins'}">
+                <div class="card">
+                    <p> Administradores </p>
+                </div>
+            </router-link >
+            <router-link :to="{ name: 'AdminUsers'}">
+                <div class="card">
+                   <p> Usuários </p> 
+                </div>
+            </router-link>
+            <router-link :to="{ name: 'AdminProducts'}">
+                <div class="card">
                     <p> Produtos </p>
                 </div>
             </router-link>
