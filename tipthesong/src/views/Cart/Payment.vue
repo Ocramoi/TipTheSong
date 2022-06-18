@@ -51,7 +51,7 @@
                         <p> {{address.refPhone}} </p>
                     </template>
                     <a href="#" style="grid-column: span 3" v-on:click="addressPopup = true">+ Adicionar um endereço de entrega</a>
-                    <NewAddressPopup v-if="addressPopup" :TriggerAddressPopup="() => TriggerAddressPopup()"></NewAddressPopup>
+                    <NewAddressPopup v-if="addressPopup" @togglePopup="TriggerAddressPopup"></NewAddressPopup>
 
                 </form>
             </div>
@@ -93,14 +93,16 @@ export default {
                     dueDate: "12/22",
                 }
             ],
-            TriggerCardPopup: function() {
-               this.cardPopup = !this.cardPopup;
-            },
-            TriggerAddressPopup: function() {
-               this.addressPopup = !this.addressPopup;
-            }
         }
     },
+    methods: {
+        TriggerCardPopup() {
+            this.cardPopup = !this.cardPopup;
+        },
+        TriggerAddressPopup() {
+            this.addressPopup = !this.addressPopup;
+        },
+    }
 }
 </script>
 

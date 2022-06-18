@@ -10,7 +10,7 @@
                 <button v-on:click="addressPopup = true">
                     Adicionar Endereço
                 </button>
-                <NewAddressPopup v-if="addressPopup" :TriggerAddressPopup="() => TriggerAddressPopup()"></NewAddressPopup>
+                <NewAddressPopup v-if="addressPopup" @togglePopup="triggerAddressPopup" />
             </div>
         </div>
     </div>
@@ -22,14 +22,10 @@ import FlexTable from '../../components/App/FlexTable.vue'
 import NewAddressPopup from '../../components/Payment/NewAddressPopup.vue'
 
 export default {
+    "name": "Address",
     data() {
         return {
             addressPopup: false,
-
-            TriggerAddressPopup: function() {
-                this.addressPopup = !this.addressPopup;
-            },
-
             tableTitles: [
                 "Endereço",
                 "Nome",
@@ -41,6 +37,11 @@ export default {
         Sidebar,
         FlexTable,
         NewAddressPopup
+    },
+    methods: {
+        triggerAddressPopup() {
+            this.addressPopup = !this.addressPopup;
+        },
     },
     computed: {
         addresses() {
