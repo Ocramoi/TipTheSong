@@ -104,6 +104,7 @@ h1 {
 }
 
 .productInfoBox {
+    padding: 1rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

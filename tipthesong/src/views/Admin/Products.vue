@@ -13,7 +13,9 @@
             </div>
         </div>
         <div class="bts">
-            <button class="backBtn">VOLTAR</button>
+            <router-link :to="{ name: 'AdminHomepage'}">
+                <button class="backBtn">VOLTAR</button>
+            </router-link>
             <button class="addBtn" @click="togglePopup">
                 <span>+</span>
             </button>

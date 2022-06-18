@@ -69,12 +69,6 @@
      padding: 10px;
  }
 
- h2 {
-     margin: 1em 0 0 1em;
-     /* text-transform: uppercase; */
-     color: var(--white);
- }
-
  .albumList {
      width: 100%;
      padding-bottom: 10px;

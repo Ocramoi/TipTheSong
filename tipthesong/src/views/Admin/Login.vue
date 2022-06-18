@@ -61,6 +61,7 @@ export default {
 }
 
 .container {
+    margin: 0 !important;
     position: relative;
     top: 10vh;    
 
