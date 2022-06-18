@@ -1,0 +1,12 @@
+.cartStatus h2:not(.active) {
+    color: var(--black) !important;
+}
+
+.cartStatus {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+

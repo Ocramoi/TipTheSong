@@ -1,18 +1,20 @@
 <template>
-    <div class="carouselContainer">
-        <n-carousel class="carousel" show-arrow autoplay>
-            <img
-                v-for="(img, idx) in carouselImgs"
-                :key="idx"
-                :src="img?.src"
-                :alt="img?.alt" />
-        </n-carousel>
+    <div class="container">
+        <div class="carouselContainer">
+            <n-carousel class="carousel" show-arrow autoplay>
+                <img
+                    v-for="(img, idx) in carouselImgs"
+                    :key="idx"
+                    :src="img?.src"
+                    :alt="img?.alt" />
+            </n-carousel>
+        </div>
+        <AlbumCollection
+            v-for="(collection, idx) in collections"
+            :key="idx"
+            :title="collection"
+            :albuns="albuns" />
     </div>
-    <AlbumCollection
-        v-for="(collection, idx) in collections"
-        :key="idx"
-        :title="collection"
-        :albuns="albuns" />
 </template>
 
 <script type="text/javascript">

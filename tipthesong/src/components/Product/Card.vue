@@ -70,6 +70,7 @@
  h3, p {
      word-wrap: break-word;
      margin: 5px 0px;
+     padding: 0;
  }
 
  .interact {
@@ -81,6 +82,11 @@
      width: 100%;
      padding: 0 15px;
      box-sizing: border-box;
+     gap: 10px;
+ }
+
+ .interact > button {
+     flex: 1;
  }
 
  .cartButton {
@@ -89,11 +95,7 @@
      align-items: center;
      border-radius: 100%;
      aspect-ratio: 1 / 1;
-     width: min-content;
- }
-
- .interact > * {
-     display: block;
+     flex: 0 0 min-content !important;
  }
 
 </style>

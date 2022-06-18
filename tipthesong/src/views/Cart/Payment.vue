@@ -108,31 +108,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
-    margin: 0 auto;
-    min-width: 500px;
-    color: var(--white);
-}
-
-.cartStatus {
-    margin: 10px 0px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.cartStatus > h2 {
-    color: var(--black);
- }
-
-.active {
-    color: var(--white) !important;
-}
-
+@import url('../../css/Cart.css');
 .innerContainer {
     display: flex;
     flex-direction: column;
@@ -154,25 +130,20 @@ export default {
 #paymentMethods {
     display: grid;
     grid-template-columns: 1.25rem repeat(3, auto);
-    column-gap: 1.5rem;
+    column-gap: 0.5rem;
 }
 #addresses {
     display: grid;
     grid-template-columns: 1.25rem repeat(2, auto);
-    column-gap: 1rem;
-}
-
-button {
-    font-size: 1.2em;
-    text-transform: uppercase;
+    column-gap: 0.5rem;
 }
 
 a:link, a:visited, a:active {
-   color: var(--secondary-dark);
+   color: var(--secondary-dark) !important;
 }
 
 a:hover {
-    color: var(--secondary-light);
+    color: var(--secondary-light) !important;
 }
 
 input[type='radio'] {

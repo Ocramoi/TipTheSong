@@ -143,11 +143,6 @@
      flex-wrap: wrap;
  }
 
- h3 {
-     padding: 0;
-     margin: 0;
- }
-
  .card {
      min-width: min(300px, 100vw);
      padding: 1em;
@@ -168,16 +163,9 @@
      width: 100%;
  }
 
- label {
-     margin-bottom: 10px;
- }
-
  .card button {
      text-transform: uppercase;
      float: right;
-     /* display: block;
-        margin: 0 auto;
-      */
      padding-left: 2em;
      padding-right: 2em;
  }

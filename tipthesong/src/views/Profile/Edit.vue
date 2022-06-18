@@ -125,12 +125,7 @@ export default {
     width: 100%;
 }
 
-label {
-    margin-bottom: 10px;
-}
-
 button {
-    text-transform: uppercase;
     float:  left;
     padding-left: 2em;
     padding-right: 2em;

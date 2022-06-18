@@ -1,0 +1,16 @@
+:root {
+    --white: #fcfcfc;
+    --black: #0f0f0f;
+    --bg: #39454B;
+    --bg-popup: #000a12f1;
+
+    --primary: #263238;
+    --primary-light: #4f5b62;
+    --primary-dark: #000a12;
+
+    --secondary: #bf360c;
+    --secondary-light: #f9683a;
+    --secondary-dark: #870000;
+
+    --min-profile-width: 400px;
+}

@@ -244,8 +244,6 @@
 
 <style scoped>
  .container {
-     padding: 5px;
-     position: relative;
      display: grid;
      grid-template-columns: min-content 1fr;
      grid-template-rows: auto;

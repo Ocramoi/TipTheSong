@@ -37,10 +37,7 @@ export default {
     color: var(--white);   
 }
 
-.container {
-    width: 100%;
-    margin-top: 1rem;
-    
+.container {    
     display: flex;
     flex-direction: column;
     gap: 2rem;
