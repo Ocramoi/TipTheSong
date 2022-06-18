@@ -1,11 +1,11 @@
 <template>
     <div class="container">
         <div class="innerContainer">
-            <h2>DISCOS CADASTRADOS</h2>
+            <h2>ADMINISTRADORES CADASTRADOS</h2>
             <div class="productBox">
                     <FlexTable
                         :titles="tableTitles"
-                        :values="orders" 
+                        :values="admins" 
                         rowHeight="4rem"/>
             </div>
         </div>
@@ -44,25 +44,13 @@ export default {
          };
      },
      computed: {
-         orders() {
+         admins() {
              return [
                 [
                     '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
                     `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                    `${this.user.name}#${this.user.id}`,
-                    this.user.email,
-                ],
-                [
-                    '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                    `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                    `${this.user.name}#${this.user.id}`,
-                    this.user.email,
-                ],
-                [
-                    '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                    `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                    `${this.user.name}#${this.user.id}`,
-                    this.user.email,
+                    `${this.admin.name}#${this.admin.id}`,
+                    this.admin.email,
                 ]
              ];
          },

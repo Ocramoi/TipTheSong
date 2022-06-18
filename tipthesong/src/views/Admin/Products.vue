@@ -5,7 +5,7 @@
             <div class="productBox">
                     <FlexTable
                         :titles="tableTitles"
-                        :values="orders" 
+                        :values="products" 
                         :center="true"
                         rowHeight="7rem"/>
             </div>
@@ -50,7 +50,7 @@ export default {
          };
      },
      computed: {
-         orders() {
+         products() {
              return [
                  [
                     '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
