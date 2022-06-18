@@ -9,7 +9,7 @@
             </div>
             <img
                 class="topbarLogo"
-                src="../assets/Global/logo-v1.svg"
+                :src="require('../../assets/Global/logo-v1.svg')"
                 alt="Logo" />
             <div class="personal">
                 <router-link

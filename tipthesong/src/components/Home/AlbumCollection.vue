@@ -13,7 +13,7 @@
                 :space-between="cardMargin"
                 v-for="album in albuns"
                 :key="album?.id">
-                <Card
+                <ProductCard
                     :style="`width: ${cardWidth}px;`"
                     :product="album" />
             </n-carousel-item>
@@ -33,7 +33,7 @@
 </template>
 
 <script type="text/javascript">
- import Card from "../products/Card";
+ import ProductCard from "../Product/Card";
 
  export default {
      name: "AlbumCollection",
@@ -54,7 +54,7 @@
          },
      },
      components: {
-         Card,
+         ProductCard,
      },
      mounted() {
          this.$refs.carousel.prev();

@@ -87,7 +87,7 @@
 </template>
 
 <script>
- import ProductCard from '../components/products/Card';
+ import ProductCard from '../components/Product/Card';
  import VueSlider from 'vue-slider-component';
  import 'vue-slider-component/theme/default.css';
 

@@ -8,9 +8,9 @@
 </template>
 
 <script>
- import TopBar from './components/TopBar';
+ import TopBar from './components/App/TopBar';
  import AdminTopBar from './components/Admin/TopBar.vue'
- import Footer from './components/Footer';
+ import Footer from './components/App/Footer';
 
  export default {
      name: 'App',
