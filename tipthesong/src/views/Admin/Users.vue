@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="innerContainer">
-            <h2>DISCOS CADASTRADOS</h2>
+            <h2>Usuários</h2>
             <div class="productBox">
                     <FlexTable
                         :titles="tableTitles"
@@ -24,7 +24,7 @@
 import FlexTable from '../../components/App/FlexTable.vue';
 
 export default {
-    name: "AdminAdmins",
+    name: "AdminUsers",
     components: {
         FlexTable,
     },
@@ -36,7 +36,7 @@ export default {
                  "Usertag",
                  "Email"
              ],
-            admin: {
+            user: {
                 id: "999",
                 name: "Robertin",
                 email: "robertin@gmail.com",
