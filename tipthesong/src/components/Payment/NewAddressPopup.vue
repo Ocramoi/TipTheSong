@@ -2,7 +2,7 @@
     <div class="popup">
         <div class="popupHeader">
             <h3>Adicionar Endereço</h3>
-            <button type="button" class="popupCloseBtn" v-on:click="TriggerAddressPopup">x</button>
+            <button type="button" class="popupCloseBtn" @click="$emit('togglePopup')">x</button>
         </div>
 
         <form action="POST">
@@ -110,7 +110,6 @@
                     placeholder=""/>
             </div>
 
-
             <button type="button"> Adicionar </button>
         </form>
     </div>
@@ -119,9 +118,6 @@
 
 <script>
 export default {
-    props: [
-        'TriggerAddressPopup'
-    ],
     data() {
         return {
             fullName: null,
@@ -145,9 +141,10 @@ export default {
     width: 50%;
     
     position: fixed;
-    left: 25%;
-    top: 25%;
-    z-index: 99;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
     background-color: var(--bg-popup);
     border-radius: 5px;
 }
