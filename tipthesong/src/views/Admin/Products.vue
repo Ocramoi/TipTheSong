@@ -60,53 +60,61 @@
          products() {
              return [
                  [
-                     '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                     {
+                         content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                         style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                      this.turnToImageTag(this.product.img),
-                     this.turnToDescription(this.product.name, this.product.description),
-                     `R$ ${this.product.price.toFixed(2)}`,
+                     {
+                         content: this.turnToDescription(this.product.name, this.product.description),
+                         style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center;",
+                     },
+                     `R$${this.product.price.toFixed(2)}`,
                      this.product.stock,
                      this.product.sold
                  ],
                  [
-                     '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                     {
+                         content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                         style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                      this.turnToImageTag(this.product.img),
-                     this.turnToDescription(this.product.name, this.product.description),
-                     `R$ ${this.product.price.toFixed(2)}`,
+                     {
+                         content: this.turnToDescription(this.product.name, this.product.description),
+                         style: "width: 100%; height: 100%; display: flex; align-itens: center; justify-content: center;",
+                     },
+                     `R$${this.product.price.toFixed(2)}`,
                      this.product.stock,
                      this.product.sold
                  ],
                  [
-                     '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                     {
+                         content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                         style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                      this.turnToImageTag(this.product.img),
-                     this.turnToDescription(this.product.name, this.product.description),
-                     `R$ ${this.product.price.toFixed(2)}`,
+                     {
+                         content: this.turnToDescription(this.product.name, this.product.description),
+                         style: "width: 100%; height: 100%; display: flex; align-itens: center; justify-content: center;",
+                     },
+                     `R$${this.product.price.toFixed(2)}`,
                      this.product.stock,
                      this.product.sold
                  ],
                  [
-                     '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                     {
+                         content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                         style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                      this.turnToImageTag(this.product.img),
-                     this.turnToDescription(this.product.name, this.product.description),
-                     `R$ ${this.product.price.toFixed(2)}`,
+                     {
+                         content: this.turnToDescription(this.product.name, this.product.description),
+                         style: "width: 100%; height: 100%; display: flex; align-itens: center; justify-content: center;",
+                     },
+                     `R$${this.product.price.toFixed(2)}`,
                      this.product.stock,
                      this.product.sold
                  ],
-                 [
-                     '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     this.turnToImageTag(this.product.img),
-                     this.turnToDescription(this.product.name, this.product.description),
-                     `R$ ${this.product.price.toFixed(2)}`,
-                     this.product.stock,
-                     this.product.sold
-                 ],
-                 [
-                     '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     this.turnToImageTag(this.product.img),
-                     this.turnToDescription(this.product.name, this.product.description),
-                     `R$ ${this.product.price.toFixed(2)}`,
-                     this.product.stock,
-                     this.product.sold
-                 ]
              ];
          },
      },
