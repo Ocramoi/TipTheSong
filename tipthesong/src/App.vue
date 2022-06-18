@@ -73,6 +73,9 @@
  input[type="text"],
  input[type="password"],
  input[type="email"],
+ input[type="url"],
+ input[type="date"],
+ input[type="number"],
  input[type="tel"] {
      border: 0;
      background-color: var(--primary);
