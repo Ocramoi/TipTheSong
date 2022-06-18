@@ -6,19 +6,15 @@
                 <p> Obrigado por comprar conosco!</p>
                 <p> Seu pedido de número #{{order.number}} foi concluído com sucesso. Você pode acompanhá-lo em seu perfil na aba de pedidos.</p>
             </div>
-            <button type="button"> Ir para meus pedidos </button>
+            <router-link :to="{ name: 'ProfileOrders' }">
+                <button type="button"> Ir para meus pedidos </button>
+            </router-link>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    // props: {
-    //     order: {
-    //         type: Object,
-    //         required: true,
-    //     },
-    // }
     data () {
         return {
             order: {
@@ -32,8 +28,8 @@ export default {
 
 <style scoped>
 .card {
-    width: 500px;
-    height: 300px;
+    max-width: 500px;
+    min-height: 300px;
     margin: 1rem auto;
     padding: 1rem;
     background-color: var(--primary-light);
