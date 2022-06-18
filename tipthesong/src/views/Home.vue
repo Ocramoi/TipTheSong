@@ -101,4 +101,11 @@
  .carousel img {
      width: 100%;
  }
+
+ @media screen and (max-width: 599px) {
+     .carouselContainer {
+         display: none;
+     }
+ }
+
 </style>
