@@ -58,6 +58,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Homepage')
   }, 
   {
+    path: '/admin/admins',
+    name: 'AdminAdmins',
+    component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Admins')
+  }, 
+  {
     path: '/order',
     name: 'Order',
     component: () => import(/* webpackChunkName: "Order" */ '../views/Cart/Order')
@@ -81,7 +86,7 @@ const routes = [
   {
     path: '/admin/products',
     name: 'AdminProducts',
-    component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/AdminProducts')
+    component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/Products')
   }, 
   {
     path: '/profile/addresses',
