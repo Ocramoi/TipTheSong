@@ -1,28 +1,30 @@
 <template>
-    <div v-html="nthStyle" />
-    <div
-        class="flexTable"
-        :style="{
-            '--n': `${nGrid}`,
-            '--row-height': `${rowHeight}`,
-            '--row-gap': `${rowGap}`
-        }">
-        <span
-            v-for="(title, idx) in titles"
-            :key="idx"
-            class="columnTitle"
-        >
-            {{ title }}
-        </span>
+    <div>
+        <div v-html="nthStyle" />
+        <div
+            class="flexTable"
+            :style="{
+                '--n': `${nGrid}`,
+                '--row-height': `${rowHeight}`,
+                '--row-gap': `${rowGap}`
+            }">
+            <span
+                v-for="(title, idx) in titles"
+                :key="idx"
+                class="columnTitle"
+            >
+                {{ title }}
+            </span>
 
-        <template
-            v-for="(entry, idx) in values"
-            :key="idx" >
-            <div class="innerRow" v-for="(value, idx) in entry" :key="idx">
-                <span v-if="textValue(value)" :class="{ 'elementCenter': center }" v-html="value" />
-                <div v-else :style="value.style" v-html="value.content" />
-            </div>
-        </template>
+            <template
+                v-for="(entry, idx) in values"
+                :key="idx" >
+                <div class="innerRow" v-for="(value, idx) in entry" :key="idx">
+                    <span v-if="textValue(value)" :class="{ 'elementCenter': center }" v-html="value" />
+                    <div v-else :style="value.style" :class="value.class" v-html="value.content" />
+                </div>
+            </template>
+        </div>
     </div>
 </template>
 
