@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="innerProfileContainer">
-            <Sidebar />
+            <Sidebar class="sidebar"/>
             <div class="profileBox">
                 <h2> MEUS ENDEREÇOS </h2>
                 <FlexTable
