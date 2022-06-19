@@ -47,7 +47,10 @@ export default {
          admins() {
              return [
                 [
-                    '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    {
+                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                     `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
                     `${this.admin.name}#${this.admin.id}`,
                     this.admin.email,
@@ -61,7 +64,7 @@ export default {
 </script>
 
 <style scoped>
-:deep(.trashIcon) {
+ :deep(.trashIcon) {
      font-size: 1.1em;
      margin: auto 10px;
      display: block;

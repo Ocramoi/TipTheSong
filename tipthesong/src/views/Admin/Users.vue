@@ -44,19 +44,28 @@ export default {
          users() {
              return [
                 [
-                    '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    {
+                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                     `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
                     `${this.user.name}#${this.user.id}`,
                     this.user.email,
                 ],
                 [
-                    '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    {
+                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                     `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
                     `${this.user.name}#${this.user.id}`,
                     this.user.email,
                 ],
                 [
-                    '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    {
+                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                     `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
                     `${this.user.name}#${this.user.id}`,
                     this.user.email,
