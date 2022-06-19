@@ -23,16 +23,16 @@
             </div>
         </div>
         <div class="bottomRow" id="links" :class="{ 'hide': !optionsVisible }">
-            <router-link to="/" class="topbarButton " @click="optionsVisible = !optionsVisible">
+            <router-link to="/" class="topbarButton " @click="showOptions">
                 Início
             </router-link>
-            <router-link to="/products" class="topbarButton" @click="optionsVisible = !optionsVisible">
+            <router-link to="/products" class="topbarButton" @click="showOptions">
                 Produtos
             </router-link>
-            <router-link to="/whoweare" class="topbarButton" @click="optionsVisible = !optionsVisible">
+            <router-link to="/whoweare" class="topbarButton" @click="showOptions">
                 Quem somos?
             </router-link>
-            <router-link to="/contact" class="topbarButton" @click="optionsVisible = !optionsVisible">
+            <router-link to="/contact" class="topbarButton" @click="showOptions">
                 Contato
             </router-link>
         </div>
@@ -72,7 +72,8 @@
 
             <router-link
                 :to="{ name: 'Home', }"
-                class="topbarButton">
+                class="topbarButton"
+                @click="showProfile">
                 Sair
             </router-link>
         </div>
