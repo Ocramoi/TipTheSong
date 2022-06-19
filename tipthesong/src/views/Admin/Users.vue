@@ -90,6 +90,12 @@ export default {
      padding: 0.25rem;
  }
 
+@media screen and (max-width: 599px) {
+    :deep(.userPhoto) {
+        display: none;
+    } 
+}
+
 .bts {
     margin-top: 1rem;
     display: flex;

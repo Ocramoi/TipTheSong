@@ -74,6 +74,13 @@ export default {
      box-sizing: border-box;
      padding: 0.25rem;
  }
+
+@media screen and (max-width: 599px) {
+    :deep(.userPhoto) {
+        display: none;
+    } 
+}
+
  .addBtn {
     display: flex;
     justify-content: center;
@@ -82,6 +89,7 @@ export default {
     aspect-ratio: 1 / 1;
     width: min-content;
 }
+
 
 .bts {
     margin-top: 1rem;
