@@ -3,7 +3,6 @@
     color: var(--white);
 }
 
-
 .innerProfileContainer {
     margin-top: 3rem;
 
@@ -27,7 +26,13 @@
 
 @media screen and (max-width: var(--min-profile-width)) {
     .profileBox {
-        min-width: none;
+        min-width: min-content;
         padding: 5px;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .sidebar {
+        display: none !important;
     }
 }

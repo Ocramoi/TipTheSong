@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="innerProfileContainer">
-            <Sidebar></Sidebar>
+            <Sidebar class="sidebar"/>
             <div class="profileBox">
                 <form>
                 <div class="innerFlexContainer">
