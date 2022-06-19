@@ -71,26 +71,26 @@
      flex-direction: row;
      flex-wrap: wrap;
      align-items: flex-start;
-     justify-content: center;
+     gap: 1rem;
  }
 
  img {
+     margin: 0 auto;
      min-width: 200px;
      flex: 0 1 300px;
  }
 
  .productInfoText {
      flex: 1 0 200px;
-     padding: 0 50px;
- }
-
- .productInfoText > h2, .productInfoText > p {
-     padding: 0;
  }
 
  .productExtraInfo {
      padding: 1rem;
      margin: 100px 0;
+ }
+
+:deep(h2), p {
+     padding: 0;
  }
 
 </style>
