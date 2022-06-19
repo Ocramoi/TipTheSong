@@ -11,9 +11,12 @@
                     alt="Logo" />
             </div>
             <div class="userCart">
-                <router-link to="/login" class="clickableIcon">
+                <router-link v-if="false" to="/login" class="clickableIcon">
                     <i class="fa-solid fa-user" />
                 </router-link>
+                <div class="clickableIcon" @click="showProfile">
+                    <i class="fa-solid fa-user" />
+                </div>
                 <router-link to="/cart" class="clickableIcon">
                     <i class="fa-solid fa-cart-shopping" />
                 </router-link>
@@ -33,6 +36,46 @@
                 Contato
             </router-link>
         </div>
+        <div class="bottomRow" id="profile" :class="{ 'hide': !profileVisible }">
+            <router-link
+                :class="{ 'active': $route.name == 'ProfileEdit' }"
+                :to="{ name: 'ProfileEdit', }"
+                class="topbarButton"
+                @click="showProfile">   
+                Editar dados
+            </router-link>
+
+            <router-link
+                :class="{ 'active': $route.name == 'ProfileOrders' }"
+                :to="{ name: 'ProfileOrders', }"
+                class="topbarButton"
+                @click="showProfile">
+                Pedidos
+            </router-link>
+
+            <router-link
+                :class="{ 'active': $route.name == 'ProfilePayment' }"
+                :to="{ name: 'ProfilePayment', }"
+                class="topbarButton"
+                @click="showProfile">
+                Métodos de pagamento
+            </router-link>
+
+            <router-link
+                :class="{ 'active': $route.name == 'ProfileAddresses' }"
+                :to="{ name: 'ProfileAddresses', }"
+                class="topbarButton"
+                @click="showProfile">
+                Endereços
+            </router-link>
+
+
+            <router-link
+                :to="{ name: 'Home', }"
+                class="topbarButton">
+                Sair
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -41,12 +84,21 @@
         data() {
             return {
                 optionsVisible: false,
+                profileVisible: false,
+                user: {
+                    name: "milena",
+                    id: 111,
+                },
             };
         },
         methods: {
             showOptions() {
                 this.optionsVisible = !this.optionsVisible;
-                console.log(this.optionsVisible);
+                this.profileVisible = false;
+            },
+            showProfile() {
+                this.profileVisible = !this.profileVisible;
+                this.optionsVisible = false;
             },
         },
     }
@@ -74,8 +126,6 @@
         color: var(--white);
         font-size: 1.1rem;
     }
-
-    
 
     .topRow {
         width: 100%;
@@ -142,6 +192,11 @@
     }
 
     #links {
+        display: flex;
+        transition: 0.4s;
+    }
+
+    #profile {
         display: flex;
         transition: 0.4s;
     }
