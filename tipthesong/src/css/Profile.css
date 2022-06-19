@@ -35,4 +35,8 @@
     .sidebar {
         display: none !important;
     }
+
+    button {
+        margin: 0 auto;
+    }
 }
