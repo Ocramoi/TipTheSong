@@ -14,10 +14,10 @@
         <hr />
 
         <div class="interact" v-if="interact">
-            <button class="cartButton">
+            <button class="cartButton" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>
             </button>
-            <button type="button">Comprar agora</button>
+            <button type="button" @click="addToCart">Comprar agora</button>
         </div>
     </div>
 </template>
@@ -35,6 +35,14 @@
              required: false,
              default: true,
          },
+     },
+     methods: {
+         addToCart() {
+             this.$store.dispatch('addToCart', {
+                 id: this.product.id,
+                 qnt: 1,
+             });
+         }
      },
  }
 </script>

@@ -113,106 +113,6 @@
                  price: [],
                  year: [],
              },
-             products: [
-                 {
-                     id: 1,
-                     name: 'Now, Not Yet',
-                     price: 10.0 ,
-                     released: 1929,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 2,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 3,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 4,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 5,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 6,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 7,
-                     name: 'Now, Not Yet',
-                     price: 190.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 1,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 2,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 3,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 4,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 5,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 6,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 7,
-                     name: 'Now, Not Yet',
-                     price: 90.0 ,
-                     released: 2022,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-             ],
          };
      },
      beforeMount() {
@@ -236,6 +136,9 @@
          },
          maxYear() {
              return this.products.reduce((prev, cur) => Math.max(prev, cur?.released), Number.NEGATIVE_INFINITY);
+         },
+         products() {
+             return this.$store.getters.getProductList;
          },
      }
  }

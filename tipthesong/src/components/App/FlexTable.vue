@@ -19,9 +19,11 @@
             <template
                 v-for="(entry, idx) in values"
                 :key="idx" >
-                <div class="innerRow" v-for="(value, idx) in entry" :key="idx">
+                <div class="innerRow" v-for="(value, idx) in entry" :key="idx" @click="sendEvent(value?.id)">
                     <span v-if="textValue(value)" :class="{ 'elementCenter': center }" v-html="value" />
-                    <div v-else :style="value.style" :class="value.class" v-html="value.content" />
+                    <div v-else :style="value?.style || ''"
+                         :class="value?.class || ''"
+                         v-html="value.content" />
                 </div>
             </template>
         </div>
@@ -63,7 +65,7 @@
      },
      computed: {
          nthStyle() {
-             return `<style> .flexTable div.innerRow:nth-child(${this.nGrid}n + 1):before { content: ''; height: var(--row-height); width: 100%; position: absolute; box-shadow: 5px 5px 10px var(--primary-dark); } </style>`;
+             return `<style> .flexTable div.innerRow:nth-child(${this.nGrid}n + 1):before { content: ''; height: var(--row-height); width: 100%; position: absolute; box-shadow: 5px 5px 10px var(--primary-dark); z-index: 0; } </style>`;
          },
      },
      methods: {
@@ -71,6 +73,7 @@
              if (['string', 'number'].includes(typeof(value))) return true;
              return false;
          },
+         sendEvent(id) { this.$emit('clicked', id); },
      },
  };
 </script>
@@ -102,6 +105,8 @@
      line-height: var(--row-height);
      vertical-align: middle;
      background-color: var(--primary-light);
+
+     z-index: 1;
  }
 
  .flexTable > span {

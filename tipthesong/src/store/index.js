@@ -3,12 +3,14 @@ import createPersistedState from "vuex-persistedstate";
 import SecureLS from "secure-ls";
 
 // MODULES
+import cart from './modules/cart';
 import products from './modules/products';
 
 const ls = new SecureLS({ isCompression: false });
 
 export default createStore({
   modules: [
+    cart,
     products,
   ],
   plugins: [

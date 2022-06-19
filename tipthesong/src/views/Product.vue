@@ -1,12 +1,12 @@
 <template>
     <div class="container">
-        <h1>{{ product.name }}</h1>
+        <h1>{{ product?.name }}</h1>
 
         <div class="productInfoBox"> 
-            <img :src="product.img">
+            <img :src="product?.img">
             <div class="productInfoText">
-                <h2> R$ {{ product.price.toFixed(2) }} </h2>
-                <p> {{ product.description }} </p>
+                <h2> R$ {{ product?.price.toFixed(2) }} </h2>
+                <p> {{ product?.description }} </p>
                 <br/>
                 <button type="button"> COMPRAR </button>
             </div>
@@ -14,121 +14,83 @@
 
         <div class="productExtraInfo">
             <h2>Informações Adicionais</h2>
-            <p> {{ product.extraInfo }} </p>
+            <p> {{ product?.extraInfo }} </p>
         </div>
-    
+
         <div class="suggestions"> 
             <AlbumCollection
-             title="Suggestions"
-             :albuns="albuns" />
+                title="Sugestões"
+                :albuns="sugestions || []" />
         </div>
 
     </div>
 </template>
 
 <script>
-import AlbumCollection from '../components/Home/AlbumCollection';
+ import AlbumCollection from '../components/Home/AlbumCollection';
 
-export default {
-    name: "Product",
-    components: {
-        AlbumCollection
-    },
-    props: {
-        // product: {
-        //     type: Object,
-        //     required: true,
-        // }
-    }, 
-    data() {
-        return {
-            product: {
-                id: 1,
-                name: 'Now, Not Yet (2019) - halfalive', 
-                price: 90.0 , 
-                img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg',
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
-                extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae."
-            },
-            albuns: [
-                 {
-                     id: 1,
-                     name: 'Now, Not Yet',
-                     price: 10.0,
-                     released: 1929,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 2,
-                     name: 'Now, Not Yet',
-                     price: 90.0,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 3,
-                     name: 'Now, Not Yet',
-                     price: 90.0,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 4,
-                     name: 'Now, Not Yet',
-                     price: 90.0,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 5,
-                     name: 'Now, Not Yet',
-                     price: 90.0,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-             ],
-        };
-        
-    },
-
-}
+ export default {
+     name: "Product",
+     components: {
+         AlbumCollection
+     },
+     props: {},
+     data() {
+         return ;
+     },
+     async created() {
+         this.$store.dispatch('loadProduct', this.id);
+         this.$store.dispatch('getSugestions', this.id);
+     },
+     computed: {
+         sugestions() {
+             return this.$store.getters.getSugestions;
+         },
+         id() {
+             return this.$route.params.idProduct;
+         },
+         product() {
+             return this.$store.getters.getCurrentProduct;
+         },
+     }
+ }
 </script>
 
 <style scoped>
-.container {
-    text-align: justify;
-}
+ .container {
+     text-align: justify;
+ }
 
-h1 {
-    text-align: center;
-}
+ h1 {
+     text-align: center;
+ }
 
-.productInfoBox {
-    padding: 1rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
-} 
+ .productInfoBox {
+     padding: 1rem;
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     align-items: flex-start;
+     justify-content: center;
+ }
 
-img {
-    min-width: 200px;
-    flex: 0 1 300px;
-}
+ img {
+     min-width: 200px;
+     flex: 0 1 300px;
+ }
 
-.productInfoText {
-    flex: 1 0 200px;
-    padding: 0 50px;
-}
+ .productInfoText {
+     flex: 1 0 200px;
+     padding: 0 50px;
+ }
 
-.productInfoText > h2, .productInfoText > p {
-    padding: 0;
-}
+ .productInfoText > h2, .productInfoText > p {
+     padding: 0;
+ }
 
-.productExtraInfo {
-    padding: 1rem;
-    margin: 100px 0;
-}
+ .productExtraInfo {
+     padding: 1rem;
+     margin: 100px 0;
+ }
 
 </style>
