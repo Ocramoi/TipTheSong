@@ -1,7 +1,7 @@
 <template>
     <div class="topBar">
         <div class="topRow">
-            <div class="burguerMenu clickableIcon">
+            <div class="burguerMenu clickableIcon" @click="showOptions">
                 <i class="fa-solid fa-bars" />
             </div>
             <div class="imgContainer">
@@ -19,12 +19,36 @@
                 </router-link>
             </div>
         </div>
+        <div class="bottomRow" id="links" :class="{ 'hide': !optionsVisible }">
+            <router-link to="/" class="topbarButton ">
+                Início
+            </router-link>
+            <router-link to="/products" class="topbarButton">
+                Produtos
+            </router-link>
+            <router-link to="/whoweare" class="topbarButton">
+                Quem somos?
+            </router-link>
+            <router-link to="/contact" class="topbarButton">
+                Contato
+            </router-link>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        
+        data() {
+            return {
+                optionsVisible: false,
+            };
+        },
+        methods: {
+            showOptions() {
+                this.optionsVisible = !this.optionsVisible;
+                console.log(this.optionsVisible);
+            },
+        },
     }
 </script>
 
@@ -43,6 +67,16 @@
         box-shadow: 0 0 5px var(--primary-dark);
     }
 
+    .topbarButton {
+        text-align: center;
+        padding: 5px;
+        cursor: pointer;
+        color: var(--white);
+        font-size: 1.1rem;
+    }
+
+    
+
     .topRow {
         width: 100%;
         display: flex;
@@ -51,6 +85,17 @@
         justify-content: space-evenly;
         align-items: center;
         margin-top: 5px;
+    }
+
+    .bottomRow {
+        padding-top: 3rem;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transition: 1s;
     }
 
     .topRow > * {
@@ -86,5 +131,19 @@
         left: 50%;
         transform: translate(-50%, -30%);
         cursor: pointer;
+    }
+
+    .hide {
+        height: 0px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden;
+        transition: 0.4s;
+        flex-wrap: nowrap;
+    }
+
+    #links {
+        display: flex;
+        transition: 0.4s;
     }
 </style>
