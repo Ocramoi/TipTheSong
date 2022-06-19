@@ -36,12 +36,9 @@
      },
      props: {},
      data() {
-         return ;
+         return {};
      },
-     async created() {
-         this.$store.dispatch('loadProduct', this.id);
-         this.$store.dispatch('getSugestions', this.id);
-     },
+     async created() { this.loadFromId(); },
      computed: {
          sugestions() {
              return this.$store.getters.getSugestions;
@@ -52,7 +49,16 @@
          product() {
              return this.$store.getters.getCurrentProduct;
          },
-     }
+     },
+     watch: {
+         id() { this.loadFromId(); },
+     },
+     methods: {
+         loadFromId() {
+             this.$store.dispatch('loadProduct', this.id);
+             this.$store.dispatch('getSugestions', this.id);
+         },
+     },
  }
 </script>
 
