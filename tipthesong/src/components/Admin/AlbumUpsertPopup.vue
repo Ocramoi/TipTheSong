@@ -3,7 +3,9 @@
         <div class="popup">
             <div class="popupHeader">
                 <h3>{{ popupTitle }}</h3>
-                <button type="button" class="popupCloseBtn" @click="close" />
+                <button type="button" class="popupCloseBtn" @click="close"> 
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
             <form action="POST">
@@ -56,7 +58,7 @@
                     </div>
 
                     <button type="button" class="roundButton" @click="addArtist">
-                        <span>+</span>
+                        <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
                 <div>
@@ -78,7 +80,7 @@
                     </div>
 
                     <button type="button" class="roundButton" @click="addGenre">
-                        <span>+</span>
+                        <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
 

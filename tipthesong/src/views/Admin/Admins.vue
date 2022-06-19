@@ -14,7 +14,7 @@
                 <button class="backBtn">VOLTAR</button>
             </router-link>
             <button class="addBtn">
-                <span>+</span>
+                <i class="fa-solid fa-plus"></i>
             </button>
         </div>
     </div>

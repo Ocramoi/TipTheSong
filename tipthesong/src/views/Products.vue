@@ -76,7 +76,7 @@
                 @click="showPanel"
                 :class="{ 'hidden': filterVisible, }"
                 class="filterButton">
-                <span>&gt;&gt;</span>
+                <i class="fa-solid fa-filter"></i>
             </button>
 
             <div class="productList">

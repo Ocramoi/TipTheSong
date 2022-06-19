@@ -2,7 +2,9 @@
     <div class="popup">
         <div class="popupHeader">
             <h3>Criar admin</h3>
-            <button type="button" class="popupCloseBtn" v-on:click="TriggerAdminPopup">x</button>
+            <button type="button" class="popupCloseBtn" v-on:click="TriggerAdminPopup">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
         <form action="POST">
