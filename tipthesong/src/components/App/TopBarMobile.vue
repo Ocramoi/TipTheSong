@@ -20,16 +20,16 @@
             </div>
         </div>
         <div class="bottomRow" id="links" :class="{ 'hide': !optionsVisible }">
-            <router-link to="/" class="topbarButton ">
+            <router-link to="/" class="topbarButton " @click="optionsVisible = !optionsVisible">
                 Início
             </router-link>
-            <router-link to="/products" class="topbarButton">
+            <router-link to="/products" class="topbarButton" @click="optionsVisible = !optionsVisible">
                 Produtos
             </router-link>
-            <router-link to="/whoweare" class="topbarButton">
+            <router-link to="/whoweare" class="topbarButton" @click="optionsVisible = !optionsVisible">
                 Quem somos?
             </router-link>
-            <router-link to="/contact" class="topbarButton">
+            <router-link to="/contact" class="topbarButton" @click="optionsVisible = !optionsVisible">
                 Contato
             </router-link>
         </div>
