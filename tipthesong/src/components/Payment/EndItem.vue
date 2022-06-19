@@ -24,8 +24,6 @@
 
 <style scoped>
     .cardItem {
-        width: 67.2%;
-        min-height: 75px;
         padding: 1rem;
         background-color: var(--primary-light);
 
