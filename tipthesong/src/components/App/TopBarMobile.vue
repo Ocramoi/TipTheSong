@@ -7,15 +7,15 @@
             <div class="imgContainer">
                 <img
                     class="topbarLogo"
-                    :src="require('../../assets/Global/logo-v1.svg')"
+                    :src="require('../../assets/Global/logo-v2.svg')"
                     alt="Logo" />
             </div>
             <div class="userCart">
                 <router-link to="/login" class="clickableIcon">
-                    <i style="font-size: 35px;" class="fa-solid fa-user" />
+                    <i class="fa-solid fa-user" />
                 </router-link>
                 <router-link to="/cart" class="clickableIcon">
-                    <i style="font-size: 35px;" class="fa-solid fa-cart-shopping" />
+                    <i class="fa-solid fa-cart-shopping" />
                 </router-link>
             </div>
         </div>
@@ -88,7 +88,7 @@
     }
 
     .bottomRow {
-        padding-top: 3rem;
+        padding-top: 2rem;
         flex-direction: column;
         flex-wrap: wrap;
         width: 100%;
@@ -104,7 +104,7 @@
 
     .topbarLogo {
         width: 100%;
-        max-width: 7rem;
+        max-width: 4rem;
     }
 
     .userCart {
@@ -117,7 +117,6 @@
 
     .burguerMenu {
         text-align: center;
-        font-size: 35px;
     }
 
     .imgContainer {
@@ -145,5 +144,9 @@
     #links {
         display: flex;
         transition: 0.4s;
+    }
+
+    .clickableIcon {
+        font-size: 1.25rem;
     }
 </style>

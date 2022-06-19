@@ -2,20 +2,14 @@
     <div class="topBar">
         <div class="topRow">
             <div class="topbarLogo">
-                <img
-                    src="../../assets/Global/logo-v2.svg"
-                    alt="Logo" />
+                <router-link class="clickableIcon" :to="{ name: 'AdminHomepage' }">
+                    <img
+                        src="../../assets/Global/logo-v2.svg"
+                        alt="Logo" />
+                </router-link>
                 <p> ÁREA DO ADMINISTRADOR </p>
             </div>
             <div class="personal">
-                <router-link
-                    to="/admin/homepage">
-                    <button
-                        type="button"
-                        :class="{ 'active': $route.name == 'AdminHomepage' }">
-                        Início
-                    </button>
-                </router-link>
                 <router-link to="/">
                     <button type="button">
                         Sair
@@ -70,7 +64,7 @@
      gap: 1rem;
  }
 
- .topbarLogo > img {
+ .topbarLogo > .clickableIcon > img {
      width: 100%;
      max-width: 3rem;
      transition: 0.4s;
@@ -86,12 +80,11 @@
 
 .personal {
      width: 30%;
-     max-width: 400px;
-     align-items: center;
+     max-width: 7rem;
      display: grid;
-     grid-template-columns: 1fr 1fr;
      column-gap: 10px;
  }
+
  .personal button {
      width: 100%;
      background-color: var(--primary-light);

@@ -172,9 +172,6 @@ form {
     width: 100%;
 }
 
-label {
-    margin-bottom: 10px;
-}
 
 .addBtn {
     height: min-content;

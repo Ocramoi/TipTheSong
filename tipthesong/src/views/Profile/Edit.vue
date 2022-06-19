@@ -3,7 +3,8 @@
         <div class="innerProfileContainer">
             <Sidebar></Sidebar>
             <div class="profileBox">
-                <form class="formGrid">
+                <form>
+                <div class="innerFlexContainer">
                     <div>
                         <label for="username">Nome de usuário</label>
                         <br>
@@ -15,7 +16,6 @@
                             required
                             :placeholder="user.name" />
                     </div>
-                  
                     <div>
                         <label for="phone">Telefone</label>
                         <br>
@@ -27,8 +27,8 @@
                             required
                             :placeholder="user.phone" />
                     </div>
-                    
-                    <div style="grid-column: span 2">
+                </div>
+                    <div>
                         <label for="email">Endereço de email</label>
                         <br>
                         <input
@@ -41,9 +41,9 @@
                     </div>
                 </form>
 
-                <form class="formGrid">
-                    <h3 style="grid-column: span 2"> MUDAR SENHA </h3>
-                    <div style="grid-column: span 2">
+                <form>
+                    <h3> MUDAR SENHA </h3>
+                    <div>
                         <label for="curPassword">Senha Atual</label>
                         <br>
                         <input
@@ -114,10 +114,25 @@ export default {
 <style scoped>
 @import url('../../css/Profile.css');
 
-.formGrid {
-    display: grid;
-    grid-template-columns: auto auto;
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 1rem;
+}
+
+.innerFlexContainer {
+    flex: 0 1 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.innerFlexContainer > div {
+    flex: 1;
+    min-width: 300px;
 }
 
 .inputFill {
@@ -129,6 +144,10 @@ button {
     float:  left;
     padding-left: 2em;
     padding-right: 2em;
+}
+
+form > h3 {
+    padding: 0;
 }
 
 </style>

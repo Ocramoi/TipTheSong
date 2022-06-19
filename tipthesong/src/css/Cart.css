@@ -10,3 +10,8 @@
     justify-content: space-around;
 }
 
+@media screen and (max-width: 599px) {
+    .cartStatus h2:not(.active) {
+        display: none;
+    } 
+}
