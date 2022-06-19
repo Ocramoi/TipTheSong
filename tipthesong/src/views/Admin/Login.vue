@@ -75,8 +75,9 @@ export default {
 }
 
 .card { 
-    width: 500px;
-    height: 350px;
+    max-width: 500px;
+    min-width: min(90vw, 500px);
+    min-height: 350px;
     padding: 1rem;
     background-color: var(--primary-light);
 

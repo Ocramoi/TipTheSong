@@ -15,7 +15,7 @@
 
 .popup {
     padding: 1rem;
-    flex: 1 0 max-content;
+    flex: 1 0 min-content;
     max-width: 800px;
     box-sizing: border-box;
     margin: 0 20px;
