@@ -13,15 +13,17 @@
                 :key="idx"
                 class="columnTitle"
             >
-                {{ title }}
+                &nbsp;{{ title }}&nbsp;
             </span>
 
             <template
                 v-for="(entry, idx) in values"
                 :key="idx" >
                 <div class="innerRow" v-for="(value, idx) in entry" :key="idx">
+                    &nbsp;
                     <span v-if="textValue(value)" :class="{ 'elementCenter': center }" v-html="value" />
                     <div v-else :style="value.style" :class="value.class" v-html="value.content" />
+                    &nbsp;
                 </div>
             </template>
         </div>
@@ -87,6 +89,10 @@
      width: 100%;
  }
 
+ * {
+     box-sizing: border-box;
+ }
+
  .flexTable div.innerRow {
      height: var(--row-height);
      box-sizing: border-box;
@@ -108,20 +114,15 @@
      text-overflow: ellipsis;
      white-space: nowrap;
      overflow: hidden;
-     padding: 0 5px;
      box-sizing: border-box;
  }
 
  .flexTable div.innerRow > span {
-     padding: 0 5px 0 5px;
      box-sizing: border-box;
      text-overflow: ellipsis;
      white-space: nowrap;
      overflow: hidden;
-     height: 100%;
-     /* display: flex;
-        justify-content: center; */
-     padding: 0;
+     height: 100%; 
  }
 
  .elementCenter {
