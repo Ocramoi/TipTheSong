@@ -82,8 +82,8 @@
 
  .description {
      width: 100%;
-     min-width: max-content;
      text-align: center;
+     word-break: break-all;
  }
 
  img, h3, p {
