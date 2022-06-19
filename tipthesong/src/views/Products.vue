@@ -70,15 +70,13 @@
 
             </div>
         </div>
-
         <div class="productsContainer">
-            <button
+             <button
                 @click="showPanel"
                 :class="{ 'hidden': filterVisible, }"
                 class="filterButton">
-                <span>&gt;&gt;</span>
+                <i class="fa-solid fa-filter"></i>
             </button>
-
             <div class="productList">
                 <ProductCard v-for="product in products" :key="product.id" :product="product"/>
             </div>
@@ -182,7 +180,6 @@
      border-radius: 1em;
      padding: 5px;
      width: 100%;
-     min-width: 200px;
  }
 
  .panel > button {
@@ -221,13 +218,6 @@
      justify-content: center;
      align-items: center;
      z-index: 10;
- }
-
- @media screen and (max-width: 850px) {
-     .container {
-         width: calc(100% - 100px);
-         margin: 0 auto;
-     }
  }
 
  .productsContainer {

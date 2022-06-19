@@ -114,6 +114,7 @@
 
  .interact > button {
      flex: 1;
+     font-size: 0.7rem !important;
  }
 
  .cartButton {

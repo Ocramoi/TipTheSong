@@ -14,7 +14,7 @@
                 <button class="backBtn">VOLTAR</button>
             </router-link>
             <button class="addBtn">
-                <span>+</span>
+                <i class="fa-solid fa-plus"></i>
             </button>
         </div>
     </div>
@@ -47,7 +47,10 @@ export default {
          admins() {
              return [
                 [
-                    '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    {
+                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     },
                     `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
                     `${this.admin.name}#${this.admin.id}`,
                     this.admin.email,
@@ -61,7 +64,7 @@ export default {
 </script>
 
 <style scoped>
-:deep(.trashIcon) {
+ :deep(.trashIcon) {
      font-size: 1.1em;
      margin: auto 10px;
      display: block;
@@ -71,6 +74,13 @@ export default {
      box-sizing: border-box;
      padding: 0.25rem;
  }
+
+@media screen and (max-width: 599px) {
+    :deep(.userPhoto) {
+        display: none;
+    } 
+}
+
  .addBtn {
     display: flex;
     justify-content: center;
@@ -79,6 +89,7 @@ export default {
     aspect-ratio: 1 / 1;
     width: min-content;
 }
+
 
 .bts {
     margin-top: 1rem;

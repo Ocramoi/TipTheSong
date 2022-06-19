@@ -3,7 +3,9 @@
         <div class="popup">
             <div class="popupHeader">
                 <h3>Adicionar Endereço</h3>
-                <button type="button" class="popupCloseBtn" @click="$emit('togglePopup')" />
+                <button type="button" class="popupCloseBtn" @click="$emit('togglePopup')"> 
+                    <i class="fa-solid fa-xmark"></i>
+                </button>  
             </div>
 
             <form action="POST">
@@ -172,9 +174,6 @@ form {
     width: 100%;
 }
 
-label {
-    margin-bottom: 10px;
-}
 
 .addBtn {
     height: min-content;
