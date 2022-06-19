@@ -7,7 +7,8 @@
             </div>
 
             <form action="POST">
-                <div style="grid-column: span 2">
+            <div class="innerFlexContainer">
+                <div style="">
                     <label for="fullName">Nome Completo</label>
                     <br>
                     <input
@@ -29,6 +30,9 @@
                         required
                         placeholder="(dd) 9xxxx-xxxx"/>
                 </div>
+            </div>
+
+            <div class="innerFlexContainer">
                 <div>
                     <label for="county">País/Região</label>
                     <br>
@@ -51,9 +55,9 @@
                         required
                         placeholder=""/>
                 </div>
-                <div></div>
-
-                <div style="grid-column: span 2">
+            </div>
+            <div class="innerFlexContainer">
+                <div style="">
                     <label for="address">Endereço</label>
                     <br>
                     <input
@@ -75,7 +79,8 @@
                         required
                         placeholder=""/>
                 </div>
-                <div style="grid-column: span 2">
+            </div>
+                <div>
                     <label for="extra">Complemento</label>
                     <br>
                     <input
@@ -87,7 +92,7 @@
                         placeholder=""/>
                 </div>
                 <div></div>
-
+            <div class="innerFlexContainer">
                 <div>
                     <label for="estate">Estado</label>
                     <br>
@@ -110,8 +115,8 @@
                         required
                         placeholder=""/>
                 </div>
-
-                <button type="button"> Adicionar </button>
+            </div>
+            <button type="button" class="addBtn"> Adicionar </button>
             </form>
         </div>
     </div>
@@ -141,9 +146,25 @@ export default {
 @import url("../../css/Popup.css");
 
 form {
-    display: grid;
-    grid-template-columns: auto auto auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 1rem;
+}
+
+.innerFlexContainer {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.innerFlexContainer > div {
+    flex: 1;
+    min-width: 300px;
 }
 
 .inputFill {
@@ -153,5 +174,9 @@ form {
 
 label {
     margin-bottom: 10px;
+}
+
+.addBtn {
+    height: min-content;
 }
 </style>

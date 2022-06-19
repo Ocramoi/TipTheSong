@@ -7,6 +7,7 @@
             </div>
 
             <form action="POST">
+            <div class="innerFlexContainer">
                 <div>
                 <label for="cardNumber">Número do Cartão</label>
                 <br>
@@ -30,7 +31,9 @@
                     required
                     placeholder="mm/yyyy"/>
                 </div>
+            </div>
 
+            <div class="innerFlexContainer">
                 <div style="grid-column: span 2">
                 <label for="ownerName">Nome do Titular</label>
                 <br>
@@ -42,7 +45,9 @@
                     required
                     placeholder="Nome no Cartão"/>
                 </div>
+            </div>
 
+            <div class="innerFlexContainer">
                 <div>
                 <label for="securityCode">Código de Segurança</label>
                 <br>
@@ -56,6 +61,7 @@
                 </div>
 
                 <button type="button"> Adicionar </button>
+            </div>
             </form>
         </div>
     </div>
@@ -80,9 +86,25 @@ export default {
 @import url("../../css/Popup.css");
 
 form {
-    display: grid;
-    grid-template-columns: auto auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 1rem;
+}
+
+.innerFlexContainer {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.innerFlexContainer > div {
+    flex: 1;
+    min-width: 300px;
 }
 
 .inputFill {

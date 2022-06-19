@@ -119,7 +119,7 @@
 
  hr {
      display: block;
-     flex: 1 0 100%;
+     width: 100%;
      border-color: transparent;
      margin: 0;
      padding: 0;

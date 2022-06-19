@@ -7,13 +7,12 @@
         </div>
 
         <div class="cart">
-            <div class="cartProducts">
-                <h3 style="grid-column: span 3;">Produto</h3>
-                <h3>Preço</h3>
-                <h3>Quantidade</h3>
-                <h3>Total</h3>
-                <CartCard v-for="product in products" :key="product.id" />
-            </div>
+            <FlexTable
+                class="flexTable"
+                rowHeight="5rem"
+                :center="true"
+                :titles="['', 'Produto', 'Preço', 'Quantidade', 'Total']"
+                :values="productList" />
 
             <div class="cartTotals">
                 <h3 style="grid-column: span 2">Valores totais</h3>
@@ -46,12 +45,12 @@
 </template>
 
 <script>
-import CartCard from "../../components/Product/CartCard";
+import FlexTable from '../../components/App/FlexTable';
 
 export default {
     name: "MyCart",
     components: {
-        CartCard,
+        FlexTable,
     },
     data() {
         return {
@@ -69,7 +68,8 @@ export default {
                     name: 'Now, Not Yet', 
                     price: 90.0, 
                     quantity: 1,
-                    shortDescription:  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam assumenda, autem corporis excepturi dolorem vel nostrum aut illum voluptatum, soluta provident. Incidunt a quam vero nobis ratione exercitationem aspernatur magni.",
+                    // shortDescription:  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam assumenda, autem corporis excepturi dolorem vel nostrum aut illum voluptatum, soluta provident. Incidunt a quam vero nobis ratione exercitationem aspernatur magni.",
+                    shortDescription:  "Lorem ipsum dolor",
                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
                 }                
             ]
@@ -84,6 +84,21 @@ export default {
         },
         calcTotal() {
             return 0;
+        },
+        productList() {
+            return this.products.map(p => [
+                {
+                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    style: "display: flex; width: 100%; justify-content: center; align-itens: center; padding: 5px;",
+                },
+                {
+                    content: `<img src="${p?.img}" /><div class="productContainer"><h3 style="margin:0;padding:0">${p?.name}</h3><span>${p?.shortDescription}</span></div>`,
+                    class: "innerContent",
+                },
+                p?.price,
+                p?.quantity,
+                1,
+            ]);
         },
     },
 
@@ -127,8 +142,8 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: min-content;
-     row-gap: 20px;
-     text-align: justify;
+    row-gap: 20px;
+    text-align: justify;
     column-gap: 5px;
 }
 
@@ -138,5 +153,41 @@ export default {
 
  .totalRow {
      display: contents;
+ }
+
+ :deep(div.productContainer) {
+     display: block;
+     line-height: normal;
+     margin: auto 0;
+     flex: 1;
+ }
+
+ :deep(div.productContainer > h3) {
+     margin: 0;
+     padding:0;
+ }
+
+ :deep(div.productContainer span) {
+     width: 100%;
+     display: block;
+     white-space: break-spaces;
+     height: 100%;
+     font-size: 0.8em;
+     text-align: justify;
+ }
+
+ :deep(.innerContent) {
+     width: 100%;
+     height: 100% !important;
+     overflow: hidden;
+     display: flex;
+     flex-direction: row;
+     align-itens: center;
+     column-gap: 10px;
+ }
+
+ :deep(.innerContent > img) {
+     height: 100%;
+     flex: 0 0 auto;
  }
 </style>

@@ -1,27 +1,30 @@
 <template>
-    <div v-html="nthStyle" />
-    <div
-        class="flexTable"
-        :style="{
-            '--n': `${nGrid}`,
-            '--row-height': `${rowHeight}`,
-            '--row-gap': `${rowGap}`
-        }">
-        <span
-            v-for="(title, idx) in titles"
-            :key="idx"
-            class="columnTitle"
-        >
-            {{ title }}
-        </span>
+    <div>
+        <div v-html="nthStyle" />
+        <div
+            class="flexTable"
+            :style="{
+                '--n': `${nGrid}`,
+                '--row-height': `${rowHeight}`,
+                '--row-gap': `${rowGap}`
+            }">
+            <span
+                v-for="(title, idx) in titles"
+                :key="idx"
+                class="columnTitle"
+            >
+                {{ title }}
+            </span>
 
-        <template
-            v-for="(entry, idx) in values"
-            :key="idx" >
-            <div class="innerRow" v-for="(value, idx) in entry" :key="idx">
-                <span :class="{ 'elementCenter': center }" v-html="value" />
-            </div>
-        </template>
+            <template
+                v-for="(entry, idx) in values"
+                :key="idx" >
+                <div class="innerRow" v-for="(value, idx) in entry" :key="idx">
+                    <span v-if="textValue(value)" :class="{ 'elementCenter': center }" v-html="value" />
+                    <div v-else :style="value.style" :class="value.class" v-html="value.content" />
+                </div>
+            </template>
+        </div>
     </div>
 </template>
 
@@ -62,7 +65,13 @@
          nthStyle() {
              return `<style> .flexTable div.innerRow:nth-child(${this.nGrid}n + 1):before { content: ''; height: var(--row-height); width: 100%; position: absolute; box-shadow: 5px 5px 10px var(--primary-dark); } </style>`;
          },
-     }
+     },
+     methods: {
+         textValue(value) {
+             if (['string', 'number'].includes(typeof(value))) return true;
+             return false;
+         },
+     },
  };
 </script>
 
@@ -104,14 +113,15 @@
  }
 
  .flexTable div.innerRow > span {
+     padding: 0 5px 0 5px;
      box-sizing: border-box;
      text-overflow: ellipsis;
      white-space: nowrap;
      overflow: hidden;
-     padding: 0 5px 0 5px;
      height: 100%;
-     display: flex;
-     justify-content: center;
+     /* display: flex;
+        justify-content: center; */
+     padding: 0;
  }
 
  .elementCenter {
