@@ -1,6 +1,7 @@
 <template>
     <AdminTopBar v-if="$route.path.match('/admin/')"/>
-    <TopBar v-if="!$route.path.match('/admin')"/>
+    <TopBar class="desktop" v-if="!$route.path.match('/admin')"/>
+    <TopBarMobile class="mobile" v-if="!$route.path.match('/admin')"/>
     <div class="contentWrapper">
         <router-view />
     </div>
@@ -11,6 +12,7 @@
  import TopBar from './components/App/TopBar';
  import AdminTopBar from './components/Admin/TopBar.vue'
  import Footer from './components/App/Footer';
+import TopBarMobile from './components/App/TopBarMobile.vue';
 
  export default {
      name: 'App',
@@ -18,6 +20,7 @@
          TopBar,
          AdminTopBar,
          Footer,
+         TopBarMobile,
      }
  }
 </script>
@@ -60,7 +63,17 @@
      }
  }
 
+@media screen and (max-width: 599px) {
+    .desktop {
+        display: none;
+    } 
+}
 
+@media screen and (min-width: 600px) {
+    .mobile {
+        display: none;
+    } 
+}
 
 </style>
 
