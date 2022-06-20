@@ -39,34 +39,35 @@
      },
      created() {
          this.users = [ // TODO computed do back
-            [
-                {
-                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                    id: 0,
-                },
-                `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                `${this.user.name}#${this.user.id}`,
-                this.user.email,
-            ], [
-                {
-                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                    id: 1,
-                },
-                `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                `${this.user.name}#${this.user.id}`,
-                this.user.email,
-            ], [
-                {
-                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                    id: 2,
-                },
-                `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                `${this.user.name}#${this.user.id}`,
-                this.user.email,
-            ]
+             [
+                 {
+                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     id: 0,
+                 }, {
+                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                     style: "height: 100%; display: block; margin: 0 auto;",
+                 }, 
+                 {
+                     content: `${this.user.name}#${this.user.id}`,
+                     id: "upsert",
+                 },
+                 this.user.email,
+             ], [
+                 {
+                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     id: 0,
+                 }, {
+                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                     style: "height: 100%; display: block; margin: 0 auto;",
+                 }, 
+                 {
+                    content: `${this.user.name}#${this.user.id}`,
+                    id: "upsert", 
+                 },
+                 this.user.email,
+             ]
          ];
      },
      computed: {

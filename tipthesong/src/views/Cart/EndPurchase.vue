@@ -53,7 +53,7 @@
                         <span>Itens:</span>
                     </div>
                     <div class="totalRow">
-                        <span> R$100,00 </span>
+                        <span> R$180,00 </span>
                     </div>
                 </div>
                 <div class="innerFlexContainer">
@@ -61,7 +61,7 @@
                         <span>Frete e taxas:</span>
                     </div>
                     <div class="totalRow">
-                        <span> R$0 </span>
+                        <span> R$10,00 </span>
                     </div>
                 </div>
                 <div class="innerFlexContainer">
@@ -69,7 +69,7 @@
                         <span style = "font-weight: bold"> TOTAL: </span>
                     </div>
                     <div class="totalRow">
-                        <span style = "font-weight: bold"> R$100,00 </span>
+                        <span style = "font-weight: bold"> R$190,00 </span>
                     </div>
                 </div>
                 
