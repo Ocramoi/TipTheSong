@@ -14,4 +14,8 @@
     .cartStatus h2:not(.active) {
         display: none;
     } 
+    button {
+        margin: 0 auto;
+        display: block;
+    }
 }

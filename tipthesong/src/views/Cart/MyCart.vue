@@ -42,9 +42,11 @@
         </div>
 
         <br />
-        <router-link to="/products" custom v-slot="{ navigate }"> 
-            <button v-on:click="navigate" role="link" type="button"> Continuar Comprando </button>
-        </router-link>
+        <div style="width: 100%">
+            <router-link to="/products" class="button" custom v-slot="{ navigate }"> 
+                <button v-on:click="navigate" role="link" type="button"> Continuar Comprando </button>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -218,10 +220,17 @@
      overflow-x: auto;
      box-sizing: border-box;
      background-clip: border-box;
-     padding: 20px;
+     padding-bottom: 20px;
+     padding-right: 20px;
  }
 
  :deep(.flexTable) {
-     min-width: 600px !important;
+     min-width: 599px !important;
  }
+
+ :deep(h3) {
+    padding: 0;
+ }
+
+
 </style>
