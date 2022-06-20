@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <button class="goBack" @click="this.$router.back()">
+            <i class="fa-solid fa-arrow-left" /> 
+        </button>
         <h1>{{ product?.name }}</h1>
 
         <div class="productInfoBox"> 
@@ -8,7 +11,12 @@
                 <h2> R$ {{ product?.price.toFixed(2) }} </h2>
                 <p> {{ product?.description }} </p>
                 <br/>
-                <button type="button"> COMPRAR </button>
+                <div class="interact">
+                    <button class="cartButton" @click="addToCart">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </button>
+                    <button class="buyNow" type="button" @click="goToCart"> COMPRAR AGORA </button>
+                </div>
             </div>
         </div>
 
@@ -58,6 +66,16 @@
              this.$store.dispatch('loadProduct', this.id);
              this.$store.dispatch('getSugestions', this.id);
          },
+         addToCart() {
+             this.$store.dispatch('addToCart', {
+                 id: this.product.id,
+                 qnt: 1,
+             });
+         },
+         goToCart() {
+            this.addToCart()
+            this.$router.push('/cart')
+         },
      },
  }
 </script>
@@ -97,6 +115,42 @@
 
 :deep(h2), p {
      padding: 0;
+ }
+
+ .interact {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-evenly;
+     align-items: center;
+     width: min-content;
+     gap: 1rem;
+ }
+
+ .cartButton, .goBack {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     border-radius: 100%;
+     aspect-ratio: 1 / 1;
+     flex: 0 0 min-content !important;
+ }
+
+ .buyNow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: max-content;
+ }
+
+ .container {
+    position: relative;
+ }
+
+ .goBack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 1.5rem;
  }
 
 </style>
