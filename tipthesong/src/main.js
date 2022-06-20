@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
+import App from './App.vue'
 const app = createApp(App);
 
-import App from './App.vue'
 
 import VueCookies from 'vue3-cookies';
 import router from "./router";
@@ -19,6 +19,9 @@ dom.watch();
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 app.component("font-awesome-icon", FontAwesomeIcon);
+
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
 
 import {
     create,
@@ -41,5 +44,15 @@ app.use(VueCookies, {
 
 app.use(router);
 app.use(store);
+
+app.provide("notyf", new Notyf({
+    duration: 5000,
+    ripple: true,
+    dismissable: true,
+    position: {
+        x: "left",
+        y: "bottom",
+    },
+}));
 
 app.mount('#app');

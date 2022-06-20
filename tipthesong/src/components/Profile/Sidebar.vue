@@ -30,10 +30,9 @@
             </router-link>
 
 
-            <router-link
-                :to="{ name: 'Home', }">
+            <a @click="logout">
                 Sair
-            </router-link>
+            </a>
         </div>
     </div>
 </template>
@@ -48,6 +47,18 @@ export default {
             },
         }
     },
+     methods: {
+         async logout() {
+             await this.$store.dispatch("logout");
+             if (!this.$store.getters.getIsLogged) this.$router.push("/");
+             else {
+                 this.notyf.open({
+                     type: 'error',
+                     message: "Erro ao sair!",
+                 });
+             }
+         },
+     }
 }
 </script>
 

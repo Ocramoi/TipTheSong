@@ -13,7 +13,7 @@
             v-for="(collection, idx) in collections"
             :key="idx"
             :title="collection"
-            :albuns="albuns" />
+            :albuns="products" />
     </div>
 </template>
 
@@ -76,9 +76,6 @@
                  "Últimas unidades",
              ]
          };
-     },
-     async created() {
-         await this.$store.dispatch("loadProductList", { page: 1 });
      },
      computed: {
          products() {

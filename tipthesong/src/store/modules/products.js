@@ -66,6 +66,28 @@ const defaultProducts = [
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     img: 'https://upload.wikimedia.org/wikipedia/pt/7/73/Kids_See_Ghosts_I.jpg',
+  }, {
+    id: 7,
+    name: 'The Money Store',
+    artist: 'Death Grips',
+    genres: [ "ROCK", "RAP", ],
+    price: 420.0,
+    released: 2012,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    shortDescription: "Lorem ipsum!!",
+    extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    img: 'https://cf.shopee.com.br/file/4455515a96e09d22fde8d9b9e9193074',
+  }, {
+    id: 8,
+    name: 'American Football',
+    artist: 'American Football',
+    genres: [ "ROCK", "RAP", ],
+    price: 90.0,
+    released: 1999,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    shortDescription: "Lorem ipsum!!",
+    extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    img: 'https://i.scdn.co/image/ab67616d0000b273d6dfafe62fef3ad433ff77d8',
   },
 ];
 

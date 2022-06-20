@@ -16,8 +16,10 @@
                     to="/login">
                     <button
                         type="button"
-                        :class="{ 'active': $route.name == 'LoginSignUp' }">
-                        Entrar
+                        :class="{
+                            'active': userPage,
+                        }">
+                        {{ $store.getters.getIsLogged ? userInfo.name?.split(' ')[0] : 'Entrar' }}
                     </button>
                 </router-link>
                 <router-link to="/cart">
@@ -53,6 +55,22 @@
          return {
              search: "",
          };
+     },
+     created() {
+         this.$store.dispatch("setUserInfo");
+     },
+     computed: {
+         userInfo() {
+             return this.$store.getters.getUserInfo;
+         },
+         userPage() {
+             try {
+                 return this?.$route?.name == 'LoginSignUp' ||
+                        this?.$route?.name.includes("Profile");
+             } catch (e) {
+                 return false;
+             }
+         },
      },
  };
 </script>

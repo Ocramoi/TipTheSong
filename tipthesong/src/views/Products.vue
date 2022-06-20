@@ -66,8 +66,7 @@
                     v-model="filters.year" />
                 <br />
 
-                <button>Filtrar</button>
-
+                <button @click="clearFilters">limpar</button>
             </div>
         </div>
         <div class="productsContainer">
@@ -114,10 +113,15 @@
          };
      },
      beforeMount() {
-         this.filters.price = [ this.minPrice, this.maxPrice ];
-         this.filters.year = [ this.minYear, this.maxYear ];
+         this.clearFilters();
      },
      methods: {
+         clearFilters() {
+             this.filters.price = [ this.minPrice, this.maxPrice ];
+             this.filters.year = [ this.minYear, this.maxYear ];
+             this.filters.artist = "";
+             this.filters.genres.forEach(genre => genre.selected = true);
+         },
          showPanel() {
              this.filterVisible = !this.filterVisible;
          },

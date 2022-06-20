@@ -15,6 +15,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "core-js": "^3.6.5",
     "naive-ui": "^2.28.2",
+    "notyf": "^3.10.0",
     "secure-ls": "^1.2.6",
     "vfonts": "^0.0.3",
     "vue": "^3.0.0",

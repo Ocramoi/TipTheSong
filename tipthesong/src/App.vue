@@ -12,16 +12,32 @@
  import TopBar from './components/App/TopBar';
  import AdminTopBar from './components/Admin/TopBar.vue'
  import Footer from './components/App/Footer';
-import TopBarMobile from './components/App/TopBarMobile.vue';
+ import TopBarMobile from './components/App/TopBarMobile.vue';
 
  export default {
      name: 'App',
+     inject: ['notyf'],
      components: {
          TopBar,
          AdminTopBar,
          Footer,
          TopBarMobile,
-     }
+     },
+     watch: {
+         loginFailed(state) {
+             if (state)
+                 this.notyf.open({
+                     type: 'error',
+                     message: "Não autenticado",
+                 });
+             this.$store.dispatch("unauthNotyf", false);
+         },
+     },
+     computed: {
+         loginFailed() {
+             return this.$store.getters.getUnauthNotyf;
+         },
+     },
  }
 </script>
 

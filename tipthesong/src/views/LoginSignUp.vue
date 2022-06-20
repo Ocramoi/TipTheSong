@@ -3,7 +3,7 @@
         <div class="card">
             <h3>Já possui uma conta?</h3>
             <br />
-            <form method="POST" action="">
+            <form>
                 <label for="userMail">Nome de usuário ou email:</label>
                 <br />
                 <input
@@ -36,7 +36,7 @@
                 <br />
                 <br />
 
-                <button >
+                <button @click="login" type="button">
                     Entrar
                 </button>
             </form>
@@ -122,9 +122,11 @@
 <script type="text/javascript">
  export default {
      name: "LoginSignUp",
+     inject: ['notyf'],
      data() {
          return {
              userMail: "",
+             passLogin: "",
              remember: false,
              rMail: "",
              rUser: "",
@@ -132,6 +134,27 @@
              rPass: "",
              rConf: "",
          };
+     },
+     methods: {
+         async login() {
+             await this.$store.dispatch("auth", {
+                 user: this.userMail,
+                 pass: this.passLogin,
+             });
+
+             if (!this.$store.getters.getIsLogged)
+                 this.notyf.open({
+                     type: 'error',
+                     message: "Erro no login!",
+                 });
+             else {
+                 this.notyf.open({
+                     type: 'success',
+                     message: "Logado com sucesso!",
+                 });
+                 this.$router.push("/profile");
+             }
+         },
      },
  };
 </script>
