@@ -71,7 +71,7 @@
                  this.turnToImageTag(this.product.img),
                  {
                      content: this.turnToDescription(this.product.name, this.product.description),
-                     style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center;",
+                     style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center; ; cursor: pointer",
                      id: "upsert",
                  },
                  `R$${this.product.price.toFixed(2)}`,
@@ -86,7 +86,7 @@
                  this.turnToImageTag(this.product.img),
                  {
                      content: this.turnToDescription(this.product.name, this.product.description),
-                     style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center;",
+                     style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center; cursor: pointer",
                      id: "upsert",
                  },
                  `R$${this.product.price.toFixed(2)}`,

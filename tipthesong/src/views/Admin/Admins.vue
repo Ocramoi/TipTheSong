@@ -62,10 +62,13 @@
                      id: 0,
                  }, {
                      content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                     style: "height: 100%; display: block; margin: 0 auto; cursor: pointer;",
+                     style: "height: 100%; display: block; margin: 0 auto;",
+                 }, 
+                 {
+                     content: `${this.admin.name}#${this.admin.id}`,
+                     style: "cursor: pointer",
                      id: "upsert",
                  },
-                 `${this.admin.name}#${this.admin.id}`,
                  this.admin.login,
              ], [
                  {
@@ -74,10 +77,13 @@
                      id: 0,
                  }, {
                      content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                     style: "height: 100%; display: block; margin: 0 auto; cursor: pointer;",
-                     id: "upsert",
+                     style: "height: 100%; display: block; margin: 0 auto;",
+                 }, 
+                 {
+                    content: `${this.admin.name}#${this.admin.id}`,
+                    style: "cursor: pointer;",
+                    id: "upsert", 
                  },
-                 `${this.admin.name}#${this.admin.id}`,
                  this.admin.login,
              ]
          ];
