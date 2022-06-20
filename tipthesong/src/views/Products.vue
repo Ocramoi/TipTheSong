@@ -78,7 +78,7 @@
                 <i class="fa-solid fa-filter"></i>
             </button>
             <div class="productList">
-                <ProductCard v-for="product in products" :key="product.id" :product="product"/>
+                <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product"/>
             </div>
         </div>
     </div>
@@ -100,12 +100,12 @@
              filterVisible: true,
              filters: {
                  genres: [
-                     { name: "RAP", selected: false },
-                     { name: "ROCK", selected: false },
-                     { name: "JAZZ", selected: false },
-                     { name: "BLUES", selected: false },
-                     { name: "MPB", selected: false },
-                     { name: "POP", selected: false },
+                     { name: "RAP", selected: true },
+                     { name: "ROCK", selected: true },
+                     { name: "JAZZ", selected: true },
+                     { name: "BLUES", selected: true },
+                     { name: "MPB", selected: true },
+                     { name: "POP", selected: true },
                  ],
                  artist: "",
                  price: [],
@@ -137,6 +137,36 @@
          },
          products() {
              return this.$store.getters.getProductList;
+         },
+         filteredProducts() {
+             const activeGenres = this.filters.genres.filter(g => g.selected).map(g => g.name),
+                   filters = [
+                       // Filtro de gênero
+                       (product) => {
+                           for (const genre of product.genres)
+                               if (activeGenres.includes(genre)) return true;
+                           return false;
+                       },
+                       // Filtro de artista
+                       (product) => {
+                           const strip = this.filters.artist.trim().toLowerCase();
+                           if (strip === "") return true;
+                           return product.artist.toLowerCase().includes(strip);
+                       },
+                       // Filtro de preço
+                       (product) => {
+                           return product.price >= this.filters.price[0] && product.price <= this.filters.price[1];
+                       },
+                       // Filtro de lançamento
+                       (product) => {
+                           return product.released >= this.filters.year[0] && product.released <= this.filters.year[1];
+                       },
+                   ];
+             return this.products.filter(product => {
+                 for (const filter of filters)
+                     if (!filter(product)) return false;
+                 return true;
+             });
          },
      }
  }
@@ -180,6 +210,7 @@
      border-radius: 1em;
      padding: 5px;
      width: 100%;
+     color: var(--primary-dark) !important;
  }
 
  .panel > button {
