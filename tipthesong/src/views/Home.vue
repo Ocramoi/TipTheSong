@@ -33,43 +33,6 @@
                      alt: "Banner de inauguração",
                  },
              ],
-             albuns: [
-                 {
-                     id: 1,
-                     name: 'Now, Not Yet',
-                     price: 10.0,
-                     released: 1929,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 2,
-                     name: 'Now, Not Yet',
-                     price: 90.0,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 3,
-                     name: 'Now, Not Yet',
-                     price: 90.0,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 4,
-                     name: 'Now, Not Yet',
-                     price: 90.0,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-                 {
-                     id: 5,
-                     name: 'Now, Not Yet',
-                     price: 90.0,
-                     released: 2019,
-                     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg'
-                 },
-             ],
              collections: [
                  "Álbuns em alta",
                  "Novos álbuns",

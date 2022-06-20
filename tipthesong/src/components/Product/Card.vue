@@ -17,9 +17,7 @@
             <button class="cartButton" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>
             </button>
-            <router-link to="/cart">
-                <button type="button" @click="addToCart">Comprar agora</button>
-            </router-link>
+            <button type="button" @click="goToCart">Comprar agora</button>
         </div>
     </div>
 </template>
@@ -44,7 +42,11 @@
                  id: this.product.id,
                  qnt: 1,
              });
-         }
+         },
+         goToCart() {
+            this.addToCart()
+            this.$router.push('/cart')
+         },
      },
  }
 </script>
@@ -114,7 +116,7 @@
      gap: 10px;
  }
 
- .interact > button {
+ .interact > button, a {
      flex: 1;
      font-size: 0.7rem !important;
  }
