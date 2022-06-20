@@ -220,11 +220,16 @@
      overflow-x: auto;
      box-sizing: border-box;
      background-clip: border-box;
-     padding: 20px;
+     padding-bottom: 20px;
+     padding-right: 20px;
  }
 
  :deep(.flexTable) {
-     min-width: 600px !important;
+     min-width: 599px !important;
+ }
+
+ :deep(h3) {
+    padding: 0;
  }
 
 
