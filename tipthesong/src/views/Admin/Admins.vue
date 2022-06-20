@@ -1,19 +1,29 @@
 <template>
+    <AdminUpsert
+        :class="{ 'hide': !popupEdit }"
+        @togglePopup="popupEdit = !popupEdit"
+        :payload="admin" />
+
+    <AdminUpsert
+        :class="{ 'hide': !popupCreate }"
+        @togglePopup="popupCreate = !popupCreate" />
+
     <div class="container">
         <div class="innerContainer">
             <h2>ADMINISTRADORES CADASTRADOS</h2>
             <div class="productBox">
-                    <FlexTable
-                        :titles="tableTitles"
-                        :values="admins" 
-                        rowHeight="4rem"/>
+                <FlexTable
+                    @clicked="handleClick"
+                    :titles="tableTitles"
+                    :values="admins"
+                    rowHeight="4rem"/>
             </div>
         </div>
         <div class="bts">
             <router-link :to="{ name: 'AdminHomepage'}">
                 <button class="backBtn">VOLTAR</button>
             </router-link>
-            <button class="addBtn">
+            <button class="addBtn" @click="popupCreate = !popupCreate">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>
@@ -21,14 +31,16 @@
 </template>
 
 <script>
-import FlexTable from '../../components/App/FlexTable.vue';
+ import FlexTable from '../../components/App/FlexTable.vue';
+ import AdminUpsert from '../../components/Admin/AdminUpsertPopup';
 
-export default {
-    name: "AdminAdmins",
-    components: {
-        FlexTable,
-    },
-    data() {
+ export default {
+     name: "AdminAdmins",
+     components: {
+         FlexTable,
+         AdminUpsert,
+     },
+     data() {
          return {
              tableTitles: [
                  "",
@@ -36,31 +48,63 @@ export default {
                  "Usertag",
                  "Email"
              ],
-            admin: {
-                id: "999",
-                name: "Robertin",
-                email: "robertin@gmail.com",
-            }
+             admins: [],
+             popupEdit: false,
+             popupCreate: false,
          };
      },
+     created() {
+         this.admins = [
+             [
+                 {
+                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     id: 0,
+                 }, {
+                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                     style: "height: 100%; display: block; margin: 0 auto; cursor: pointer;",
+                     id: "upsert",
+                 },
+                 `${this.admin.name}#${this.admin.id}`,
+                 this.admin.login,
+             ], [
+                 {
+                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                     id: 0,
+                 }, {
+                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                     style: "height: 100%; display: block; margin: 0 auto; cursor: pointer;",
+                     id: "upsert",
+                 },
+                 `${this.admin.name}#${this.admin.id}`,
+                 this.admin.login,
+             ]
+         ];
+     },
      computed: {
-         admins() {
-             return [
-                [
-                    {
-                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     },
-                    `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                    `${this.admin.name}#${this.admin.id}`,
-                    this.admin.email,
-                ]
-             ];
+         admin(){
+             return {
+                 id: "999",
+                 name: "Robertin",
+                 login: "robertin@gmail.com",
+                 cellphone: "123456789",
+                 password: "123",
+             };
          },
      },
-    methods: {
-    }
-}
+     methods: {
+         handleClick(e) {
+             if(!e) return;
+
+             if (typeof(e) == 'number') return this.removeIdx(e);
+             this.popupEdit = true;
+         },
+         removeIdx(idx) {
+             this.admins.splice(idx, 1);
+         },
+     }
+ }
 </script>
 
 <style scoped>
@@ -75,28 +119,32 @@ export default {
      padding: 0.25rem;
  }
 
-@media screen and (max-width: 599px) {
-    :deep(.userPhoto) {
-        display: none;
-    } 
-}
+ @media screen and (max-width: 599px) {
+     :deep(.userPhoto) {
+         display: none;
+     }
+ }
 
  .addBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    aspect-ratio: 1 / 1;
-    width: min-content;
-}
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     border-radius: 100%;
+     aspect-ratio: 1 / 1;
+     width: min-content;
+ }
 
 
-.bts {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
+ .bts {
+     margin-top: 1rem;
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: space-between;
+     align-items: center;
+ }
+
+ .hide {
+     display: none;
+ }
 </style>

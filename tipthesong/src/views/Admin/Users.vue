@@ -3,10 +3,11 @@
         <div class="innerContainer">
             <h2>Usuários</h2>
             <div class="productBox">
-                    <FlexTable
-                        :titles="tableTitles"
-                        :values="users" 
-                        rowHeight="4rem"/>
+                <FlexTable
+                    @clicked="removeFromId"
+                    :titles="tableTitles"
+                    :values="users"
+                    rowHeight="4rem"/>
             </div>
         </div>
         <div class="bts">
@@ -18,14 +19,14 @@
 </template>
 
 <script>
-import FlexTable from '../../components/App/FlexTable.vue';
+ import FlexTable from '../../components/App/FlexTable.vue';
 
-export default {
-    name: "AdminUsers",
-    components: {
-        FlexTable,
-    },
-    data() {
+ export default {
+     name: "AdminUsers",
+     components: {
+         FlexTable,
+     },
+     data() {
          return {
              tableTitles: [
                  "",
@@ -33,53 +34,60 @@ export default {
                  "Usertag",
                  "Email"
              ],
-            user: {
-                id: "999",
-                name: "Robertin",
-                email: "robertin@gmail.com",
-            }
+             users: [], // TODO computed do back
          };
      },
+     created() {
+         this.users = [ // TODO computed do back
+            [
+                {
+                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                    id: 0,
+                },
+                `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                `${this.user.name}#${this.user.id}`,
+                this.user.email,
+            ], [
+                {
+                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                    id: 1,
+                },
+                `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                `${this.user.name}#${this.user.id}`,
+                this.user.email,
+            ], [
+                {
+                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                    id: 2,
+                },
+                `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                `${this.user.name}#${this.user.id}`,
+                this.user.email,
+            ]
+         ];
+     },
      computed: {
-         users() {
-             return [
-                [
-                    {
-                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     },
-                    `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                    `${this.user.name}#${this.user.id}`,
-                    this.user.email,
-                ],
-                [
-                    {
-                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     },
-                    `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                    `${this.user.name}#${this.user.id}`,
-                    this.user.email,
-                ],
-                [
-                    {
-                        content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                        style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     },
-                    `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                    `${this.user.name}#${this.user.id}`,
-                    this.user.email,
-                ]
-             ];
+         user() { // TODO remover quando carregando do back
+             return {
+                 id: "999",
+                 name: "Robertin",
+                 email: "robertin@gmail.com",
+             };
          },
      },
-    methods: {
-    }
-}
+     methods: {
+         removeFromId(idx) {
+             this.users.splice(idx, 1);
+         },
+     }
+ }
 </script>
 
 <style scoped>
-:deep(.trashIcon) {
+ :deep(.trashIcon) {
      font-size: 1.1em;
      margin: auto 10px;
      display: block;
@@ -90,18 +98,18 @@ export default {
      padding: 0.25rem;
  }
 
-@media screen and (max-width: 599px) {
-    :deep(.userPhoto) {
-        display: none;
-    } 
-}
+ @media screen and (max-width: 599px) {
+     :deep(.userPhoto) {
+         display: none;
+     }
+ }
 
-.bts {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
+ .bts {
+     margin-top: 1rem;
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: space-between;
+     align-items: center;
+ }
 </style>

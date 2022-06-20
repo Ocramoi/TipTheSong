@@ -144,4 +144,9 @@
      color: var(--white);
      text-transform: uppercase;
  }
+
+ .innerRow > * {
+     position: relative;
+     z-index: 100;
+ }
 </style>

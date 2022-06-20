@@ -174,7 +174,6 @@
          current(payload) { this.loadValues(payload); }
      },
      mounted() {
-         console.log(this.current);
          this.loadValues(this.current || {});
      },
      methods: {
@@ -196,16 +195,16 @@
              this.genres.splice(idx, 1);
          },
          loadValues(payload) {
-             this.title = payload.title || null;
+             this.title = payload.name || null;
              this.launchDate = payload.launchDate || null;
-             this.frontCover = payload.frontCover || null;
+             this.frontCover = payload.img || null;
              this.artists = payload.artists || [''];
              this.genres = payload.genres || [''];
              this.shortDescription = payload.shortDescription || null;
-             this.longDescription = payload.longDescription || null;
+             this.longDescription = payload.description || null;
              this.extraInfo = payload.extraInfo || null;
              this.price = payload.price || null;
-             this.amountInStock = payload.amountInStock || null;
+             this.amountInStock = payload.stock || null;
          },
      },
      computed: {
