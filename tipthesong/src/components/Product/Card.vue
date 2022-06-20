@@ -17,7 +17,9 @@
             <button class="cartButton" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>
             </button>
-            <button type="button" @click="addToCart">Comprar agora</button>
+            <router-link to="/cart">
+                <button type="button" @click="addToCart">Comprar agora</button>
+            </router-link>
         </div>
     </div>
 </template>

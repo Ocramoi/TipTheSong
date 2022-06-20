@@ -69,7 +69,10 @@
              return this.productList.reduce((prev, cur) => prev + cur[cur.length - 1], 0);
          },
          calcDelivery() {
-             return 10;
+             if (this.productList.length == 0)
+                 return 0;
+             else
+                 return 10;
          },
          total() {
              return this.subTotal + this.calcDelivery;
