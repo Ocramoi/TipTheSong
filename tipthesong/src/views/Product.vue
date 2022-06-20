@@ -57,6 +57,7 @@
          loadFromId() {
              this.$store.dispatch('loadProduct', this.id);
              this.$store.dispatch('getSugestions', this.id);
+             window.scrollTo(0,0);
          },
      },
  }
