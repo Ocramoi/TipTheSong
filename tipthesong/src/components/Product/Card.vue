@@ -138,4 +138,8 @@
      padding: 0;
  }
 
+button {
+    font-size: 0.775rem;
+}
+
 </style>

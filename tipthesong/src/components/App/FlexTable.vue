@@ -16,7 +16,7 @@
                 &nbsp;{{ title }}&nbsp;
             </span>
 
-            <template
+            <template class="a"
                 v-for="(entry, idx) in values"
                 :key="idx" >
                 <div class="innerRow" v-for="(value, idx) in entry" :key="idx" @click="sendEvent(value?.id)">
