@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card">
             <h2> ÁREA DO ADMINISTRADOR </h2>
-            <form method="POST" action="">
+            <form method="POST" action="submit">
                 <label for="username">Nome de usuário</label>
                 <br />
                 <input
@@ -10,8 +10,8 @@
                     name="username"
                     class="inputFill"
                     v-model="username"
-                    required
-                    placeholder="Seu nome de usuário..." />
+                    placeholder="Seu nome de usuário..." 
+                    required />
 
                 <br />
                 <br />
@@ -23,8 +23,8 @@
                     name="password"
                     class="inputFill"
                     v-model="password"
-                    required
-                    placeholder="Sua senha..." />
+                    placeholder="Sua senha..." 
+                    required />
 
                 <br />
                 <br />
@@ -35,9 +35,7 @@
                 <br />
                 <br />
 
-                <button >
-                    Entrar
-                </button>
+                <button type="submit" @click.stop.prevent="login()"> Entrar </button>
             </form>            
         </div>
     </div>
@@ -50,6 +48,11 @@ export default {
             username: null,
             password: null,
             remember: false,
+        }
+    },
+    methods: {
+        login() {
+            this.$router.push({ name : 'AdminHomepage'});
         }
     },
 }
