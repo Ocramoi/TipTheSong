@@ -135,6 +135,7 @@
         flex: 1 0 100%;
         flex-direction: row;
         align-items: flex-start;
+        justify-content: center;
     }
      
     .allInfo > * {
@@ -157,7 +158,7 @@
     }
 
     .cartTotals {
-        max-width: 250px;
+        max-width: 400px;
         min-width: min-content;
         gap: 1rem;
         display: flex;

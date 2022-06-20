@@ -42,9 +42,11 @@
         </div>
 
         <br />
-        <router-link to="/products" custom v-slot="{ navigate }"> 
-            <button v-on:click="navigate" role="link" type="button"> Continuar Comprando </button>
-        </router-link>
+        <div style="width: 100%">
+            <router-link to="/products" class="button" custom v-slot="{ navigate }"> 
+                <button v-on:click="navigate" role="link" type="button"> Continuar Comprando </button>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -224,4 +226,6 @@
  :deep(.flexTable) {
      min-width: 600px !important;
  }
+
+
 </style>
