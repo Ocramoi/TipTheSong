@@ -140,7 +140,7 @@
                 </div>
 
                 <div>
-                    <button class="center" type="button"> Criar álbum </button>
+                    <button class="center" type="button" @submit.prevent="createAlbum"> Criar álbum </button>
                 </div>
             </form>
         </div>
