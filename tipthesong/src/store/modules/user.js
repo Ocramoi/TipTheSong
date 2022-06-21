@@ -2,6 +2,7 @@ const defaultInfo = { // TODO virá do back
   name: 'milena',
   email: 'milenaxd@gmail.com',
   phone: '(24) 98374-6262',
+  isAdmin: true,
   pass: '123'
 };
 
@@ -10,6 +11,7 @@ const state = () => ({
   authReq: null,
   userInfo: {},
   unauthNotyf: false,
+  permDenied: false,
 });
 
 const mutations = {
@@ -28,6 +30,9 @@ const mutations = {
   setUnauthNotyf(state, value) {
     state.unauthNotyf = value;
   },
+  setPermDenied(state, value) {
+    state.permDenied = value;
+  }
 };
 
 const actions = {
@@ -41,9 +46,14 @@ const actions = {
       commit('setIsLogged', true);
     } else
       commit('setIsLogged', false);
-
     commit('setAuthReq', true);
     commit("setUserInfo", defaultInfo);
+    
+    if (defaultInfo.isAdmin == false && loginInfo.requiresAdminPermission == true) {
+      commit("setPermDenied", true);
+    } else {
+      commit("setPermDenied", false);
+    }
   },
   async setUserInfo({ commit }, ) {
     commit("setUserInfo", defaultInfo);
@@ -54,7 +64,7 @@ const actions = {
   },
   async unauthNotyf({ commit }, state) {
     commit("setUnauthNotyf", state);
-  },
+  }
 };
 
 const getters = {
@@ -62,6 +72,7 @@ const getters = {
   getIsLogged(state) { return state.logged; },
   getUserInfo(state) { return state.userInfo; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
+  getPermDenied(state) {return state.permDenied; },
 };
 
 export default {

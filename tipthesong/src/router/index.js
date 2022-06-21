@@ -55,25 +55,25 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Login'),
-    meta: { requiresLogin: true },
+    meta: {},
   }, 
   {
     path: '/admin/homepage',
     name: 'AdminHomepage',
     component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Homepage'),
-    meta: { requiresLogin: true },
+    meta: { requiresLogin: true, requiresAdminPermission: true },
   }, 
   {
     path: '/admin/admins',
     name: 'AdminAdmins',
     component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Admins'),
-    meta: { requiresLogin: true },
+    meta: { requiresLogin: true, requiresAdminPermission: true },
   }, 
   {
     path: '/admin/users',
     name: 'AdminUsers',
     component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin/Users'),
-    meta: { requiresLogin: true },
+    meta: { requiresLogin: true, requiresAdminPermission: true },
   }, 
   {
     path: '/order',
@@ -104,7 +104,7 @@ const routes = [
     path: '/admin/products',
     name: 'AdminProducts',
     component: () => import(/* webpackChunkName: "Order" */ '../views/Admin/Products'),
-    meta: { requiresLogin: true },
+    meta: { requiresLogin: true, requiresAdminPermission: true },
   }, 
   {
     path: '/profile/addresses',
@@ -130,7 +130,7 @@ const loggedRedirects = {
 };
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresLogin) && store.getters.getIsLogged == false) {
+  if ((to.matched.some(record => record.meta.requiresLogin) && store.getters.getIsLogged == false) || (to.matched.some(record => record.meta.requiresAdminPermission) && store.getters.getPermDenied)) {
     store.dispatch("unauthNotyf", true);
   } else {
     if (store.getters.getIsLogged)

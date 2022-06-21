@@ -140,14 +140,20 @@
              await this.$store.dispatch("auth", {
                  user: this.userMail,
                  pass: this.passLogin,
+                 requiresAdminPermission: false,
              });
 
-             if (!this.$store.getters.getIsLogged)
+             if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',
                      message: "Erro no login!",
                  });
-             else {
+            } else if (this.$store.getters.getPermDenied) {
+                 this.notyf.open({
+                     type: 'error',
+                     message: "Permissão Negada",
+                 });
+            } else {
                  this.notyf.open({
                      type: 'success',
                      message: "Logado com sucesso!",

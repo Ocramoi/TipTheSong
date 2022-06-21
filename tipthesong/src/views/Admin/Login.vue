@@ -3,14 +3,14 @@
         <div class="card">
             <h2> ÁREA DO ADMINISTRADOR </h2>
             <form method="POST" action="submit">
-                <label for="username">Nome de usuário</label>
+                <label for="userMail">Email de Administrador</label>
                 <br />
                 <input
                     type="text"
-                    name="username"
+                    name="userMail"
                     class="inputFill"
-                    v-model="username"
-                    placeholder="Seu nome de usuário..." 
+                    v-model="userMail"
+                    placeholder="Seu email..." 
                     required />
 
                 <br />
@@ -43,17 +43,40 @@
 
 <script>
 export default {
+    inject: ['notyf'],
     data() {
         return {
-            username: null,
+            userMail: null,
             password: null,
             remember: false,
         }
     },
     methods: {
-        login() {
-            this.$router.push({ name : 'AdminHomepage'});
-        }
+        async login() {
+            await this.$store.dispatch("auth", {
+                 user: this.userMail,
+                 pass: this.password,
+                 requiresAdminPermission: true,
+            });
+
+            if (!this.$store.getters.getIsLogged) {
+                 this.notyf.open({
+                     type: 'error',
+                     message: "Erro no login!",
+                 });
+            } else if (this.$store.getters.getPermDenied == true) {
+                this.notyf.open({
+                     type: 'error',
+                     message: "Permissão Negada!",
+                 });
+            } else {
+                 this.notyf.open({
+                     type: 'success',
+                     message: "Logado com sucesso!",
+                 });
+                this.$router.push({ name : 'AdminHomepage'});
+             }
+         },
     },
 }
 </script>

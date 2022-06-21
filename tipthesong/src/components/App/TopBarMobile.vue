@@ -11,10 +11,10 @@
                     alt="Logo" />
             </div>
             <div class="userCart">
-                <router-link v-if="false" to="/login" class="clickableIcon">
+                <router-link v-if="$store.getters.getIsLogged == false" to="/login" class="clickableIcon">
                     <i class="fa-solid fa-user" />
                 </router-link>
-                <div class="clickableIcon" @click="showProfile">
+                <div v-else class="clickableIcon" @click="showProfile">
                     <i class="fa-solid fa-user" />
                 </div>
                 <router-link to="/cart" class="clickableIcon">
@@ -73,7 +73,7 @@
             <router-link
                 :to="{ name: 'Home', }"
                 class="topbarButton"
-                @click="showProfile">
+                @click="logout">
                 Sair
             </router-link>
         </div>
@@ -100,6 +100,19 @@
             showProfile() {
                 this.profileVisible = !this.profileVisible;
                 this.optionsVisible = false;
+            },
+            async logout() {
+                await this.$store.dispatch("logout");
+                
+                if (!this.$store.getters.getIsLogged) this.$router.push("/");
+                else {
+                    this.notyf.open({
+                        type: 'error',
+                        message: "Erro ao sair!",
+                    });
+                }
+                
+                this.profileVisible = false;
             },
         },
     }
