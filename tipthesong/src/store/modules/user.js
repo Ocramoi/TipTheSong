@@ -117,10 +117,11 @@ const actions = {
     var foundUser = null;
     for (const defaultUser of defaultUsers) {
       if ([defaultUser.name, defaultUser.email].includes(loginInfo.user) &&
-           defaultUser.pass == loginInfo.pass) {
-              commit('setIsLogged', true);
-              foundUser = defaultUser; 
-           }
+           defaultUser.pass == loginInfo.pass
+         ) {
+        foundUser = defaultUser;
+        break;
+      }
     }
 
     // In case no user info is matched in the default users, doesn't login
@@ -130,6 +131,7 @@ const actions = {
       return;
     }
 
+    commit('setIsLogged', true);
     commit('setAuthReq', true);
     commit("setUserInfo", foundUser);
     commit("setPermDenied", !foundUser.isAdmin)

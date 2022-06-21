@@ -57,7 +57,7 @@
          };
      },
      created() {
-         this.$store.dispatch("setUserInfo");
+         // this.$store.dispatch("setUserInfo");
      },
      computed: {
          userInfo() {
