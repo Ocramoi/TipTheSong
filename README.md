@@ -91,7 +91,13 @@ Para uma melhor expêriencia de usuário, decidimos separar as páginas de admin
 ![Carrinho](documentation/screenshots/Carrinho.png)
 
 ## Comentários sobre o código
-*None*
+Foi utilizada o padrão do Vue, com uma pasta para components, uma para views, uma para css globais, uma para assets, etc. 
+
+Além disso em cada arquivo `.vue` o css é scoped, ou seja, ele só é aplicado nos elementos da página ou componente.
+
+Foi usado localStorage para simular o funcionamento do backend. Além de um arquivo de dados, ao invés dos dados do banco.
+
+*Component FlexTable*
 
 ## Testes Automatizados
 *None*
@@ -99,14 +105,29 @@ Para uma melhor expêriencia de usuário, decidimos separar as páginas de admin
 ## Resultados dos Testes
 *None*
 
-
 ## Executando o código
-*None*
+Para você poder executar o código é necessário 
+que a máquina tenha o npm e o `yarn` instalado.
 
+Caso você ainda não os tenha siga esse [tutorial](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable)
+
+Após a instalação do yarn, para instalar os pacotes necessários basta executar:
+```
+yarn install
+```
+
+Para compilar o código e ter o hot-reload para desenvolvimento:
+```
+yarn serve
+```
+
+Para compilar para produção:
+```
+yarn build
+```
 
 ## Problemas
 *None*
-
 
 ## Comentários
 *None*
