@@ -1,5 +1,5 @@
 <template>
-    <AlbumUpsertPopup v-if="popupEdit" @togglePopup="togglePopupEdit" :current="product" />
+    <AlbumUpsertPopup v-if="popupEdit" @togglePopup="togglePopupEdit" :current="products" />
     <AlbumUpsertPopup v-if="popupCreate" @togglePopup="popupCreate = !popupCreate" />
 
     <div class="container">
@@ -45,87 +45,38 @@
                  "Estoque",
                  "Vendidos"
              ],
-             product: {
-                 id: 1,
-                 name: 'Now, Not Yet (2019) - halfalive',
-                 price: 90.0 ,
-                 img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg',
-                 stock: 32,
-                 sold: 23,
-                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                 extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae."
-             },
-             products: [],
              popupEdit: false,
              popupCreate: false,
          };
      },
-     created() {
-         this.products = [
-             [
+     async created() {
+        this.$store.getters.getProductList;
+     },
+     computed: {
+         productList() {
+            return this.$store.getters.getProductList;
+         },
+         products() {
+             const cartIds = Object.keys(this.productList);
+             return cartIds?.map(id => [
                  {
-                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     id: 0,
+                     id: parseInt(id),
+                     content: '<i class="fa-solid fa-trash"></i>',
+                     style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
+                     class: "clickableIcon trashIcon",
                  },
-                 this.turnToImageTag(this.product.img),
+                 this.turnToImageTag(this.productList[id].img),
                  {
-                     content: this.turnToDescription(this.product.name, this.product.description),
+                     content: this.turnToDescription(this.productList[id].name, this.productList[id].description),
                      style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center; ; cursor: pointer",
                      id: "upsert",
                  },
-                 `R$${this.product.price.toFixed(2)}`,
-                 this.product.stock,
-                 this.product.sold
-             ], [
-                 {
-                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     id: 1,
-                 },
-                 this.turnToImageTag(this.product.img),
-                 {
-                     content: this.turnToDescription(this.product.name, this.product.description),
-                     style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center; cursor: pointer",
-                     id: "upsert",
-                 },
-                 `R$${this.product.price.toFixed(2)}`,
-                 this.product.stock,
-                 this.product.sold
-             ], [
-                 {
-                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     id: 2,
-                 },
-                 this.turnToImageTag(this.product.img),
-                 {
-                     content: this.turnToDescription(this.product.name, this.product.description),
-                     style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center;",
-                     id: "upsert",
-                 },
-                 `R$${this.product.price.toFixed(2)}`,
-                 this.product.stock,
-                 this.product.sold
-             ], [
-                 {
-                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     id: 3,
-                 },
-                 this.turnToImageTag(this.product.img),
-                 {
-                     content: this.turnToDescription(this.product.name, this.product.description),
-                     style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center;",
-                     id: "upsert",
-                 },
-                 `R$${this.product.price.toFixed(2)}`,
-                 this.product.stock,
-                 this.product.sold
-             ],
-         ];
+                 `R$${this.productList[id].price.toFixed(2)}`,
+                 this.productList[id].amountStock,
+                 this.productList[id].soldAmount
+             ]);
+         },
      },
-     computed: {},
      methods: {
          turnToImageTag: function(imgSrc) {
              return `<img src="${imgSrc}" alt="product">`;
@@ -138,11 +89,15 @@
          },
          handleEvent(e) {
              if (!e) return;
-             if (typeof(e) == 'number') return this.removeIdx(e);
+             if (typeof(e) == 'number') return this.removeAlbum(e);
              this.popupEdit = true;
          },
-         removeIdx(idx) {
-             this.products.splice(idx, 1);
+         removeAlbum(id) {
+             if (!id) return;
+             console.log(id);
+             this.$store.dispatch('removeFromProductList', {
+                 id: id,
+             });
          },
      },
  }

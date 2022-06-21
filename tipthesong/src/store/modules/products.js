@@ -10,6 +10,8 @@ const defaultProducts = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    amountStock: 1,
+    soldAmount: 1,
     img: 'https://m.media-amazon.com/images/I/71dgsFggCZL._AC_SL1500_.jpg',
   }, {
     id: 2,
@@ -21,6 +23,8 @@ const defaultProducts = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    amountStock: 1,
+    soldAmount: 1,
     img: 'https://upload.wikimedia.org/wikipedia/en/f/f8/JethroTullAPassionPlay.jpg',
   }, {
     id: 3,
@@ -32,6 +36,8 @@ const defaultProducts = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    amountStock: 1,
+    soldAmount: 1,
     img: 'https://upload.wikimedia.org/wikipedia/en/0/03/MF-DOOM-Operation.jpeg',
   }, {
     id: 4,
@@ -43,6 +49,8 @@ const defaultProducts = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    amountStock: 1,
+    soldAmount: 1,
     img: 'https://namiradogroove.com.br/blog/wp-content/uploads/2014/05/Swans-To-Be-Kind.jpg',
   }, {
     id: 5,
@@ -54,6 +62,8 @@ const defaultProducts = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    amountStock: 1,
+    soldAmount: 1,
     img: 'https://m.media-amazon.com/images/I/416uFuXmEOL._AC_SY450_.jpg',
   }, {
     id: 6,
@@ -65,6 +75,8 @@ const defaultProducts = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    amountStock: 1,
+    soldAmount: 1,
     img: 'https://upload.wikimedia.org/wikipedia/pt/7/73/Kids_See_Ghosts_I.jpg',
   }, {
     id: 7,
@@ -76,6 +88,8 @@ const defaultProducts = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    amountStock: 1,
+    soldAmount: 1,
     img: 'https://cf.shopee.com.br/file/4455515a96e09d22fde8d9b9e9193074',
   }, {
     id: 8,
@@ -87,6 +101,8 @@ const defaultProducts = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
     shortDescription: "Lorem ipsum!!",
     extraInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium aenean pharetra magna ac placerat vestibulum lectus. Tristique sollicitudin nibh sit amet commodo. Pretium lectus quam id leo in. Condimentum id venenatis a condimentum vitae.",
+    amountStock: 1,
+    soldAmount: 1,
     img: 'https://i.scdn.co/image/ab67616d0000b273d6dfafe62fef3ad433ff77d8',
   },
 ];
@@ -119,6 +135,13 @@ const mutations = {
   setCartProductsLoaded(state, cur) {
     state.cartProductsLoaded = cur;
   },
+  addToProductList(state, product) {
+    state.productList.push(product);
+  },
+  removeFromProductList(state, product) {
+    if (!state.productList[product.id]) return;
+    delete state.productList[product.id];
+  },
 };
 
 const actions = {
@@ -146,6 +169,11 @@ const actions = {
     }
     commit('setCartProducts', cartInfos);
     commit('setCartProductsLoaded', true);
+  },
+  removeFromProductList({ commit }, payload) {
+    commit('removeFromProductList', {
+      id: payload?.id,
+    });
   },
 };
 
