@@ -140,7 +140,7 @@
                 </div>
 
                 <div>
-                    <button class="center" type="button" @submit.prevent="createAlbum"> Criar álbum </button>
+                    <button class="center" type="button"> {{ popupTitle }} </button>
                 </div>
             </form>
         </div>

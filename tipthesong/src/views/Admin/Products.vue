@@ -1,5 +1,5 @@
 <template>
-    <AlbumUpsertPopup v-if="popupEdit" @togglePopup="togglePopupEdit" :current="products" />
+    <AlbumUpsertPopup v-if="popupEdit" @togglePopup="togglePopupEdit" :current="product" />
     <AlbumUpsertPopup v-if="popupCreate" @togglePopup="popupCreate = !popupCreate" />
 
     <div class="container">
@@ -45,6 +45,7 @@
                  "Estoque",
                  "Vendidos"
              ],
+             product: null,
              popupEdit: false,
              popupCreate: false,
          };
@@ -57,8 +58,8 @@
             return this.$store.getters.getProductList;
          },
          products() {
-             const cartIds = Object.keys(this.productList);
-             return cartIds?.map(id => [
+             const productsIds = Object.keys(this.productList);
+             return productsIds?.map(id => [
                  {
                      id: parseInt(id),
                      content: '<i class="fa-solid fa-trash"></i>',
@@ -69,7 +70,7 @@
                  {
                      content: this.turnToDescription(this.productList[id].name, this.productList[id].description),
                      style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center; ; cursor: pointer",
-                     id: "upsert",
+                     id: ["upsert", id],
                  },
                  `R$${this.productList[id].price.toFixed(2)}`,
                  this.productList[id].amountStock,
@@ -89,12 +90,12 @@
          },
          handleEvent(e) {
              if (!e) return;
+             if (e[0] == 'upsert') this.product = this.productList[e[1]];
              if (typeof(e) == 'number') return this.removeAlbum(e);
              this.popupEdit = true;
          },
          removeAlbum(id) {
              if (!id) return;
-             console.log(id);
              this.$store.dispatch('removeFromProductList', {
                  id: id,
              });

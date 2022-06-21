@@ -3,7 +3,7 @@ const defaultUsers = [
     name: 'milena',
     email: 'milenaxd@gmail.com',
     phone: '(24) 98374-6262',
-    isAdmin: false,
+    isAdmin: true,
     pass: '123',
     addresses: [
       [    
