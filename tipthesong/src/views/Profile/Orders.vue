@@ -5,8 +5,10 @@
             <div class="profileBox">
                 <h2> Meus pedidos </h2>
                 <FlexTable
+                    v-if="orders.length"
                     :titles="tableTitles"
                     :values="orders" />
+                <span v-else>Nenhum pedido por enquanto!</span>
             </div>
         </div>
     </div>
@@ -33,22 +35,9 @@
          FlexTable,
      },
      computed: {
-         orders() {
-             return [
-                 [
-                     "pedido#1232",
-                     "12/09/22",
-                     "Concluido",
-                     "R$ 30,00"
-                 ],
-                 [
-                     "pedido#1232",
-                     "12/02/22",
-                     "Em andamento",
-                     "R$ 24,00"
-                 ],
-             ];
-         },
+        orders() {
+            return this.$store.getters.getUserInfo.orders;
+        },
      },
  };
 </script>
@@ -58,6 +47,7 @@
 
 h2 {
     text-transform: uppercase;
+    padding: 0;
 }
 
 </style>

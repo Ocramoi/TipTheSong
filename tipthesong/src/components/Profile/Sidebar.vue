@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="profilePhoto">
             <img src="../../assets/Profile/do-utilizador.png" />
-            <p> {{user.name }}#{{user.id}} </p>
+            <p> {{user.name }}#{{user.id || "0"}} </p>
         </div>
         <div class="profileMenu">
             <router-link
@@ -39,12 +39,9 @@
 
 <script>
 export default {
-    data() {    
-        return {
-            user: {
-                name: "milena",
-                id: 111,
-            },
+    computed: {
+        user() {
+            return this.$store.getters.getUserInfo;
         }
     },
      methods: {

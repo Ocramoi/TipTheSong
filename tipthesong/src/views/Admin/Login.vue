@@ -56,7 +56,6 @@ export default {
             await this.$store.dispatch("auth", {
                  user: this.userMail,
                  pass: this.password,
-                 requiresAdminPermission: true,
             });
 
             if (!this.$store.getters.getIsLogged) {

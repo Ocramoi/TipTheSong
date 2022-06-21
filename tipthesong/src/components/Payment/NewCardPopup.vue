@@ -62,7 +62,7 @@
                     placeholder="xxx"/>
                 </div>
 
-                <button type="button"> Adicionar </button>
+                <button type="button" @click="addCard"> Adicionar </button>
             </div>
             </form>
         </div>
@@ -80,6 +80,15 @@ export default {
             securityCode: null
         }
     },
+    methods: {
+        async addCard(){
+            let lastDigits = (Array.from(this.cardNumber).splice(-4));
+            let cardString = `(Crédito) Mastercard terminando em ${lastDigits.join('')}`;
+            await this.$store.dispatch('addToUserInfoCards', {
+                card: [cardString, this.ownerName, this.dueDate]
+            })
+        }
+    }
 }
 </script>
 

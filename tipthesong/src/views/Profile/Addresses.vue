@@ -5,8 +5,10 @@
             <div class="profileBox">
                 <h2> MEUS ENDEREÇOS </h2>
                 <FlexTable
+                    v-if="addresses.length"
                     :titles="tableTitles"
                     :values="addresses" />
+                <span v-else>Nenhum endereço cadastrado por enquanto!</span>
                 <button v-on:click="addressPopup = true">
                     Adicionar Endereço
                 </button>
@@ -45,13 +47,7 @@ export default {
     },
     computed: {
         addresses() {
-            return [
-                [    
-                    "Rua Paulo Americo 289, Jardim Lutfalla, São Carlos, SP 13567594, Brasil",
-                    "Milena Correa da Silva",
-                    "55+ 24 988380298"
-                ],
-            ]
+            return this.$store.getters.getUserInfo.addresses;
         },
     },
 }

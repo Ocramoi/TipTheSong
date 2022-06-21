@@ -118,7 +118,7 @@
                         placeholder=""/>
                 </div>
             </div>
-            <button type="button" class="addBtn"> Adicionar </button>
+            <button type="button" class="addBtn" @click="addAddress"> Adicionar </button>
             </form>
         </div>
     </div>
@@ -140,6 +140,14 @@ export default {
             city: null,
         }
     },
+    methods: {
+        async addAddress(){
+            let addressString = `${this.address} ${this.houseNum}, ${this.city}, ${this.estate} ${this.postalCode}`
+            await this.$store.dispatch('addToUserInfoAddresses', {
+                address: [addressString, this.fullName, this.phone]
+            })
+        }
+    }
 }
 </script>
 

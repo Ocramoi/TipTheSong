@@ -5,8 +5,10 @@
             <div class="profileBox">
                 <h2> Meus cartões </h2>
                 <FlexTable
+                    v-if="cards.length"
                     :titles="tableTitles"
                     :values="cards" />
+                <span v-else>Nenhum cartão cadastrado por enquanto!</span>
                 <button v-on:click="cardPopup = true">Adicionar cartão</button>
                 <NewCardPopup v-if="cardPopup" @togglePopup="TriggerCardPopup"></NewCardPopup>
             </div>
@@ -44,18 +46,7 @@
      },
      computed: {
          cards() {
-             return [
-                 [
-                     "(Crédito) Mastercard terminando em 1234",
-                     "Milena C. Silva",
-                     "12/22",
-                 ],
-                 [
-                     "(Crédito) Mastercard terminando em 1234",
-                     "Milena C. Silva",
-                     "12/22",
-                 ],
-             ];
+            return this.$store.getters.getUserInfo.cards;
          },
      },
  };

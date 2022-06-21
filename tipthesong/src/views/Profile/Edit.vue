@@ -6,38 +6,38 @@
                 <form>
                 <div class="innerFlexContainer">
                     <div>
-                        <label for="username">Nome de usuário</label>
+                        <label for="newUserName">Nome de usuário</label>
                         <br>
                         <input
                             type="text"
                             class="inputFill"
-                            name="username"
-                            v-model="username"
+                            name="newUserName"
+                            v-model="newUserName"
                             required
-                            :placeholder="user.name" />
+                            :placeholder="user?.name" />
                     </div>
                     <div>
-                        <label for="phone">Telefone</label>
+                        <label for="newPhone">Telefone</label>
                         <br>
                         <input
                             type="text"
                             class="inputFill"
-                            name="phone"
-                            v-model="phone"
+                            name="newPhone"
+                            v-model="newPhone"
                             required
-                            :placeholder="user.phone" />
+                            :placeholder="user?.phone" />
                     </div>
                 </div>
                     <div>
-                        <label for="email">Endereço de email</label>
+                        <label for="newEmail">Endereço de Email</label>
                         <br>
                         <input
                             type="text"
                             class="inputFill"
-                            name="email"
-                            v-model="email"
+                            name="newEmail"
+                            v-model="newEmail"
                             required
-                            :placeholder="user.email" />
+                            :placeholder="user?.email" />
                     </div>
                 </form>
 
@@ -68,19 +68,19 @@
                     </div>
 
                     <div>
-                        <label for="confirmPassword">Confimar Nova Senha</label>
+                        <label for="confirmNewPassword">Confimar Nova Senha</label>
                         <br>
                         <input
                             type="password"
                             class="inputFill"
-                            name="confirmPassword"
-                            v-model="confirmPassword"
+                            name="confirmNewPassword"
+                            v-model="confirmNewPassword"
                             required
                             placeholder=""/>
                     </div>
                 </form>
 
-                <button type="button"> Salvar Alterações </button>
+                <button type="button" @click="saveChanges"> Salvar Alterações </button>
             </div>
         </div>
     </div>
@@ -90,24 +90,67 @@
 import Sidebar from '../../components/Profile/Sidebar.vue'
 
 export default {
+    inject: ['notyf'],
     data() {
         return {
-            username: null,
-            phone: null,
-            email: null,
+            error: false,
+            newUserName: null,
+            newPhone: null,
+            newEmail: null,
             curPassword: null,
             newPassword: null,
-            confirmPassword: null,
-            user: {
-                name: 'milena',
-                email: 'milenaxd@gmail.com',
-                phone: '(24) 98374-6262'
-            }
+            confirmNewPassword: null,
         }
     },
     components: {
         Sidebar,
-    }
+    },
+    computed: {
+        user() {
+            return this.$store.getters.getUserInfo;
+        }
+    },
+    methods: {
+        async saveChanges() {
+            this.error = false;
+
+            if (this.newUserName) {
+                await this.$store.dispatch("setUserName", {name: this.newUserName});
+                this.newUserName = null;
+            }
+
+            if (this.newPhone) {
+                await this.$store.dispatch("setUserPhone", {phone: this.newPhone});
+                this.newPhone = null;
+            }
+
+            if (this.newEmail) {
+                await this.$store.dispatch("setUserEmail", {email: this.newEmail});
+                this.newEmail = null;
+            }
+
+            if (this.newPassword) {
+                if (!this.confirmNewPassword || this.confirmNewPassword != this.newPassword) {
+                    this.notyf.open({
+                        type: 'error',
+                        message: "Novas senhas não batem!",
+                    });
+                    this.error = true;
+                } else if (this.curPassword != this.user.pass) {
+                    this.notyf.open({
+                     type: 'error',
+                     message: "Senha antiga inválida!",
+                    });
+                    this.error = true;
+                } else {
+                    await this.$store.dispatch("setUserPass", {pass: this.newPassword});
+                    this.curPassword = null;
+                    this.newPassword = null;
+                    this.confirmNewPassword = null;
+                }
+            }        
+        }
+    },
 }
 </script>
 
