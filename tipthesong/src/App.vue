@@ -1,53 +1,95 @@
 <template>
-  <TopBar />
+    <AdminTopBar v-if="$route.path.match('/admin/')"/>
+    <TopBar class="desktop" v-if="!$route.path.match('/admin')"/>
+    <TopBarMobile class="mobile" v-if="!$route.path.match('/admin')"/>
+    <div class="contentWrapper">
+        <router-view />
+    </div>
+    <Footer />
 </template>
 
 <script>
- import TopBar from './components/TopBar';
+ import TopBar from './components/App/TopBar';
+ import AdminTopBar from './components/Admin/TopBar.vue'
+ import Footer from './components/App/Footer';
+ import TopBarMobile from './components/App/TopBarMobile.vue';
 
  export default {
-   name: 'App',
-   components: {
-     TopBar,
-   }
+     name: 'App',
+     inject: ['notyf'],
+     components: {
+         TopBar,
+         AdminTopBar,
+         Footer,
+         TopBarMobile,
+     },
+     watch: {
+         loginFailed(state) {
+             if (state)
+                 this.notyf.open({
+                     type: 'error',
+                     message: "Não autenticado",
+                 });
+             this.$store.dispatch("unauthNotyf", false);
+         },
+     },
+     computed: {
+         loginFailed() {
+             return this.$store.getters.getUnauthNotyf;
+         },
+     },
  }
 </script>
 
 <style type="text/scss" media="screen">
- @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
- :root {
-   --bg: #fcfcfc;
-   --topbar-bg: #6f6f6f;
-   --grey: #797979;
- }
+ @import url('./assets/root.css');
+ @import url('./css/Global.css');
 
  body {
-   padding: 0;
-   margin: 0;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
  }
 
  #app {
-   font-family: 'Roboto', sans-serif;
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
-   background-color: var(--bg);
-   padding: 0;
-   margin: 0;
-   box-sizing: border-box;
-   width: 100%;
+     position: relative;
+     background-color: var(--bg);
+     padding: 0;
+     margin: 0;
+     box-sizing: border-box;
+     width: 100%;
+     min-height: inherit;
+}
+
+ #app * {
+     font-family: 'Roboto Mono', sans-serif;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     color: var(--white);
  }
 
- input {
-   font-weight: 400;
-   cursor: pointer;
+ .contentWrapper {
+     padding-bottom: 7rem;
  }
 
- input[type="text"] {
-   border: 0;
-   background-color: var(--bg);
-   font-style: italic;
-   padding: 5px;
-   outline: none;
+ @media screen and (min-width: 850px) {
+     .contentWrapper {
+         width: 90%;
+         margin: 0 auto;
+     }
  }
+
+@media screen and (max-width: 599px) {
+    .desktop {
+        display: none;
+    } 
+}
+
+@media screen and (min-width: 600px) {
+    .mobile {
+        display: none;
+    } 
+}
+
 </style>
+

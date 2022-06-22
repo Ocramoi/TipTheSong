@@ -1,0 +1,42 @@
+
+* {
+    color: var(--white);
+}
+
+.innerProfileContainer {
+    margin-top: 3rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 1rem;
+}
+
+.profileBox {
+    margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-width: min-content;
+    padding: 15px;
+}
+
+@media screen and (max-width: var(--min-profile-width)) {
+    .profileBox {
+        min-width: min-content;
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .sidebar {
+        display: none !important;
+    }
+
+    button {
+        margin: 0 auto;
+    }
+}

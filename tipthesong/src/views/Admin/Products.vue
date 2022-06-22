@@ -1,0 +1,152 @@
+<template>
+    <AlbumUpsertPopup v-if="popupEdit" @togglePopup="togglePopupEdit" :current="product" />
+    <AlbumUpsertPopup v-if="popupCreate" @togglePopup="popupCreate = !popupCreate" />
+
+    <div class="container">
+        <div class="innerContainer">
+            <h2>DISCOS CADASTRADOS</h2>
+            <div class="productBox">
+                <FlexTable
+                    @clicked="handleEvent"
+                    :titles="tableTitles"
+                    :values="products"
+                    :center="true"
+                    rowHeight="7rem"/>
+            </div>
+        </div>
+        <div class="bts">
+            <router-link :to="{ name: 'AdminHomepage' }">
+                <button class="backBtn">VOLTAR</button>
+            </router-link>
+            <button class="addBtn" @click="popupCreate = !popupCreate">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</template>
+
+<script>
+ import FlexTable from '../../components/App/FlexTable';
+ import AlbumUpsertPopup from '../../components/Admin/AlbumUpsertPopup';
+
+ export default {
+     name: "AdminProducts",
+     components: {
+         FlexTable,
+         AlbumUpsertPopup,
+     },
+     data() {
+         return {
+             tableTitles: [
+                 "",
+                 "Disco",
+                 "",
+                 "Preço",
+                 "Estoque",
+                 "Vendidos"
+             ],
+             product: null,
+             popupEdit: false,
+             popupCreate: false,
+         };
+     },
+     async created() {
+        this.$store.getters.getProductList;
+     },
+     computed: {
+         productList() {
+            return this.$store.getters.getProductList;
+         },
+         products() {
+             const productsIds = Object.keys(this.productList);
+             return productsIds?.map(id => [
+                 {
+                     id: parseInt(id),
+                     content: '<i class="fa-solid fa-trash"></i>',
+                     style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
+                     class: "clickableIcon trashIcon",
+                 },
+                 this.turnToImageTag(this.productList[id].img),
+                 {
+                     content: this.turnToDescription(this.productList[id].name, this.productList[id].description),
+                     style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center; ; cursor: pointer",
+                     id: ["upsert", id],
+                 },
+                 `R$${this.productList[id].price.toFixed(2)}`,
+                 this.productList[id].amountStock,
+                 this.productList[id].soldAmount
+             ]);
+         },
+     },
+     methods: {
+         turnToImageTag: function(imgSrc) {
+             return `<img src="${imgSrc}" alt="product">`;
+         },
+         turnToDescription: function(productName, productDescription) {
+             return `<div class="productContainer"><h3 style="margin:0;padding:0">${productName}</h3><span>${productDescription}</span></div>`;
+         },
+         togglePopupEdit() {
+             this.popupEdit = !this.popupEdit;
+         },
+         handleEvent(e) {
+             if (!e) return;
+             if (e[0] == 'upsert') this.product = this.productList[e[1]];
+             if (typeof(e) == 'number') return this.removeAlbum(e);
+             this.popupEdit = true;
+         },
+         removeAlbum(id) {
+             if (!id) return;
+             this.$store.dispatch('removeFromProductList', {
+                 id: id,
+             });
+         },
+     },
+ }
+</script>
+
+<style scoped>
+
+ :deep(div.productContainer) {
+     display:block;
+     width: 100%;
+     line-height: normal;
+     margin: auto 0;
+ }
+
+ :deep(div.productContainer > h3) {
+     margin: 0;
+     padding:0;
+ }
+
+ :deep(div.productContainer > span) {
+     width: 100%;
+     display: block;
+     white-space: break-spaces;
+ }
+
+ :deep(.trashIcon) {
+     font-size: 1.1em;
+     margin: auto 10px;
+     display: block;
+     width: 100%;
+ }
+
+ .addBtn {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     border-radius: 100%;
+     aspect-ratio: 1 / 1;
+     width: min-content;
+ }
+
+ .bts {
+     margin-top: 1rem;
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+ }
+</style>
