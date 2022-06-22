@@ -132,3 +132,5 @@ yarn build
 ## Comentários
 *None*
 
+## Timeline
+- **release/v2.0.0**: Entrega do *Milestone 2*, 21/06/2022
