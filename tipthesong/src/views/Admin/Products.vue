@@ -90,7 +90,7 @@
          },
          handleEvent(e) {
              if (e == null) return;
-             else if (e[0] == 'upsert') this.product = this.productList[e[1]];
+             else if (e[0] == 'upsert') this.product = this.productList.find(product => product.id == e[1]);
              else if (typeof(e) == 'number') return this.removeAlbum(e);
              this.popupEdit = true;
          },
