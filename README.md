@@ -153,7 +153,9 @@ yarn build
 ```
 
 ## Problemas
-*None*
+Como foi solicitado um teste das funcionalidades sem a utilização do servidor em si, estamos usando local storage. Dado isso ao adicionarmos novos admins eles serão adicionados, porém não é possível logar com esses admins. O mesmo se acontece com o usuário, onde é possível a criação porém não é possível logar.
+
+Esses problemas ocorrem devido ao uso do local storage, quando for implementado o servidor, esses problemas não serão mantidos.
 
 ## Comentários
 *None*
