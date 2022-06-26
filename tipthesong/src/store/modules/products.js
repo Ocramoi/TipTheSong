@@ -3,7 +3,7 @@ const defaultProducts = [
   {
     id: 1,
     name: 'Now, Not Yet',
-    artist: 'half alive',
+    artists: ['half alive'],
     genres: [ "POP", "ROCK", ],
     price: 90.0 ,
     released: 2019,
@@ -16,7 +16,7 @@ const defaultProducts = [
   }, {
     id: 2,
     name: 'A Passion Play',
-    artist: 'Jethro Tull',
+    artists: ['Jethro Tull'],
     genres: [ "JAZZ", "ROCK", ],
     price: 120.0 ,
     released: 1973,
@@ -29,7 +29,7 @@ const defaultProducts = [
   }, {
     id: 3,
     name: 'Operation Doomsday',
-    artist: 'MF DOOM',
+    artists: ['MF DOOM'],
     genres: [ "RAP", "JAZZ", ],
     price: 110.0 ,
     released: 1999,
@@ -42,7 +42,7 @@ const defaultProducts = [
   }, {
     id: 4,
     name: 'To Be Kind',
-    artist: 'Swans',
+    artists: ['Swans'],
     genres: [ "ROCK", ],
     price: 80.0 ,
     released: 2014,
@@ -55,7 +55,7 @@ const defaultProducts = [
   }, {
     id: 5,
     name: 'Madvillainy',
-    artist: 'Madvillain',
+    artists: ['Madvillain'],
     genres: [ "POP", "RAP", ],
     price: 120.0 ,
     released: 2004,
@@ -68,7 +68,7 @@ const defaultProducts = [
   }, {
     id: 6,
     name: 'Kids See Ghosts',
-    artist: 'Kids See Ghosts',
+    artists: ['Kids See Ghosts'],
     genres: [ "POP", "RAP", ],
     price: 150.0 ,
     released: 2018,
@@ -81,7 +81,7 @@ const defaultProducts = [
   }, {
     id: 7,
     name: 'The Money Store',
-    artist: 'Death Grips',
+    artists: ['Death Grips'],
     genres: [ "ROCK", "RAP", ],
     price: 420.0,
     released: 2012,
@@ -94,7 +94,7 @@ const defaultProducts = [
   }, {
     id: 8,
     name: 'American Football',
-    artist: 'American Football',
+    artists: ['American Football'],
     genres: [ "ROCK", "RAP", ],
     price: 90.0,
     released: 1999,
@@ -145,6 +145,7 @@ const mutations = {
   upsertAlbum(state, product) {
     if (!product.id) {
       product.id = state.productList.length + 1;
+      product.soldAmount = 0;
       state.productList.push(product);
       return;
     } else {
@@ -161,7 +162,10 @@ const mutations = {
         return;
       }
 
-      state.productList[idxModification] = product;
+      state.productList[idxModification] = {
+        ...state.productList[idxModification],
+        ...product,
+      };
     }
     
   }
@@ -199,18 +203,19 @@ const actions = {
     });
   },
   async upsertAlbum( { commit }, payload) {
+    console.log(payload);
     commit('upsertAlbum', {
       id: payload?.id,
-      title: payload?.title,
-      launchDate: payload?.launchDate,
-      frontCover: payload?.frontCover,
+      name: payload?.title,
+      released: payload?.launchDate,
+      img: payload?.frontCover,
       artists: payload?.artists,
       genres: payload?.genres,
       shortDescription: payload?.shortDescription,
-      longDescription: payload?.longDescription,
+      description: payload?.longDescription,
       extraInfo: payload?.extraInfo,
       price: payload?.price,
-      amountInStock: payload?.amountInStock
+      amountStock: payload?.amountInStock
     })
   }
 };

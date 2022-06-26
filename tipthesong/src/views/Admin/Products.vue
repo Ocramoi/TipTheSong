@@ -74,7 +74,7 @@
                  },
                  `R$${this.productList[id].price.toFixed(2)}`,
                  this.productList[id].amountStock,
-                 this.productList[id].soldAmount
+                 this.productList[id].soldAmount,
              ]);
          },
      },
