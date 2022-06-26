@@ -77,7 +77,10 @@
                 <i class="fa-solid fa-filter"></i>
             </button>
             <div class="productList">
-                <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product"/>
+                <ProductCard
+                    v-for="product in filteredProducts"
+                    :key="product.id"
+                    :product="product"/>
             </div>
         </div>
     </div>
@@ -150,7 +153,7 @@
              return this.products.reduce((prev, cur) => Math.max(prev, cur?.released), Number.NEGATIVE_INFINITY);
          },
          products() {
-             return this.$store.getters.getProductList;
+             return this.$store.getters?.getProductList || [];
          },
          filteredProducts() {
              const activeGenres = this.filters.genres.filter(g => g.selected).map(g => g.name),
@@ -165,7 +168,9 @@
                        (product) => {
                            const strip = this.filters.artist.trim().toLowerCase();
                            if (strip === "") return true;
-                           return product.artist.toLowerCase().includes(strip);
+                           for (const artist of product?.artists || [])
+                               if (artist.toLowerCase().includes(strip)) return true;
+                           return false;
                        },
                        // Filtro de album
                        (product) => {

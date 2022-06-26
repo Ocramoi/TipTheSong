@@ -139,8 +139,15 @@ const mutations = {
     state.productList.push(product);
   },
   removeFromProductList(state, product) {
-    if (!state.productList[product.id]) return;
-    delete state.productList[product.id];
+    let idxModification = null;
+    for (let i = 0; i < state.productList.length; ++i) {
+      let cur = state.productList[i];
+      if (cur.id !== product.id) continue;
+      idxModification = i; break;
+    }
+
+    if (idxModification === null) return;
+    state.productList.splice(idxModification, 1);
   },
   upsertAlbum(state, product) {
     if (!product.id) {
@@ -203,7 +210,6 @@ const actions = {
     });
   },
   async upsertAlbum( { commit }, payload) {
-    console.log(payload);
     commit('upsertAlbum', {
       id: payload?.id,
       name: payload?.title,

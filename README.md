@@ -100,10 +100,36 @@ Foi usado localStorage para simular o funcionamento do backend. Além de um arqu
 *Component FlexTable*
 
 ## Testes Automatizados
-*None*
+Algumas funcionalidades foram implementadas para testar o funcionamento do site, antes do desenvolvimento do backend. Para a simulação das funcionalidades foram implementadas:
+- Cadastro de conta
+- Login (usuário e admin)
+- Logout
+- Operações no carrinho (adição e remoção de discos)
+- Compra
+- Adicionar mêtodos de pagamento e novos endereços no perfil do usuário
+- Filtro pro gênero, preço e nome do artista (funcionaidade extra).
+- Sugestão de discos (funcionalidade extra).
+- Operações dos admins (adição, edição e remoção de admins e produtos, além de remoção de usuários)
+
+Para testar as funcionalidades temos:
+1. Compra:
+    
+    O usuário pode adicionar e remover produtos do carrinho. Os produtos podem ser adicionados pela página inicial, pela página de produtos ou pela página de um produto específico.
+
+    O filtro está implementado na página de produto e é aplicado automaticamente.
+    
+2. Admin:
+
+    Ao entrar na página de admin o usuário precisa ter a permissão necessária para poder logar. (Temos no arquivo user.js dentro de src/store/modules um usuário admin que pode logar na página para poder fazer os testes)
+
+    Ao logar ele pode acessar as páginas de produto, admins e usuários. Nessas temos um menu responsivo para adição, edição e remoção de produtos, admins ou usuários.
+
+3. Novas informações para o usuário
+
+    Entrando na página do perfil do usuário o mesmo pode adicionar novos cartões como mêtodo de pagamento, além de poder adicionar novos endereços para entrega.
 
 ## Resultados dos Testes
-*None*
+Pelos testes realizados, temos um bom funcionamento em todos os casos. Espera-se poucos problemas durante a integração com o servidor.
 
 ## Executando o código
 Para você poder executar o código é necessário 
