@@ -1,5 +1,6 @@
 const defaultUsers = [
   { // TODO virá do back
+    id: 1,
     name: 'milena',
     email: 'milenaxd@gmail.com',
     phone: '(24) 98374-6262',
@@ -35,6 +36,18 @@ const defaultUsers = [
     ],
   },
   {
+    id: 2,
+    name: 'admin',
+    email: 'admin@gmail.com',
+    phone: '(24) 98374-6262',
+    isAdmin: true,
+    pass: 'admin',
+    addresses: [],
+    cards: [],
+    orders: [],
+  },
+  {
+    id: 3,
     name: 'anonimo',
     email: '123@gmail.com',
     phone: '(24) 98374-6262',
@@ -58,6 +71,7 @@ const state = () => ({
   userInfo: {},
   unauthNotyf: false,
   permDenied: false,
+  adminList: defaultUsers.filter(user => user.isAdmin),
 });
 
 const mutations = {
@@ -107,6 +121,42 @@ const mutations = {
     if (state.logged)
       state.userInfo.orders.push(order);
   },
+  removeFromAdminList(state, admin) {
+    let idxModification = null;
+    for (let i = 0; i < state.adminList.length; ++i) {
+      let cur = state.adminList[i];
+      if (cur.id !== admin.id) continue;
+      idxModification = i; break;
+    }
+
+    if (idxModification === null) return;
+    state.adminList.splice(idxModification, 1);
+  },
+  upsertAdmin(state, admin) {
+    if (!admin?.id) {
+      admin.id = state.adminList.length + 1;
+      state.adminList.push(admin);
+      return;
+    } else {
+      let idxModification = null;
+      for (let i = 0; i < state.adminList.length; ++i) {
+        let cur = state.adminList[i];
+        if (cur.id !== admin.id) continue;
+        idxModification = i; break;
+      }
+      
+      if (idxModification === null) {
+        admin.id = state.adminList.length + 1;
+        state.adminList.push(admin);
+        return;
+      }
+
+      state.adminList[idxModification] = {
+        ...state.adminList[idxModification],
+        ...admin,
+      };
+    }
+  }
 };
 
 const actions = {
@@ -167,6 +217,21 @@ const actions = {
   async addToUserInfoOrders({commit}, {order}) {
     commit("addToUserInfoOrders", order);
   },
+  async removeFromAdminList( { commit }, payload ) {
+    commit('removeFromAdminList', {
+      id: payload?.id,
+    });
+  },
+  async upsertAdmin( { commit }, payload) {
+    console.log(payload)
+    commit('upsertAdmin', {
+      id: payload?.id,
+      name: payload?.name,
+      phone: payload?.cellphone,
+      email: payload?.login,
+      pass: payload?.password,
+    })
+  },
 };
 
 const getters = {
@@ -174,7 +239,8 @@ const getters = {
   getIsLogged(state) { return state.logged; },
   getUserInfo(state) { return state.userInfo; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
-  getPermDenied(state) {return state.permDenied; },
+  getPermDenied(state) { return state.permDenied; },
+  getAdminList(state) { return state.adminList; },
 };
 
 export default {
