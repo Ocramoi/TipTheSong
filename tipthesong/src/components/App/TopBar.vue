@@ -2,10 +2,10 @@
     <div class="topBar">
         <div class="topRow">
             <div class="searchBar">
-                <label for="search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                <label for="search" @click="searchBar">
+                    <i class="fa-solid fa-magnifying-glass clickableIcon" ></i>
                 </label>
-                <input v-model="search" type="text" name="search" placeholder="Pesquisar..." />
+                <input v-model="search" type="text" name="search" placeholder="Pesquisar..."  v-on:keyup.enter="searchBar"/>
             </div>
             <img
                 class="topbarLogo"
@@ -71,6 +71,15 @@
                  return false;
              }
          },
+     },
+     methods: {
+         searchBar() {
+            console.log(this.search);
+             this.$router.push({
+                 name: 'Products',
+                 query: { q: this.search },
+             });
+         }
      },
  };
 </script>
