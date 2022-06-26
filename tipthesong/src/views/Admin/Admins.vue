@@ -85,7 +85,7 @@
          handleClick(e) {
              console.log(e)
              if(!e) return;
-             else if (e[0] == 'upsert') this.admin = this.adminList[e[1]];
+             else if (e[0] == 'upsert') this.admin = this.adminList.find(admin => admin.id == e[1]);
              else if (typeof(e) == 'number') return this.removeIdx(e);
              this.popupEdit = true;
          },

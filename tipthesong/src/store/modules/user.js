@@ -135,9 +135,11 @@ const mutations = {
   upsertAdmin(state, admin) {
     if (!admin?.id) {
       admin.id = state.adminList.length + 1;
+      console.log(admin.id);
       state.adminList.push(admin);
       return;
     } else {
+      console.log(admin.id);
       let idxModification = null;
       for (let i = 0; i < state.adminList.length; ++i) {
         let cur = state.adminList[i];
@@ -223,14 +225,8 @@ const actions = {
     });
   },
   async upsertAdmin( { commit }, payload) {
-    console.log(payload)
-    commit('upsertAdmin', {
-      id: payload?.id,
-      name: payload?.name,
-      phone: payload?.cellphone,
-      email: payload?.login,
-      pass: payload?.password,
-    })
+    // console.log("ID: " + payload.id)
+    commit('upsertAdmin', payload)
   },
 };
 

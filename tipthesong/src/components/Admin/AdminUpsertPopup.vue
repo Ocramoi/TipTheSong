@@ -73,6 +73,7 @@
      },
      data() {
          return {
+             id: null,
              name: null,
              cellphone: null,
              login: null,
@@ -97,14 +98,15 @@
              this.$emit("togglePopup");
          },
          loadFromPayload(payload) {
+             this.id = payload?.id;
              this.name = payload?.name;
              this.cellphone = payload?.phone;
              this.login = payload?.email;
              this.password = payload?.pass;
          },
          upsertAdmin() {
-            console.log(this.login)
             this.$store.dispatch("upsertAdmin", {
+                id: this?.id,
                 name: this.name,
                 phone: this.cellphone,
                 email: this.login,
