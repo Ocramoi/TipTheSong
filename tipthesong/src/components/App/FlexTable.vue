@@ -24,7 +24,7 @@
                     <span v-if="textValue(value)" :class="{ 'elementCenter': center }" v-html="value" />
                     <div v-else :style="value?.style || ''"
                          :class="value?.class || ''"
-                         v-html="value.content" />
+                         v-html="value?.content" />
                     &nbsp;
                 </div>
             </template>

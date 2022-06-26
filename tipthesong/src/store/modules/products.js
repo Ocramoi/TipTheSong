@@ -143,7 +143,6 @@ const mutations = {
     delete state.productList[product.id];
   },
   upsertAlbum(state, product) {
-    console.log(product)
     if (!product.id) {
       product.id = state.productList.length + 1;
       state.productList.push(product);
@@ -162,7 +161,6 @@ const mutations = {
         return;
       }
 
-      console.log(product)
       state.productList[idxModification] = product;
     }
     
@@ -203,16 +201,16 @@ const actions = {
   async upsertAlbum( { commit }, payload) {
     commit('upsertAlbum', {
       id: payload?.id,
-      title: this.title,
-      launchDate: this.launchDate,
-      frontCover: this.frontCover,
-      artists: this.artists,
-      genres: this.genres,
-      shortDescription: this.shortDescription,
-      longDescription: this.longDescription,
-      extraInfo: this.extraInfo,
-      price: this.price,
-      amountInStock: this.amountInStock
+      title: payload?.title,
+      launchDate: payload?.launchDate,
+      frontCover: payload?.frontCover,
+      artists: payload?.artists,
+      genres: payload?.genres,
+      shortDescription: payload?.shortDescription,
+      longDescription: payload?.longDescription,
+      extraInfo: payload?.extraInfo,
+      price: payload?.price,
+      amountInStock: payload?.amountInStock
     })
   }
 };
