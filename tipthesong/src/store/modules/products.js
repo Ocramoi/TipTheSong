@@ -203,7 +203,6 @@ const actions = {
     });
   },
   async upsertAlbum( { commit }, payload) {
-    console.log(payload);
     commit('upsertAlbum', {
       id: payload?.id,
       name: payload?.title,

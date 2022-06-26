@@ -95,7 +95,7 @@
              this.popupEdit = true;
          },
          removeAlbum(id) {
-             if (!id) return;
+             if (typeof(id) !== 'number') return;
              this.$store.dispatch('removeFromProductList', {
                  id: id,
              });
