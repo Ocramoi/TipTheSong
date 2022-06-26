@@ -6,11 +6,17 @@ const defaultUsers = [
     isAdmin: true,
     pass: '123',
     addresses: [
-      [    
-        "Rua Paulo Americo 289, Jardim Lutfalla, São Carlos, SP 13567594, Brasil",
-        "Milena Correa da Silva",
-        "55+ 24 988380298"
-      ],
+      {
+        address: "Rua Paulo Americo",
+        name: "Milena Correa da Silva",
+        phone: "55+ 24 988380298",
+        country: "Brasil",
+        postalCode: "13564030",
+        complemment: "Apt. 16",
+        extra: "",
+        state: "SP",
+        city: "São Carlos",
+      },
     ],
     cards: [
       [
@@ -74,8 +80,8 @@ const mutations = {
       state.userInfo = {};
   },
   setUserName(state, name) {
-    if (state.logged)
-      state.userInfo.name = name;
+    if (!state.logged) return;
+    state.userInfo.name = name;
   },
   setUserPhone(state, photo) {
     if (state.logged)
@@ -106,6 +112,17 @@ const mutations = {
   addToUserInfoOrders(state, order) {
     if (state.logged)
       state.userInfo.orders.push(order);
+  },
+  upsertAddress(state, payload) {
+    if (!state.logged) return;
+    console.log(payload);
+    if (payload.id !== null && payload.id !== undefined) {
+      state.userInfo.addresses[payload.id] = payload;
+      console.log("...");
+      return;
+    }
+    state.userInfo.addresses.push(payload);
+    console.log("??");
   },
 };
 
@@ -166,6 +183,9 @@ const actions = {
   },
   async addToUserInfoOrders({commit}, {order}) {
     commit("addToUserInfoOrders", order);
+  },
+  async upsertAddress({ commit }, payload) {
+    commit("upsertAddress", payload);
   },
 };
 
