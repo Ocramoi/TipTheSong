@@ -101,6 +101,7 @@
          return {
              filterVisible: true,
              filters: {
+                 album: "",
                  genres: [
                      { name: "RAP", selected: true },
                      { name: "ROCK", selected: true },
@@ -118,6 +119,14 @@
      beforeMount() {
          this.clearFilters();
      },
+     mounted () {
+        this.filters.album = this.query ? this.query : "";
+     },
+     watch: {
+         query() {
+            this.filters.album = this.query ? this.query : "";
+         },
+     },
      methods: {
          clearFilters() {
              this.filters.price = [ this.minPrice, this.maxPrice ];
@@ -130,6 +139,7 @@
          },
      },
      computed: {
+         query() { return this.$route.query.q; },
          minPrice() {
              return this.products.reduce((prev, cur) => Math.min(prev, cur?.price), Number.POSITIVE_INFINITY);
          },
@@ -161,6 +171,12 @@
                            for (const artist of product?.artists || [])
                                if (artist.toLowerCase().includes(strip)) return true;
                            return false;
+                       },
+                       // Filtro de album
+                       (product) => {
+                           const strip = this.filters.album.trim().toLowerCase();
+                           if (strip === "") return true;
+                           return product.name.toLowerCase().includes(strip);
                        },
                        // Filtro de preço
                        (product) => {
