@@ -142,6 +142,31 @@ const mutations = {
     if (!state.productList[product.id]) return;
     delete state.productList[product.id];
   },
+  upsertAlbum(state, product) {
+    console.log(product)
+    if (!product.id) {
+      product.id = state.productList.length + 1;
+      state.productList.push(product);
+      return;
+    } else {
+      let idxModification = null;
+      for (let i = 0; i < state.productList.length; ++i) {
+        let cur = state.productList[i];
+        if (cur.id !== product.id) continue;
+        idxModification = i; break;
+      }
+      
+      if (idxModification === null) {
+        product.id = state.productList.length + 1;
+        state.productList.push(product);
+        return;
+      }
+
+      console.log(product)
+      state.productList[idxModification] = product;
+    }
+    
+  }
 };
 
 const actions = {
@@ -170,11 +195,26 @@ const actions = {
     commit('setCartProducts', cartInfos);
     commit('setCartProductsLoaded', true);
   },
-  removeFromProductList({ commit }, payload) {
+  async removeFromProductList({ commit }, payload) {
     commit('removeFromProductList', {
       id: payload?.id,
     });
   },
+  async upsertAlbum( { commit }, payload) {
+    commit('upsertAlbum', {
+      id: payload?.id,
+      title: this.title,
+      launchDate: this.launchDate,
+      frontCover: this.frontCover,
+      artists: this.artists,
+      genres: this.genres,
+      shortDescription: this.shortDescription,
+      longDescription: this.longDescription,
+      extraInfo: this.extraInfo,
+      price: this.price,
+      amountInStock: this.amountInStock
+    })
+  }
 };
 
 const getters = {
