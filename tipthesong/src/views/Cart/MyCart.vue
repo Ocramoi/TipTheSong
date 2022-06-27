@@ -55,6 +55,7 @@
 
  export default {
      name: "MyCart",
+     inject: ['notyf'],
      components: {
          FlexTable,
      },
@@ -113,6 +114,10 @@
                  id: id,
                  qnt: 1,
              });
+             this.notyf.open({
+                     type: 'success',
+                     message: "Produto removido do carrinho!",
+                    });
          },
      },
  }
