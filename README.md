@@ -11,8 +11,8 @@
 [Resultados dos Testes](#resultados-dos-testes)\
 [Executando o código](#executando-o-código)\
 [Problemas](#problemas)\
-[Comentários](#comentários)
-
+[Comentários](#comentários)\
+[Reviews](#reviews)
 
 
 ## Participantes
@@ -48,7 +48,7 @@ Milena Corrêa da Silva - **11795401**
 * **Cupons**: id, id do usuário, id do disco, porcentagem do desconto.
 
 ### Funcionalidade Extra 
-* Uma vez por dia, o usuário tem direito a um cupom de desconto em um albúm aleatório, encorajando-o a expandir seu gosto musical.
+* O usuário consegue filtrar os produtos. Além de que em cada página específica de um produto, no final temos um sugestão de discos parecidos.
 
 ### Requisitos Não Funcionais
 *  O sistema deve ser responsivo e possuir boa usabilidade.
@@ -106,7 +106,7 @@ Algumas funcionalidades foram implementadas para testar o funcionamento do site,
 - Logout
 - Operações no carrinho (adição e remoção de discos)
 - Compra
-- Adicionar mêtodos de pagamento e novos endereços no perfil do usuário
+- Adicionar ou editar endereços no perfil do usuário
 - Filtro pro gênero, preço e nome do artista (funcionaidade extra).
 - Sugestão de discos (funcionalidade extra).
 - Operações dos admins (adição, edição e remoção de admins e produtos, além de remoção de usuários)
@@ -126,7 +126,7 @@ Para testar as funcionalidades temos:
 
 3. Novas informações para o usuário
 
-    Entrando na página do perfil do usuário o mesmo pode adicionar novos cartões como mêtodo de pagamento, além de poder adicionar novos endereços para entrega.
+    Entrando na página do perfil do usuário o mesmo pode adicionar ou editar endereços para entrega.
 
 ## Resultados dos Testes
 Pelos testes realizados, temos um bom funcionamento em todos os casos. Espera-se poucos problemas durante a integração com o servidor.
@@ -157,8 +157,16 @@ Como foi solicitado um teste das funcionalidades sem a utilização do servidor 
 
 Esses problemas ocorrem devido ao uso do local storage, quando for implementado o servidor, esses problemas não serão mantidos.
 
+Outro problema existente é a falta da funcionalidade de adicionar/editar novos endereços. Foi decidido pela não implementação dessa funcionalidade na simulação, pois a mesma funciona do mesmo jeito que a adição/edição de endereços. A falta da funcionalidade será resolvida juntamente com a implementação do servidor.
+
+Mesmo sem estar logado é possível adicionar produtos ao carrinho. Porém não é possível acessar a página de carrinho sem estar logado. Essa problema será arrumado quando fizermos a integração com o servidor.
+
 ## Comentários
 *None*
 
+## Reviews:
+[Review da Milestone 1](https://drive.google.com/file/d/1u9YdB2jHsU6PN_XvezgvMbzt3af5cu-a/view?usp=sharing)
+[Review da Milestone 2](https://drive.google.com/file/d/1wBV1UUMXi_KrsCjqDOGNRJnl4LqCbHnC/view?usp=sharing)
+
 ## Timeline
-- **release/v2.1.0**: Entrega do *Milestone 2*, 27/06/2022
+- **release/v2.0.0**: Entrega do *Milestone 2*, 21/06/2022
