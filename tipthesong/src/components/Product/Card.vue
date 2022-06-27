@@ -25,6 +25,7 @@
 <script>
  export default {
      name: "Card",
+     inject: ['notyf'],
      props: {
          product: {
              type: Object,
@@ -42,6 +43,10 @@
                  id: this.product.id,
                  qnt: 1,
              });
+             this.notyf.open({
+                     type: 'success',
+                     message: "Produto adicionado ao carrinho!",
+                    });
          },
          goToCart() {
             this.addToCart()
