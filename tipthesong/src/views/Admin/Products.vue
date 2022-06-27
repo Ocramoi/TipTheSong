@@ -58,23 +58,23 @@
             return this.$store.getters.getProductList;
          },
          products() {
-             const productsIds = Object.keys(this.productList);
-             return productsIds?.map(id => [
+             const _products = this.productList;
+             return _products?.map(product => [
                  {
-                     id: parseInt(id),
+                     id: parseInt(product?.id),
                      content: '<i class="fa-solid fa-trash"></i>',
                      style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
                      class: "clickableIcon trashIcon",
                  },
-                 this.turnToImageTag(this.productList[id].img),
+                 this.turnToImageTag(product?.img),
                  {
-                     content: this.turnToDescription(this.productList[id].name, this.productList[id].description),
+                     content: this.turnToDescription(product?.name, product?.description),
                      style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center; ; cursor: pointer",
-                     id: ["upsert", id],
+                     id: ["upsert", product?.id],
                  },
-                 `R$${this.productList[id].price.toFixed(2)}`,
-                 this.productList[id].amountStock,
-                 this.productList[id].soldAmount
+                 `R$${product?.price.toFixed(2)}`,
+                 product?.amountStock,
+                 product?.soldAmount,
              ]);
          },
      },
@@ -89,13 +89,12 @@
              this.popupEdit = !this.popupEdit;
          },
          handleEvent(e) {
-             if (!e) return;
-             if (e[0] == 'upsert') this.product = this.productList[e[1]];
-             if (typeof(e) == 'number') return this.removeAlbum(e);
+             if (e == null) return;
+             else if (e[0] == 'upsert') this.product = this.productList.find(product => product.id == e[1]);
+             else if (typeof(e) == 'number') return this.removeAlbum(e);
              this.popupEdit = true;
          },
          removeAlbum(id) {
-             if (!id) return;
              this.$store.dispatch('removeFromProductList', {
                  id: id,
              });

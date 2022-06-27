@@ -3,7 +3,7 @@
         <button class="goBack" @click="this.$router.back()">
             <i class="fa-solid fa-arrow-left" /> 
         </button>
-        <h1>{{ product?.name }}</h1>
+        <h1>{{ product?.name }} - {{ product?.artists.join(', ') }} ({{ product?.released }})</h1>
 
         <div class="productInfoBox"> 
             <img :src="product?.img">
@@ -22,7 +22,7 @@
 
         <div class="productExtraInfo">
             <h2>Informações Adicionais</h2>
-            <p> {{ product?.extraInfo }} </p>
+            <p> {{ product?.extraInfo || "Nehuma." }} </p>
         </div>
 
         <div class="suggestions"> 

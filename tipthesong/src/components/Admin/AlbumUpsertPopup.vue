@@ -22,12 +22,12 @@
                 <div>
                     <label for="launchDate">Data de lançamento</label>
                     <input
-                        type="date"
+                        type="number"
                         name="launchDate"
                         class="inputFill"
                         v-model="launchDate"
                         required
-                        placeholder="xx/xx/xxxx" />
+                        placeholder="19xx" />
                 </div>
                 <div>
                     <label for="frontCover">Capa</label>
@@ -140,7 +140,7 @@
                 </div>
 
                 <div>
-                    <button class="center" type="button"> {{ popupTitle }} </button>
+                    <button class="center" type="button" @click="upsertAlbum"> {{ popupTitle }} </button>
                 </div>
             </form>
         </div>
@@ -158,6 +158,7 @@
      },
      data() {
          return {
+             id: null,
              title: null,
              launchDate: null,
              frontCover: null,
@@ -171,7 +172,7 @@
          }
      },
      watch: {
-         current(payload) { this.loadValues(payload); }
+         current(payload) { this.loadValues(payload); },
      },
      mounted() {
          this.loadValues(this.current || {});
@@ -195,8 +196,9 @@
              this.genres.splice(idx, 1);
          },
          loadValues(payload) {
+             this.id = payload?.id || undefined;
              this.title = payload.name || null;
-             this.launchDate = payload.launchDate || null;
+             this.launchDate = payload.released || null;
              this.frontCover = payload.img || null;
              this.artists = payload.artists || [''];
              this.genres = payload.genres || [''];
@@ -204,7 +206,23 @@
              this.longDescription = payload.description || null;
              this.extraInfo = payload.extraInfo || null;
              this.price = payload.price || null;
-             this.amountInStock = payload.stock || null;
+             this.amountInStock = payload.amountStock || null;
+         },
+         upsertAlbum() {
+             this.$store.dispatch("upsertAlbum", {
+                 id: this.id,
+                 title: this.title,
+                 launchDate: this.launchDate,
+                 frontCover: this.frontCover,
+                 artists: this.artists,
+                 genres: this.genres,
+                 shortDescription: this.shortDescription,
+                 longDescription: this.longDescription,
+                 extraInfo: this.extraInfo,
+                 price: this.price,
+                 amountInStock: this.amountInStock
+             });
+             this.close();
          },
      },
      computed: {

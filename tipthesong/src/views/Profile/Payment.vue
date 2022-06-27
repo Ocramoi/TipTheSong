@@ -10,7 +10,7 @@
                     :values="cards" />
                 <span v-else>Nenhum cartão cadastrado por enquanto!</span>
                 <button v-on:click="cardPopup = true">Adicionar cartão</button>
-                <NewCardPopup v-if="cardPopup" @togglePopup="TriggerCardPopup"></NewCardPopup>
+                <CardUpsertPopup v-if="cardPopup" @togglePopup="TriggerCardPopup" />
             </div>
         </div>
     </div>
@@ -19,8 +19,7 @@
 <script type="text/javascript">
  import Sidebar from '../../components/Profile/Sidebar.vue';
  import FlexTable from '../../components/App/FlexTable.vue';
- import NewCardPopup from '../../components/Payment/NewCardPopup.vue'
-
+ import CardUpsertPopup from '../../components/Payment/CardUpsertPopup.vue'
 
  export default {
      name: "ProfilePayment",
@@ -37,7 +36,7 @@
      components: {
          Sidebar,
          FlexTable,
-         NewCardPopup
+         CardUpsertPopup,
      },
      methods: {
         TriggerCardPopup() {

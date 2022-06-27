@@ -23,7 +23,7 @@
                         <p> {{card.dueDate}} </p>
                     </template>
                     <a href="#" style="grid-column: span 4" v-on:click="cardPopup = true">+ Adicionar um cartão</a>
-                    <NewCardPopup v-if="cardPopup" @togglePopup="TriggerCardPopup"></NewCardPopup>
+                    <CardUpsertPopup v-if="cardPopup" @togglePopup="TriggerCardPopup" />
 
               
                     <h3 style="grid-column: span 4"> Boleto </h3>
@@ -52,7 +52,7 @@
                         <p> {{address.refPhone}} </p>
                     </template>
                     <a href="#" style="grid-column: span 3" v-on:click="addressPopup = true">+ Adicionar um endereço de entrega</a>
-                    <NewAddressPopup v-if="addressPopup" @togglePopup="TriggerAddressPopup"></NewAddressPopup>
+                    <AddressUpsertPopup v-if="addressPopup" @togglePopup="TriggerAddressPopup" />
 
                 </form>
             </div>
@@ -66,13 +66,13 @@
 </template>
 
 <script>
-import NewCardPopup from '../../components/Payment/NewCardPopup.vue'
-import NewAddressPopup from '../../components/Payment/NewAddressPopup.vue'
+import CardUpsertPopup from '../../components/Payment/CardUpsertPopup.vue'
+import AddressUpsertPopup from '../../components/Payment/AddressUpsertPopup.vue'
 
 export default {
     components: {
-        NewCardPopup,
-        NewAddressPopup
+        CardUpsertPopup,
+        AddressUpsertPopup,
     },
     data() {
         return {

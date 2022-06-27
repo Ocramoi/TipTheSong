@@ -16,7 +16,7 @@
                 &nbsp;{{ title }}&nbsp;
             </span>
 
-            <template class="a"
+            <template
                 v-for="(entry, idx) in values"
                 :key="idx" >
                 <div class="innerRow" v-for="(value, idx) in entry" :key="idx" @click="sendEvent(value?.id)">
@@ -24,7 +24,7 @@
                     <span v-if="textValue(value)" :class="{ 'elementCenter': center }" v-html="value" />
                     <div v-else :style="value?.style || ''"
                          :class="value?.class || ''"
-                         v-html="value.content" />
+                         v-html="value?.content" />
                     &nbsp;
                 </div>
             </template>

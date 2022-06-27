@@ -55,7 +55,7 @@
                 </div>
 
                 <div>
-                    <button class="center" type="button">{{ popupTitle }}</button>
+                    <button class="center" type="button" @click="upsertAdmin">{{ popupTitle }}</button>
                 </div>
             </form>
         </div>
@@ -73,6 +73,7 @@
      },
      data() {
          return {
+             id: null,
              name: null,
              cellphone: null,
              login: null,
@@ -92,12 +93,27 @@
          },
      },
      methods: {
-         loadFromPayload(payload) {
-             this.name = payload?.name;
-             this.cellphone = payload?.cellphone;
-             this.login = payload?.login;
-             this.password = payload?.password;
+         close() {
+             console.log("FECHA")
+             this.$emit("togglePopup");
          },
+         loadFromPayload(payload) {
+             this.id = payload?.id;
+             this.name = payload?.name;
+             this.cellphone = payload?.phone;
+             this.login = payload?.email;
+             this.password = payload?.pass;
+         },
+         upsertAdmin() {
+            this.$store.dispatch("upsertAdmin", {
+                id: this?.id,
+                name: this.name,
+                phone: this.cellphone,
+                email: this.login,
+                pass: this.password,
+            });
+            this.close();
+         }
      },
  }
 </script>

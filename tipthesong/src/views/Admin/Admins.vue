@@ -48,66 +48,51 @@
                  "Usertag",
                  "Email"
              ],
-             admins: [],
+             admin: null,
              popupEdit: false,
              popupCreate: false,
          };
      },
-     created() {
-         this.admins = [
-             [
-                 {
-                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     id: 0,
-                 }, {
-                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                     style: "height: 100%; display: block; margin: 0 auto;",
-                 }, 
-                 {
-                     content: `${this.admin.name}#${this.admin.id}`,
-                     style: "cursor: pointer",
-                     id: "upsert",
-                 },
-                 this.admin.login,
-             ], [
-                 {
-                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     id: 0,
-                 }, {
-                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                     style: "height: 100%; display: block; margin: 0 auto;",
-                 }, 
-                 {
-                    content: `${this.admin.name}#${this.admin.id}`,
-                    style: "cursor: pointer;",
-                    id: "upsert", 
-                 },
-                 this.admin.login,
-             ]
-         ];
+     async created() {
+         this.$store.getters.getAdminList;
      },
      computed: {
-         admin(){
-             return {
-                 id: "999",
-                 name: "Robertin",
-                 login: "robertin@gmail.com",
-                 cellphone: "123456789",
-                 password: "123",
-             };
+         adminList() {
+            return this.$store.getters.getAdminList;
+         },
+         admins() {
+            const _admins = this.adminList;
+
+            return _admins?.map(admin => [
+                {
+                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                    id: parseInt(admin?.id),
+                }, {
+                    content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                    style: "height: 100%; display: block; margin: 0 auto;",
+                }, 
+                {
+                    content: `${admin?.name}#${admin?.id}`,
+                    style: "cursor: pointer",
+                    id: ["upsert", admin?.id],
+                },
+                admin?.email,
+            ]);
          },
      },
      methods: {
          handleClick(e) {
+             console.log(e)
              if(!e) return;
-
-             if (typeof(e) == 'number') return this.removeIdx(e);
+             else if (e[0] == 'upsert') this.admin = this.adminList.find(admin => admin.id == e[1]);
+             else if (typeof(e) == 'number') return this.removeIdx(e);
              this.popupEdit = true;
          },
-         removeIdx(idx) {
-             this.admins.splice(idx, 1);
+         removeIdx(id) {
+             this.$store.dispatch('removeFromAdminList', {
+                id: id,
+             })
          },
      }
  }
