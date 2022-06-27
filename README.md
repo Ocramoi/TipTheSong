@@ -161,4 +161,4 @@ Esses problemas ocorrem devido ao uso do local storage, quando for implementado 
 *None*
 
 ## Timeline
-- **release/v2.0.0**: Entrega do *Milestone 2*, 21/06/2022
+- **release/v2.1.0**: Entrega do *Milestone 2*, 27/06/2022
