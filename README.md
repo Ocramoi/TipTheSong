@@ -106,7 +106,7 @@ Algumas funcionalidades foram implementadas para testar o funcionamento do site,
 - Logout
 - Operações no carrinho (adição e remoção de discos)
 - Compra
-- Adicionar mêtodos de pagamento e novos endereços no perfil do usuário
+- Adicionar ou editar endereços no perfil do usuário
 - Filtro pro gênero, preço e nome do artista (funcionaidade extra).
 - Sugestão de discos (funcionalidade extra).
 - Operações dos admins (adição, edição e remoção de admins e produtos, além de remoção de usuários)
@@ -126,7 +126,7 @@ Para testar as funcionalidades temos:
 
 3. Novas informações para o usuário
 
-    Entrando na página do perfil do usuário o mesmo pode adicionar novos cartões como mêtodo de pagamento, além de poder adicionar novos endereços para entrega.
+    Entrando na página do perfil do usuário o mesmo pode adicionar ou editar endereços para entrega.
 
 ## Resultados dos Testes
 Pelos testes realizados, temos um bom funcionamento em todos os casos. Espera-se poucos problemas durante a integração com o servidor.
@@ -156,6 +156,8 @@ yarn build
 Como foi solicitado um teste das funcionalidades sem a utilização do servidor em si, estamos usando local storage. Dado isso ao adicionarmos novos admins eles serão adicionados, porém não é possível logar com esses admins. O mesmo se acontece com o usuário, onde é possível a criação porém não é possível logar.
 
 Esses problemas ocorrem devido ao uso do local storage, quando for implementado o servidor, esses problemas não serão mantidos.
+
+Outro problema existente é a falta da funcionalidade de adicionar/editar novos endereços. Foi decidido pela não implementação dessa funcionalidade na simulação, pois a mesma funciona do mesmo jeito que a adição/edição de endereços. A falta da funcionalidade será resolvida juntamente com a implementação do servidor.
 
 ## Comentários
 *None*
