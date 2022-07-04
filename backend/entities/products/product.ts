@@ -1,19 +1,41 @@
-import { Entity, Column, ObjectIdColumn } from "typeorm";
+import { ObjectId } from "mongodb";
+import { Entity, Column, ObjectIdColumn, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export abstract class Product {
+export class Product {
     @ObjectIdColumn()
-    id: number;
+    _id: ObjectId;
+
+    @PrimaryColumn()
+    id: string;
 
     @Column()
-    imgLink: string;
+    title: string;
+
+    @Column()
+    launchDate: number;
+
+    @Column()
+    frontCover: string;
+
+    @Column()
+    artists: string[];
+
+    @Column()
+    genres: string[];
+
+    @Column()
+    shortDescription: string;
+
+    @Column()
+    longDescription: string;
+
+    @Column()
+    extraInfo: string;
 
     @Column()
     price: number;
 
     @Column()
-    name: string;
-
-    @Column()
-    description: string;
+    amountInStock: number;
 };
