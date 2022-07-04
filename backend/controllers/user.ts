@@ -7,18 +7,18 @@ const UserModel = require('../models/user');
 module.exports.createUser = async (req: Request, res: Response) => {
     const body = req.body;
 
-    // Check if the user exists already
-    const existingUser = await UserModel.findOne({
-        email: body.email
-    });
-
-    if (existingUser) {
-        await UserModel.deleteOne({_id: existingUser._id});
-        return res.status(409).send({'error': 'Email já cadastrado.'});
-    }
-
-    // Tries to create the user
     try {
+        // Check if the user exists already
+        const existingUser = await UserModel.findOne({
+            email: body.email
+        });
+    
+        if (existingUser) {
+            await UserModel.deleteOne({_id: existingUser._id});
+            return res.status(409).send({'error': 'Email já cadastrado.'});
+        }
+
+        // Tries to create the user
         const user = new UserModel({
             name: body.name,
             phone: body.phone,
@@ -101,11 +101,3 @@ module.exports.getUserOrders = async(req: Request, res: Response) => {
         return res.status(500).send(`Erro encontrar usuário: ${e}`);
     }
 };
-
-// {
-//     "name": "milena",
-//     "email": "milenaxd@gmail.com",
-//     "phone": "(24) 98374-6262",
-//     "isAdmin": true,
-//     "password": "123"
-// }
