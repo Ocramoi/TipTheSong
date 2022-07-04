@@ -1,40 +1,74 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import jwt, {Secret} from 'jsonwebtoken';
 import { logger } from '../logger';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const SECRET: Secret = process.env.SECRET ?? '';
 
 const UserModel = require('../models/user');
 
-module.exports.createUser = async (req: Request, res: Response) => {
-    const body = req.body;
+module.exports.register = async (req: Request, res: Response) => {
+    const {name, phone, email, password} = req.body;
 
     try {
-        // Check if the user exists already
-        const existingUser = await UserModel.findOne({
-            email: body.email
-        });
-    
+        // Checks if the email has already been registered
+        const existingUser = await UserModel.findOne({email: email});
         if (existingUser) {
-            await UserModel.deleteOne({_id: existingUser._id});
             return res.status(409).send({'error': 'Email já cadastrado.'});
         }
 
         // Tries to create the user
         const user = new UserModel({
-            name: body.name,
-            phone: body.phone,
-            email: body.email,   
-            password: await bcrypt.hash(body.password, 10),  
+            name: name,
+            phone: phone,
+            email: email,   
+            password: await bcrypt.hash(password, 10),  
             isAdmin: false,
             addresses: [],
             cards: [],
             orders: []
         });
 
+        // Saves the new user
         const userCreated = await user.save(user);
         return res.status(200).send(userCreated);
     } catch (e) { // If the is any errors with the data
         logger.error(e);
         return res.status(500).send(`Erro ao cadastrar usuário: ${e}`);
+    }
+};
+
+module.exports.login = async (req: Request, res: Response) => {
+    const {email, password} = req.body;
+
+    try {
+        // Tries to find an user with matching email
+        const user = await UserModel.findOne({email: email});
+        if (!user) {
+            return res.status(400).send("Erro ao logar usuário: Email não cadastrado");
+        }
+
+        // Check if given password matches user.password
+        const isValid =  await bcrypt.compare(password, user.password);
+        if (!isValid) {
+            return res.status(403).send("Erro ao logar usuário: Senha inválida");
+        }
+
+        const accessToken = jwt.sign(
+            {
+                id: user._id,
+                isAdmin: user.isAdmin,
+            }, 
+            SECRET, 
+            {expiresIn:"1d"}
+        );
+
+        return res.status(200).send({user, accessToken});
+    } catch (e) { // If the is any errors with the data
+        logger.error(e);
+        return res.status(500).send(`Erro ao logar usuário: ${e}`);
     }
 };
 
@@ -44,19 +78,21 @@ module.exports.getUserInfo = async(req: Request, res: Response) => {
         return res.status(200).send(user);
     } catch (e) {
         logger.error(e);
-        return res.status(500).send(`Erro encontrar usuário: ${e}`);
+        return res.status(500).send(`Erro carregar usuário: ${e}`);
     }
 };
 
 module.exports.updateUserInfo = async(req: Request, res: Response) => { 
     const {name, phone, email, currPassword, newPassword} = req.body;
     const id = req.params.id;
+    
     try {
         const user = await UserModel.findById(req.params.id);       
         const isValid =  await bcrypt.compare(currPassword, user.password);
 
+        // Check if given password matches user.password
         if (!isValid) {
-            return res.status(400).send("Senha inválida");
+            return res.status(400).send("Erro ao atualizar usuário: Senha inválida");
         }
     
         const updatedUser = await user.update({
@@ -68,7 +104,7 @@ module.exports.updateUserInfo = async(req: Request, res: Response) => {
         return res.status(200).send(updatedUser);
     } catch (e) {
         logger.error(e);
-        return res.status(500).send(`Erro encontrar usuário: ${e}`);
+        return res.status(500).send(`Erro ao atualizar usuário: ${e}`);
     }
 };
 
@@ -78,7 +114,7 @@ module.exports.getUserCards = async(req: Request, res: Response) => {
         return res.status(200).send(user.cards);
     } catch (e) {
         logger.error(e);
-        return res.status(500).send(`Erro encontrar usuário: ${e}`);
+        return res.status(500).send(`Erro ao encontrar usuário: ${e}`);
     }
 };
 
@@ -88,7 +124,7 @@ module.exports.getUserAddresses = async(req: Request, res: Response) => {
         return res.status(200).send(user.addresses);
     } catch (e) {
         logger.error(e);
-        return res.status(500).send(`Erro encontrar usuário: ${e}`);
+        return res.status(500).send(`Erro ao encontrar usuário: ${e}`);
     }
 };
 
@@ -98,6 +134,6 @@ module.exports.getUserOrders = async(req: Request, res: Response) => {
         return res.status(200).send(user.orders);
     } catch (e) {
         logger.error(e);
-        return res.status(500).send(`Erro encontrar usuário: ${e}`);
+        return res.status(500).send(`Erro ao encontrar usuário: ${e}`);
     }
 };

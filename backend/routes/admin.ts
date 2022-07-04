@@ -1,16 +1,17 @@
 import express, { Router } from 'express';
 
 const router: Router = express.Router();
+const{ verifyTokenAndAdmin } = require('./verifyToken');
 const adminController = require('../controllers/admin');
 
-router.get('/products', adminController.getProducts);
-router.get('/users', adminController.getUsers);
-router.get('/admins', adminController.getAdmins);
-router.post('/product/', adminController.createProduct);
-router.put('/product/:id', adminController.updateProduct);
-router.delete('/product/:id', adminController.deleteProduct);
-router.put('/promote/:id', adminController.promoteUser);
-router.put('/demote/:id', adminController.demoteUser);
-router.delete('/user/:id', adminController.deleteUser);
+router.get('/products', verifyTokenAndAdmin, adminController.getProducts);
+router.get('/users', verifyTokenAndAdmin, adminController.getUsers);
+router.get('/admins', verifyTokenAndAdmin, adminController.getAdmins);
+router.post('/product/', verifyTokenAndAdmin, adminController.createProduct);
+router.put('/product/:id', verifyTokenAndAdmin, adminController.updateProduct);
+router.delete('/product/:id', verifyTokenAndAdmin, adminController.deleteProduct);
+router.put('/promote/:id', verifyTokenAndAdmin, adminController.promoteUser);
+router.put('/demote/:id', verifyTokenAndAdmin, adminController.demoteUser);
+router.delete('/user/:id', verifyTokenAndAdmin, adminController.deleteUser);
 
 export default router;
