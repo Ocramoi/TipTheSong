@@ -1,13 +1,15 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import * as bodyparser from 'body-parser';
-import { dataSource } from './dataSource';
+import mongoose from 'mongoose';
 import { logger } from './logger';
 
 import router from './routes';
-import { exit } from 'process';
 
 dotenv.config();
+
+const CLUSTER_URL: string = process.env.CLUSTER_URL ?? '';
+const PORT: string = process.env.APP_PORT ?? '';
 
 const app: Express = express();
 
@@ -16,14 +18,12 @@ app.use(bodyparser.urlencoded());
 app.use(router);
 
 logger.info("Creation DB connection...");
-dataSource
-  .initialize()
-  .then(async () => {
-    app.listen(process.env.APP_PORT, () => {
-      logger.info(`Server running at :${process.env.APP_PORT}`);
+mongoose.connect(CLUSTER_URL);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    app.listen(PORT, () => {
+        console.log(`App listening at http://localhost:${PORT}`);
     });
-  })
-  .catch(err => {
-    logger.error(err)
-    exit(1);
-  });
+});
