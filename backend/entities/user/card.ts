@@ -1,9 +1,10 @@
-import { Entity, Column, ObjectIdColumn} from "typeorm";
+import { Entity, Column, ObjectIdColumn, ObjectID} from "typeorm";
+import { ObjectId } from "mongodb";
 
 @Entity()
 export class Card {
     @ObjectIdColumn()
-    id: number;
+    id: ObjectId;
 
     @Column()
     cardNumber: string;

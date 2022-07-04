@@ -1,4 +1,4 @@
-import { Entity, Column, ObjectIdColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, ObjectIdColumn, ManyToMany, JoinTable, ObjectID} from "typeorm";
 
 import { Address } from "./address";
 import { Card } from "./card";
@@ -7,7 +7,7 @@ import { Order } from "./order";
 @Entity()
 export class User {
     @ObjectIdColumn()
-    id: number;
+    _id: ObjectID;
 
     @Column()
     name: string;

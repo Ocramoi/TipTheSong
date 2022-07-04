@@ -4,7 +4,7 @@ import { Genre } from "../genre/genre";
 @Entity()
 export class Artist {
     @ObjectIdColumn()
-    id: number;
+    _id: number;
 
     @Column()
     name: string;
