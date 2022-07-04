@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
 import { logger } from '../logger';
 
 const UserModel = require('../models/user');
@@ -26,7 +25,7 @@ module.exports.createCard = async(req: Request, res: Response) => {
         return res.status(200).send(cardCreated);
     } catch (e) { // If the is any errors with the data
         logger.error(e);
-        return res.status(500).send(`Erro ao cadastrar cartão: ${e}`);
+        return res.status(500).send(`Error: ${e}`);
     }
 };
 
