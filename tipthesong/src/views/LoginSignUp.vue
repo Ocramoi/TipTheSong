@@ -4,26 +4,26 @@
             <h3>Já possui uma conta?</h3>
             <br />
             <form>
-                <label for="userMail">Nome de usuário ou email:</label>
+                <label for="lEmail">Email:</label>
                 <br />
                 <input
                     type="text"
                     class="inputFill"
-                    name="userMail"
-                    v-model="userMail"
+                    name="lEmail"
+                    v-model="lEmail"
                     required
                     placeholder="Seu nome de usuário/email..." />
 
                 <br />
                 <br />
 
-                <label for="userMail">Senha:</label>
+                <label for="lEmail">Senha:</label>
                 <br />
                 <input
                     type="password"
                     class="inputFill"
-                    name="userMail"
-                    v-model="passLogin"
+                    name="lEmail"
+                    v-model="lPassword"
                     required
                     placeholder="Sua senha..." />
 
@@ -45,14 +45,14 @@
         <div class="card">
             <h3>Ainda não possui conta no site? Cadastre-se agora</h3>
             <br />
-            <form method="POST" action="">
-                <label for="rMail">Endereço de email:</label>
+            <form>
+                <label for="rEmail">Endereço de email:</label>
                 <br />
                 <input
                     type="email"
                     class="inputFill"
-                    name="rMail"
-                    v-model="rMail"
+                    name="rEmail"
+                    v-model="rEmail"
                     required
                     placeholder="Email de cadastro..." />
 
@@ -61,25 +61,25 @@
 
                 <div class="inputDouble">
                     <div>
-                        <label for="rUser">Usuário:</label>
+                        <label for="rName">Nome:</label>
                         <br />
                         <input
                             type="text"
                             class="inputFill"
-                            name="rUser"
-                            v-model="rUSer"
+                            name="rName"
+                            v-model="rName"
                             required
-                            placeholder="Nome de usuário..." />
+                            placeholder="Nome..." />
                     </div>
 
                     <div>
-                        <label for="rTel">Telefone:</label>
+                        <label for="rPhone">Telefone:</label>
                         <br />
                         <input
                             type="tel"
                             class="inputFill"
-                            name="rTel"
-                            v-model="rTel"
+                            name="rPhone"
+                            v-model="rPhone"
                             required
                             placeholder="Telefone..." />
                     </div>
@@ -87,31 +87,31 @@
 
                 <br />
 
-                <label for="rPass">Senha:</label>
+                <label for="rPassword">Senha:</label>
                 <br />
                 <input
                     type="password"
                     class="inputFill"
-                    name="rPass"
-                    v-model="rPass"
+                    name="rPassword"
+                    v-model="rPassword"
                     placeholder="Senha de conta..." />
 
                 <br />
                 <br />
 
-                <label for="rConf">Confirmar senha:</label>
+                <label for="rConfirmPassword">Confirmar senha:</label>
                 <br />
                 <input
                     type="password"
                     class="inputFill"
-                    name="rConf"
-                    v-model="rConf"
+                    name="rConfirmPassword"
+                    v-model="rConfirmPassword"
                     placeholder="Repita a senha..." />
 
                 <br />
                 <br />
 
-                <button>
+                <button @click="register"  type="button">
                     Cadastrar
                 </button>
             </form>
@@ -125,34 +125,60 @@
      inject: ['notyf'],
      data() {
          return {
-             userMail: "",
-             passLogin: "",
+             lEmail: "",
+             lPassword: "",
              remember: false,
-             rMail: "",
-             rUser: "",
-             rTel: "",
-             rPass: "",
-             rConf: "",
+             rEmail: "",
+             rName: "",
+             rPhone: "",
+             rPassword: "",
+             rConfirmPassword: "",
          };
      },
      methods: {
          async login() {
              await this.$store.dispatch("auth", {
-                 user: this.userMail,
-                 pass: this.passLogin,
+                 email: this.lEmail,
+                 password: this.lPassword,
              });
-
-             console.log(this.$store.getters.getIsLogged);
-
              if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',
-                     message: "Erro no login!",
+                     message: "Erro ao logar!",
                  });
              } else {
                  this.notyf.open({
                      type: 'success',
                      message: "Logado com sucesso!",
+                 });
+                 this.$router.push("/profile");
+             }
+         },
+        async register() {
+            if (this.rPassword != this.rConfirmPassword) {
+                this.notyf.open({
+                     type: 'error',
+                     message: "Erro ao cadastrar: Senhas não batem!",
+                 });
+                return;
+            }
+
+             await this.$store.dispatch("register", {
+                 name: this.rName,
+                 phone: this.rPhone,
+                 email: this.rEmail,
+                 password: this.rPassword,
+
+             });
+             if (!this.$store.getters.getIsLogged) {
+                 this.notyf.open({
+                     type: 'error',
+                     message: "Erro ao cadastrar!",
+                 });
+             } else {
+                 this.notyf.open({
+                     type: 'success',
+                     message: "Cadastrado com sucesso!",
                  });
                  this.$router.push("/profile");
              }

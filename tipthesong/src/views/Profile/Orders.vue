@@ -36,7 +36,7 @@
      },
      computed: {
         orders() {
-            return this.$store.getters.getUserInfo.orders;
+            return this.$store.getters.getUser.orders;
         },
      },
  };

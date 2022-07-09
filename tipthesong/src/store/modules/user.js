@@ -3,183 +3,37 @@ import Cookies from 'js-cookie';
 
 // const JWT = () => Cookies.get("jwt");
 
-const defaultUsers = [
-  { // TODO virá do back
-    id: 1,
-    name: 'milena',
-    email: 'milenaxd@gmail.com',
-    phone: '(24) 98374-6262',
-    isAdmin: true,
-    pass: '123',
-    addresses: [
-      {
-        address: "Rua Paulo Americo",
-        name: "Milena Correa da Silva",
-        phone: "55+ 24 988380298",
-        country: "Brasil",
-        postalCode: "13564030",
-        complemment: "Apt. 16",
-        extra: "",
-        state: "SP",
-        city: "São Carlos",
-      },
-    ],
-    cards: [
-      [
-        "(Crédito) Mastercard terminando em 1234",
-        "Milena C. Silva",
-        "12/22",
-      ]
-    ],
-    orders: [
-      [
-          "pedido#1232",
-          "12/09/22",
-          "Concluido",
-          "R$ 30,00"
-      ],
-      [
-          "pedido#1232",
-          "12/02/22",
-          "Em andamento",
-          "R$ 24,00"
-      ],
-    ],
-  },
-  {
-    id: 2,
-    name: 'admin',
-    email: 'admin@gmail.com',
-    phone: '(24) 98374-6262',
-    isAdmin: true,
-    pass: 'admin',
-    addresses: [],
-    cards: [],
-    orders: [],
-  },
-  {
-    id: 3,
-    name: 'anonimo',
-    email: '123@gmail.com',
-    phone: '(24) 98374-6262',
-    isAdmin: false,
-    pass: '123',
-    addresses: [],
-    cards: [
-      [
-        "(Crédito) Mastercard terminando em 1234",
-        "Milena C. Silva",
-        "12/22",
-      ]
-    ],
-    orders: [],
-  },
-];
-
 const state = () => ({
   authReq: null,
-  userInfo: null,
+  user: null,
   unauthNotyf: false,
-  adminList: defaultUsers.filter(user => user.isAdmin),
+  userUpdated: false,
 });
 
 const mutations = {
   setAuthReq(state, value) {
     state.authReq = value;
   },
-  setUserInfo(state, info) {
-    state.userInfo = info;
-  },
-  setUserName(state, name) {
-    if (!state.logged) return;
-    state.userInfo.name = name;
-  },
-  setUserPhone(state, photo) {
-    if (state.logged)
-      state.userInfo.photo = photo;
-  },
-  setUserEmail(state, email) {
-    if (state.logged)
-      state.userInfo.email = email;
-  },
-  setUserPass(state, pass) {
-    if (state.logged)
-      state.userInfo.pass = pass;
+  setUser(state, info) {
+    state.user = info;
   },
   setUnauthNotyf(state, value) {
     state.unauthNotyf = value;
   },
-  addToUserInfoAddresses(state, address) {
-    if (state.logged)
-      state.userInfo.addresses.push(address);
-  },
-  addToUserInfoCards(state, card) {
-    if (state.logged)
-      state.userInfo.cards.push(card);
-  },
-  addToUserInfoOrders(state, order) {
-    if (state.logged)
-      state.userInfo.orders.push(order);
-  },
-  upsertAddress(state, payload) {
-    if (!state.logged) return;
-    console.log(payload);
-    if (payload.id !== null && payload.id !== undefined) {
-      state.userInfo.addresses[payload.id] = payload;
-      console.log("...");
-      return;
-    }
-    state.userInfo.addresses.push(payload);
-    console.log("??");
-  },
-  removeFromAdminList(state, admin) {
-    let idxModification = null;
-    for (let i = 0; i < state.adminList.length; ++i) {
-      let cur = state.adminList[i];
-      if (cur.id !== admin.id) continue;
-      idxModification = i; break;
-    }
-
-    if (idxModification === null) return;
-    state.adminList.splice(idxModification, 1);
-  },
-  upsertAdmin(state, admin) {
-    if (!admin?.id) {
-      admin.id = state.adminList.length + 1;
-      console.log(admin.id);
-      state.adminList.push(admin);
-      return;
-    } else {
-      console.log(admin.id);
-      let idxModification = null;
-      for (let i = 0; i < state.adminList.length; ++i) {
-        let cur = state.adminList[i];
-        if (cur.id !== admin.id) continue;
-        idxModification = i; break;
-      }
-      
-      if (idxModification === null) {
-        admin.id = state.adminList.length + 1;
-        state.adminList.push(admin);
-        return;
-      }
-
-      state.adminList[idxModification] = {
-        ...state.adminList[idxModification],
-        ...admin,
-      };
-    }
-  },
+  setUserUpdated(state, value) {
+    state.userUpdated = value;
+  }
 };
 
 const actions = {
-  async auth({ commit }, loginInfo) {
+  // Autenticates a existing user
+  async auth({ commit }, login) {
     commit('setAuthReq', false);
 
     await api.post(
       "user/login", {
-        email: loginInfo.user,
-        password: loginInfo.pass,
+        email: login.email,
+        password: login.password,
       }, /* {
         headers: {
           "Authorization": `Bearer ${JWT()}`,
@@ -192,65 +46,81 @@ const actions = {
                  expires: 1,
                  sameSite: 'strict',
                });
-               commit("setUserInfo", user);
+               commit("setUser", user);
                commit('setAuthReq', true);
              })
              .catch(err => {
                console.log(`Erro no login: ${err}`);
-               commit("setUserInfo", null);
+               commit("setUser", null);
                commit('setAuthReq', true);
              });
   },
-  async setUserInfo({ commit }, ) {
-    commit("setUserInfo", defaultUsers);
+
+  // Register a new user
+  async register({ commit }, register) {
+    commit('setAuthReq', false);
+
+    await api.post(
+      "user/register", {
+        name: register.name,
+        phone: register.phone,
+        email: register.email,
+        password: register.password,
+      }
+    )
+             .then(response => {
+               const { user, accessToken } = response.data;
+               Cookies.set("jwt", accessToken, {
+                 expires: 1,
+                 sameSite: 'strict',
+               });
+               commit("setUser", user);
+               commit('setAuthReq', true);
+             })
+             .catch(err => {
+               console.log(`Erro no login: ${err}`);
+               commit("setUser", null);
+               commit('setAuthReq', true);
+             });
   },
-  async setUserName({ commit }, { name }) {
-    commit("setUserName", name);
-  },
-  async setUserPhone({ commit }, { photo }) {
-    commit("setUserPhoto", photo);
-  },
-  async setUserEmail({ commit }, { email }) {
-    commit("setUserEmail", email);
-  },
-  async setUserPass({ commit }, { pass }) {
-    commit("setUserPass", pass);
-  },
+
+  // Logs out
   async logout({ commit }, ) {
-    commit("setUserInfo", null);
+    Cookies.remove("jwt");
+    commit("setUser", null);
   },
-  async unauthNotyf({ commit }, state) {
-    commit("setUnauthNotyf", state);
-  },
-  async addToUserInfoAddresses({commit}, {address}) {
-    commit("addToUserInfoAddresses", address);
-  },
-  async addToUserInfoCards({commit}, {card}) {
-    commit("addToUserInfoCards", card);
-  },
-  async addToUserInfoOrders({commit}, {order}) {
-    commit("addToUserInfoOrders", order);
-  },
-  async upsertAddress({ commit }, payload) {
-    commit("upsertAddress", payload);
-  },
-  async removeFromAdminList( { commit }, payload ) {
-    commit('removeFromAdminList', {
-      id: payload?.id,
-    });
-  },
-  async upsertAdmin( { commit }, payload) {
-    commit('upsertAdmin', payload)
-  },
+
+  async updateUserInfo({ commit, state }, updated) {
+    commit("setUserUpdated", false);
+
+    await api.put(`user/edit/${state.user?.id}`, 
+        {
+          name: updated.name,
+          phone: updated.phone,
+          email: updated.email,
+          curPassword: updated.curPassword,
+          newPassword: updated.newPassword,
+        }
+    )
+              .then(response => {
+               const { user } = response.data;
+               commit("setUser", user);
+               commit("setUserUpdated", true);
+             })
+             .catch(err => {
+               console.log(`Erro ao atualizar informações: ${err}`);
+               commit("setUserUpdated", false);
+             });
+  }
 };
 
 const getters = {
   getAuthReceived(state) { return state.authReq; },
-  getIsLogged(state) { return state.userInfo != null; },
-  getUserInfo(state) { return state.userInfo; },
+  getIsLogged(state) { return state.user != null; },
+  getUser(state) { return state.user; },
+  getUserUpdated(state) { return state.userUpdated; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
-  getPermDenied(state) { return !state?.userInfo?.isAdmin || true; },
-  getAdminList(state) { return state.adminList; },
+  getPermDenied(state) { return !state?.user?.isAdmin || true; },
 };
 
 export default {

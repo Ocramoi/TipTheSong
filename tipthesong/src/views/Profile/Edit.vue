@@ -107,48 +107,38 @@ export default {
     },
     computed: {
         user() {
-            return this.$store.getters.getUserInfo;
+            return this.$store.getters.getUser;
         }
     },
     methods: {
         async saveChanges() {
-            this.error = false;
-
-            if (this.newUserName) {
-                await this.$store.dispatch("setUserName", {name: this.newUserName});
-                this.newUserName = null;
-            }
-
-            if (this.newPhone) {
-                await this.$store.dispatch("setUserPhone", {phone: this.newPhone});
-                this.newPhone = null;
-            }
-
-            if (this.newEmail) {
-                await this.$store.dispatch("setUserEmail", {email: this.newEmail});
-                this.newEmail = null;
-            }
-
             if (this.newPassword) {
-                if (!this.confirmNewPassword || this.confirmNewPassword != this.newPassword) {
+                if (this.newPassword != this.confirmNewPassword) {
                     this.notyf.open({
-                        type: 'error',
-                        message: "Novas senhas não batem!",
-                    });
-                    this.error = true;
-                } else if (this.curPassword != this.user.pass) {
-                    this.notyf.open({
-                     type: 'error',
-                     message: "Senha antiga inválida!",
-                    });
-                    this.error = true;
-                } else {
-                    await this.$store.dispatch("setUserPass", {pass: this.newPassword});
-                    this.curPassword = null;
-                    this.newPassword = null;
-                    this.confirmNewPassword = null;
+                         type: 'error',
+                         message: "Erro ao salvar alterações: Senhas não batem!",
+                     });
+                    return;
                 }
-            }        
+            }
+
+            await this.$store.dispatch("updateUser", {
+                 name: this.newUserName ?? this.user.name,
+                 phone: this.newPhone ?? this.user.phone,
+                 email: this.newEmail ?? this.user.email,
+                 curPassword: this.curPassword,
+                 newPassword: this.newPassword,
+                 
+            });
+
+            if (!this.$store.getters.getUserUpdated) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao salvar alterações!",
+                     });
+            }
+            
+            window.scrollTo(0,0);
         }
     },
 }
