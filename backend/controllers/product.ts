@@ -10,7 +10,10 @@ module.exports.getProductById = async (req: Request, res: Response) => {
     
     try {
         const product = await ProductModel.findById(id);
-        return res.status(200).send(product);
+        if (product)
+            return res.status(200).send(product);
+        else
+            return res.status(400).send("Produto não encontrado");
     } catch (e) {
         logger.error(e);
         return res.status(500).send(`Erro ao encontrar o produto: ${e}`);

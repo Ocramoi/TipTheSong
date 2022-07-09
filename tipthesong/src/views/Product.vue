@@ -1,9 +1,9 @@
 <template>
-    <div class="container">
+    <div v-if="product" class="container">
         <button class="goBack" @click="this.$router.back()">
             <i class="fa-solid fa-arrow-left" /> 
         </button>
-        <h1>{{ product?.title }} - {{ product?.artists.join(', ') }} ({{ product?.launchDate }})</h1>
+        <h1>{{ product?.title }} - {{ product?.artists?.join(', ') }} ({{ product?.launchDate }})</h1>
 
         <div class="productInfoBox"> 
             <img :src="product?.frontCover">
@@ -32,6 +32,15 @@
         </div>
 
     </div>
+    <div class="notFound" v-else-if="loaded">
+        <div>
+            Produto não encontrado...
+            <br />
+            <router-link to="/products">
+                Volte para a página de produtos
+            </router-link>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -56,6 +65,9 @@
          },
          product() {
              return this.$store.getters.getCurrentProduct;
+         },
+         loaded() {
+             return this.$store.getters.getCurrentLoaded;
          },
      },
      watch: {
@@ -152,6 +164,19 @@
     top: 0;
     left: 0;
     margin: 1.5rem;
+ }
+
+ .notFound {
+     width: 100%;
+     height: 100%;
+     align-items: center;
+     justify-content: center;
+     display: flex;
+     font-size: 1.5em;
+ }
+
+ .notFound > div {
+     text-align: center;
  }
 
 </style>
