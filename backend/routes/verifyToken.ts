@@ -7,7 +7,7 @@ dotenv.config();
 const SECRET: Secret = process.env.SECRET ?? '';
 
 module.exports.verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    const token = (req.headers['Authorization'] as string)?.split(' ')[1];
+    const token = (req.headers['authorization'] as string)?.split(' ')[1];
     if (!token) {
         return res.status(401).send("Usuário não autenticado");
     }

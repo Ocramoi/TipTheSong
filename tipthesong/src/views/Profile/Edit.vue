@@ -112,20 +112,18 @@ export default {
     },
     methods: {
         async saveChanges() {
-            if (this.newPassword) {
-                if (this.newPassword != this.confirmNewPassword) {
-                    this.notyf.open({
-                         type: 'error',
-                         message: "Erro ao salvar alterações: Senhas não batem!",
-                     });
-                    return;
-                }
+            if (this.newPassword && this.newPassword != this.confirmNewPassword) {
+                this.notyf.open({
+                     type: 'error',
+                     message: "Erro ao salvar alterações: Senhas não batem!",
+                 });
+                return;
             }
 
-            await this.$store.dispatch("updateUser", {
-                 name: this.newUserName ?? this.user.name,
-                 phone: this.newPhone ?? this.user.phone,
-                 email: this.newEmail ?? this.user.email,
+            await this.$store.dispatch("updateUserInfo", {
+                 name: this.newUserName,
+                 phone: this.newPhone,
+                 email: this.newEmail,
                  curPassword: this.curPassword,
                  newPassword: this.newPassword,
                  
@@ -136,8 +134,12 @@ export default {
                          type: 'error',
                          message: "Erro ao salvar alterações!",
                      });
+            } else {
+                  this.notyf.open({
+                         type: 'success',
+                         message: "Alterações salvas com sucesso!",
+                     });
             }
-            
             window.scrollTo(0,0);
         }
     },

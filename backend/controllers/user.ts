@@ -98,25 +98,29 @@ module.exports.getUserInfo = async(req: Request, res: Response) => {
 };
 
 module.exports.updateUserInfo = async(req: Request, res: Response) => { 
-    const { name, phone, email, currPassword, newPassword } = req.body;
+    const { name, phone, email, curPassword, newPassword } = req.body;
     const id = req.params.id;
-    
+
     try {
         const user = await UserModel.findById(id);
         if (!user) throw new Error("User não encontrado");
-        const isValid =  await bcrypt.compare(currPassword, user.password || "");
+      
+        if (!curPassword || !newPassword) {
+            user.name = name && name.trim() !== "" ? name.trim() : user.name;
+            user.phone = phone && phone.trim() !== "" ? phone.trim() : user.phone;
+            user.email = email && email.trim() !== "" ? email.trim() : user.email;
+        } else {
+            const isValid =  await bcrypt.compare(curPassword, user.password || "");
 
-        // Check if given password matches user.password
-        if (!isValid) {
-            return res.status(400).send("Erro ao atualizar usuário: Senha inválida");
-        }
+            // Check if given password matches user.password
+            if (!isValid) {
+                return res.status(400).send("Erro ao atualizar usuário: Senha inválida");
+            }
 
-        const updatedUser = await user.update({
-            name: name,
-            phone: phone,
-            email: email,
-            password: await bcrypt.hash(newPassword, 10)});
-        
+            user.password = await bcrypt.hash(newPassword, 10);
+        }    
+
+        const updatedUser = await user.save();
         return res.status(200).send(updatedUser);
     } catch (e) {
         logger.error(e);

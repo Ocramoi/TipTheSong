@@ -1,7 +1,7 @@
 import api from '../api';
 import Cookies from 'js-cookie';
 
-// const JWT = () => Cookies.get("jwt");
+const JWT = () => Cookies.get("jwt");
 
 const state = () => ({
   authReq: null,
@@ -92,19 +92,22 @@ const actions = {
 
   async updateUserInfo({ commit, state }, updated) {
     commit("setUserUpdated", false);
-
-    await api.put(`user/edit/${state.user?.id}`, 
+    await api.put(`user/${state.user?._id}`, 
         {
           name: updated.name,
           phone: updated.phone,
           email: updated.email,
           curPassword: updated.curPassword,
           newPassword: updated.newPassword,
-        }
+        }, {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
     )
               .then(response => {
-               const { user } = response.data;
-               commit("setUser", user);
+               console.log(response.data);
+               commit("setUser", response.data);
                commit("setUserUpdated", true);
              })
              .catch(err => {
