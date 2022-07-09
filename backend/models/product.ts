@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
     title: String,
-    launchDate: String,
+    launchDate: Number,
     frontCover: String,
     artists: Array,
     genres: Array,
