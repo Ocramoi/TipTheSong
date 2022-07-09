@@ -42,7 +42,7 @@ export default {
     inject: ['notyf'],
     computed: {
         user() {
-            return this.$store.getters.getUserInfo;
+            return this.$store.getters.getUser;
         }
     },
      methods: {

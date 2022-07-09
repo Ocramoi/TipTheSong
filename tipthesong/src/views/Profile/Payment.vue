@@ -45,7 +45,7 @@
      },
      computed: {
          cards() {
-            return this.$store.getters.getUserInfo.cards;
+            return this.$store.getters.getUser.cards;
          },
      },
  };
