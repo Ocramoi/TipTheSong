@@ -22,7 +22,6 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: () => import(/* webpackChunkName: "Cart" */ '../views/Cart/MyCart'),
-    meta: { requiresLogin: true },
   },
   {
     path: '/login',
