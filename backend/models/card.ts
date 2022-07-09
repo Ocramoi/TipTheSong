@@ -8,5 +8,4 @@ const cardSchema = new mongoose.Schema({
     userId: mongoose.Types.ObjectId
 });
 
-module.exports = mongoose.model('Card', cardSchema);
-
+export default mongoose.model('Card', cardSchema);

@@ -1,28 +1,33 @@
-import express, { Request, Response } from 'express';
-import { logger } from '../logger';
+import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 
-const UserModel = require('../models/user');
-const AddressModel = require('../models/address');
+import { logger } from '../logger';
+import UserModel from '../models/user';
+import AddressModel from '../models/address';
 
 module.exports.createAddress = async(req: Request, res: Response) => { 
     const body = req.body;
    
     try {
         const user = await UserModel.findById(body.userId); 
-        
-        if (!user) {
-            return res.status(404).send("Error");
-        }
+        if (!user) return res.status(404).send("Error");
 
-        // Creates a new address
-        const address = new AddressModel(body);
-        const addressCreated = await address.save();
+        // Creates a new address TODO CHECK should create inside user
+        // const address = new AddressModel(body);
+        // const addressCreated = await address.save();
+        // if (!addressCreated) return res.status(500).send("Erro ao criar endereço");
         
         // Adds it to the user addresss
-        user.addresses.push(addressCreated._id);
-        await user.save();
-        
-        return res.status(200).send(addressCreated);
+        user.addresses.push(body);
+        user.save()
+            .then(userUpdated => {
+                return res.status(200).send(userUpdated);
+            })
+            .catch(err => {
+                logger.error(err);
+                return res.status(500).send(err);
+            });
+
     } catch (e) { // If the is any errors with the data
         logger.error(e);
         return res.status(500).send(`Error: ${e}`);
@@ -59,23 +64,29 @@ module.exports.deleteAddress = async(req: Request, res: Response) => {
     
     try {
         const address = await AddressModel.findById(id);
-        
-        if (!address) {
-            return res.status(404).send("Error");
-        }
+        if (!address) return res.status(400).send("Error");
 
         // Deletes address from addressSchema
-        await AddressModel.deleteOne({_id: id});
+        await AddressModel.deleteOne({ _id: id });
 
         // Deletes address from UserSchema
-        const owner = await UserModel.findById(address.userId);
-        let index = owner.addresses.indexOf(id);
-        if (index !== -1) {
-            owner.addresses.splice(index, 1);
-        }
-        await owner.save();
-
-        res.status(200).send("Endereço deletado com sucesso");
+        UserModel.findOneAndUpdate(
+            { _id: address.userId },
+            {
+                $pull: {
+                    addresses: {
+                        _id: id,
+                    },
+                },
+            }
+        )
+            .exec()
+            .then(updated => {
+                return res.status(200).send(updated);
+            })
+            .catch(err => {
+                return res.status(400).send(err);
+            });
     } catch (e) {
         logger.error(e);
         return res.status(500).send(`Error: ${e}`);

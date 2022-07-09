@@ -12,5 +12,4 @@ const addressSchema = new mongoose.Schema({
     userId: mongoose.Types.ObjectId
 });
 
-module.exports = mongoose.model('Address', addressSchema);
-
+export default mongoose.model('Address', addressSchema);

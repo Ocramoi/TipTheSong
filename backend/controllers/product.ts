@@ -1,9 +1,7 @@
-import express, { Request, Response } from 'express';
-import { userInfo } from 'os';
-import { send } from 'process';
+import { Request, Response } from 'express';
 import { logger } from '../logger';
 
-const ProductModel = require('../models/product');
+import ProductModel from '../models/product';
 
 module.exports.getProductById = async (req: Request, res: Response) => {
     const id = req.params.id;

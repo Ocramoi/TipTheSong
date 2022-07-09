@@ -6,9 +6,13 @@ const userSchema = new mongoose.Schema({
     email: String, 
     password: String,
     isAdmin: Boolean,
-    addresses: Array,
-    cards: Array,
+    addresses: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "Address" }
+    ],
+    cards: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "Card" }
+    ],
     orders: Array
 });
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema);

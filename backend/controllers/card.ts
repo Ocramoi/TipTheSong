@@ -1,8 +1,8 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { logger } from '../logger';
 
-const UserModel = require('../models/user');
-const CardModel = require('../models/card');
+import UserModel from '../models/user';
+import CardModel from '../models/card';
 
 module.exports.createCard = async(req: Request, res: Response) => { 
     const body = req.body;
@@ -10,19 +10,22 @@ module.exports.createCard = async(req: Request, res: Response) => {
     try {
         const user = await UserModel.findById(body.userId); 
         
-        if (!user) {
-            return res.status(404).send("Error");
-        }
+        if (!user) return res.status(404).send("Error");
 
-        // Creates a new card
-        const card = new CardModel(body);
-        const cardCreated = await card.save();
+        // Creates a new card TODO CHECK should create inside user
+        // const card = new CardModel(body);
+        // const cardCreated = await card.save();
         
         // Adds it to the user cards
-        user.cards.push(cardCreated._id);
-        await user.save();
-        
-        return res.status(200).send(cardCreated);
+        user.cards.push(body);
+        user.save()
+            .then(userUpdated => {
+                return res.status(200).send(userUpdated);
+            })
+            .catch(err => {
+                return res.status(500).send(err);
+            });
+
     } catch (e) { // If the is any errors with the data
         logger.error(e);
         return res.status(500).send(`Error: ${e}`);
@@ -47,22 +50,39 @@ module.exports.deleteCard = async(req: Request, res: Response) => {
     try {
         const card = await CardModel.findById(id);
         
-        if (!card) {
-            return res.status(404).send("Error");
-        }
+        if (!card) return res.status(404).send("Error");
 
         // Deletes card from CardSchema
         await CardModel.deleteOne({_id: id});
 
         // Deletes card from UserSchema
-        const owner = await UserModel.findById(card.userId);
-        let index = owner.cards.indexOf(id);
-        if (index !== -1) {
-            owner.cards.splice(index, 1);
-        }
-        await owner.save();
+        UserModel.findOneAndUpdate(
+            { _id: card.userId },
+            {
+                $pull: {
+                    cards: {
+                        _id: id,
+                    },
+                },
+            }
+        )
+            .exec()
+            .then(updated => {
+                return res.status(200).send(updated);
+            })
+            .catch(err => {
+                return res.status(400).send(err);
+            });
 
-        res.status(200).send("Cartão deletado com sucesso");
+        // TODO remove leagcy v
+        // const owner = await UserModel.findById(card.userId);
+        // let index = owner.cards.indexOf(id);
+        // if (index !== -1) {
+        //     owner.cards.splice(index, 1);
+        // }
+        // await owner.save();
+
+        // res.status(200).send("Cartão deletado com sucesso");
     } catch (e) {
         logger.error(e);
         return res.status(500).send(`Error: ${e}`);

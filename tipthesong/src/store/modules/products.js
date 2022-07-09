@@ -46,7 +46,6 @@ const actions = {
   // Loads a product for a product page
   async loadProduct({ commit }, id) {
     commit('setCurrentLoaded', false);
-    console.log(">>", id);
     await api.get(`product/${id}`)
              .then(response => {
                commit("setCurrentProduct", response.data)
