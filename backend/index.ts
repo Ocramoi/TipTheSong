@@ -2,6 +2,7 @@ import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import * as bodyparser from 'body-parser';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import { logger } from './logger';
 
 import router from './routes';
@@ -13,6 +14,7 @@ const PORT: string = process.env.APP_PORT ?? '';
 
 const app: Express = express();
 
+app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded());
 app.use(router);

@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="profilePhoto">
             <img src="../../assets/Profile/do-utilizador.png" />
-            <p> {{user.name }}#{{user.id || "0"}} </p>
+            <p> {{user?.name }}#{{user?.id || "0"}} </p>
         </div>
         <div class="profileMenu">
             <router-link
@@ -39,6 +39,7 @@
 
 <script>
 export default {
+    inject: ['notyf'],
     computed: {
         user() {
             return this.$store.getters.getUserInfo;

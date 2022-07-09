@@ -141,13 +141,15 @@
                  user: this.userMail,
                  pass: this.passLogin,
              });
-            
-            if (!this.$store.getters.getIsLogged) {
+
+             console.log(this.$store.getters.getIsLogged);
+
+             if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',
                      message: "Erro no login!",
                  });
-            } else {
+             } else {
                  this.notyf.open({
                      type: 'success',
                      message: "Logado com sucesso!",

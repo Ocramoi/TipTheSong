@@ -1,3 +1,8 @@
+import api from '../api';
+import Cookies from 'js-cookie';
+
+// const JWT = () => Cookies.get("jwt");
+
 const defaultUsers = [
   { // TODO virá do back
     id: 1,
@@ -72,26 +77,18 @@ const defaultUsers = [
 ];
 
 const state = () => ({
-  logged: false,
   authReq: null,
-  userInfo: {},
+  userInfo: null,
   unauthNotyf: false,
-  permDenied: false,
   adminList: defaultUsers.filter(user => user.isAdmin),
 });
 
 const mutations = {
-  setIsLogged(state, value) {
-    state.logged = value;
-  },
   setAuthReq(state, value) {
     state.authReq = value;
   },
   setUserInfo(state, info) {
-    if (state.logged)
-      state.userInfo = info;
-    else
-      state.userInfo = {};
+    state.userInfo = info;
   },
   setUserName(state, name) {
     if (!state.logged) return;
@@ -111,9 +108,6 @@ const mutations = {
   },
   setUnauthNotyf(state, value) {
     state.unauthNotyf = value;
-  },
-  setPermDenied(state, value) {
-    state.permDenied = value;
   },
   addToUserInfoAddresses(state, address) {
     if (state.logged)
@@ -182,28 +176,30 @@ const actions = {
   async auth({ commit }, loginInfo) {
     commit('setAuthReq', false);
 
-    // Searches for the user
-    var foundUser = null;
-    for (const defaultUser of defaultUsers) {
-      if ([defaultUser.name, defaultUser.email].includes(loginInfo.user) &&
-           defaultUser.pass == loginInfo.pass
-         ) {
-        foundUser = defaultUser;
-        break;
-      }
-    }
-
-    // In case no user info is matched in the default users, doesn't login
-    if (foundUser == null) {
-      commit('setIsLogged', false);
-      commit('setAuthReq', true);
-      return;
-    }
-
-    commit('setIsLogged', true);
-    commit('setAuthReq', true);
-    commit("setUserInfo", foundUser);
-    commit("setPermDenied", !foundUser.isAdmin)
+    await api.post(
+      "user/login", {
+        email: loginInfo.user,
+        password: loginInfo.pass,
+      }, /* {
+        headers: {
+          "Authorization": `Bearer ${JWT()}`,
+        }
+      }, */
+    )
+             .then(response => {
+               const { user, accessToken } = response.data;
+               Cookies.set("jwt", accessToken, {
+                 expires: 1,
+                 sameSite: 'strict',
+               });
+               commit("setUserInfo", user);
+               commit('setAuthReq', true);
+             })
+             .catch(err => {
+               console.log(`Erro no login: ${err}`);
+               commit("setUserInfo", null);
+               commit('setAuthReq', true);
+             });
   },
   async setUserInfo({ commit }, ) {
     commit("setUserInfo", defaultUsers);
@@ -221,8 +217,7 @@ const actions = {
     commit("setUserPass", pass);
   },
   async logout({ commit }, ) {
-    commit('setIsLogged', false);
-    commit("setUserInfo", {});
+    commit("setUserInfo", null);
   },
   async unauthNotyf({ commit }, state) {
     commit("setUnauthNotyf", state);
@@ -251,10 +246,10 @@ const actions = {
 
 const getters = {
   getAuthReceived(state) { return state.authReq; },
-  getIsLogged(state) { return state.logged; },
+  getIsLogged(state) { return state.userInfo != null; },
   getUserInfo(state) { return state.userInfo; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
-  getPermDenied(state) { return state.permDenied; },
+  getPermDenied(state) { return !state?.userInfo?.isAdmin || true; },
   getAdminList(state) { return state.adminList; },
 };
 
