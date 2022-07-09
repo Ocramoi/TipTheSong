@@ -22,7 +22,7 @@ module.exports.createProduct = async (req: Request, res: Response) => {
             extraInfo: body.extraInfo,
             price: body.price,
             amountInStock: body.amountInStock,
-            amountSold: body.amountSold
+            amountSold: 0
         });
         
         const createdProduct = await product.save(product);

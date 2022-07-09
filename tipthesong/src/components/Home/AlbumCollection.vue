@@ -3,7 +3,7 @@
         <h2>{{ title }}</h2>
         <n-carousel
             ref="carousel"
-            class="albumList"
+            class="productList"
             slides-per-view="auto"
             :centered-slides="true"
             effect="slide"
@@ -11,11 +11,11 @@
             <n-carousel-item
                 :style="`width: ${cardWidth + 2*cardMargin}px;`"
                 :space-between="cardMargin"
-                v-for="album in albuns"
-                :key="album?.id">
+                v-for="product in albuns"
+                :key="product?._id">
                 <ProductCard
                     :style="`width: ${cardWidth}px;`"
-                    :product="album" />
+                    :product="product" />
             </n-carousel-item>
 
             <template #dots="{ total, currentIndex, to }">
@@ -69,7 +69,7 @@
      padding: 10px;
  }
 
- .albumList {
+ .productList {
      width: 100%;
      padding-bottom: 10px;
  }
