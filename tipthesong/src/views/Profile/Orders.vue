@@ -36,7 +36,12 @@
      },
      computed: {
         orders() {
-            return this.$store.getters.getUser.orders;
+            return this.$store.getters.getUser?.orders?.map(order => [
+                order._id,
+                order.date,
+                order.status,
+                order.total,
+            ]) || [];
         },
      },
  };

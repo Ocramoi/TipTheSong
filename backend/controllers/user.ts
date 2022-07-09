@@ -14,7 +14,7 @@ module.exports.register = async (req: Request, res: Response) => {
 
     try {
         // Checks if the email has already been registered
-        const existingUser = await UserModel.findOne({email: email});
+        const existingUser = await UserModel.findOne({ email: email });
         if (existingUser) {
             return res.status(409).send({'error': 'Email já cadastrado.'});
         }
@@ -56,7 +56,11 @@ module.exports.login = async (req: Request, res: Response) => {
 
     try {
         // Tries to find an user with matching email
-        const user = await UserModel.findOne({email: email});
+        const user = await UserModel
+            .findOne({ email: email })
+            .populate("addresses")
+            .populate("cards")
+            .populate("orders");
         if (!user) {
             return res.status(400).send("Erro ao logar usuário: Email não cadastrado");
         }
@@ -74,10 +78,10 @@ module.exports.login = async (req: Request, res: Response) => {
                 isAdmin: user.isAdmin,
             }, 
             SECRET, 
-            {expiresIn:"1d"}
+            { expiresIn:"1d" }
         );
 
-        return res.status(200).send({user, accessToken});
+        return res.status(200).send({ user, accessToken });
     } catch (e) { // If the is any errors with the data
         logger.error(e);
         return res.status(500).send(`Erro ao logar usuário: ${e}`);
@@ -89,7 +93,8 @@ module.exports.getUserInfo = async(req: Request, res: Response) => {
         const user = await UserModel
             .findById(req.params.id)
             .populate("addresses")
-            .populate("cards");
+            .populate("cards")
+            .populate("orders");
         return res.status(200).send(user);
     } catch (e) {
         logger.error(e);
