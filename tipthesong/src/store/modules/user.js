@@ -7,6 +7,7 @@ const state = () => ({
   authReq: null,
   user: null,
   unauthNotyf: false,
+  userUpdated: false,
 });
 
 const mutations = {
@@ -18,10 +19,14 @@ const mutations = {
   },
   setUnauthNotyf(state, value) {
     state.unauthNotyf = value;
+  },
+  setUserUpdated(state, value) {
+    state.userUpdated = value;
   }
 };
 
 const actions = {
+  // Autenticates a existing user
   async auth({ commit }, login) {
     commit('setAuthReq', false);
 
@@ -50,6 +55,8 @@ const actions = {
                commit('setAuthReq', true);
              });
   },
+
+  // Register a new user
   async register({ commit }, register) {
     commit('setAuthReq', false);
 
@@ -76,17 +83,42 @@ const actions = {
                commit('setAuthReq', true);
              });
   },
-  
+
+  // Logs out
   async logout({ commit }, ) {
     Cookies.remove("jwt");
     commit("setUser", null);
   },
+
+  async updateUserInfo({ commit, state }, updated) {
+    commit("setUserUpdated", false);
+
+    await api.put(`user/edit/${state.user?.id}`, 
+        {
+          name: updated.name,
+          phone: updated.phone,
+          email: updated.email,
+          curPassword: updated.curPassword,
+          newPassword: updated.newPassword,
+        }
+    )
+              .then(response => {
+               const { user } = response.data;
+               commit("setUser", user);
+               commit("setUserUpdated", true);
+             })
+             .catch(err => {
+               console.log(`Erro ao atualizar informações: ${err}`);
+               commit("setUserUpdated", false);
+             });
+  }
 };
 
 const getters = {
   getAuthReceived(state) { return state.authReq; },
   getIsLogged(state) { return state.user != null; },
   getUser(state) { return state.user; },
+  getUserUpdated(state) { return state.userUpdated; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
   getPermDenied(state) { return !state?.user?.isAdmin || true; },
 };

@@ -60,10 +60,7 @@
      },
      computed: {
          _addresses() {
-             return this.$store
-                        .getters
-                        .getUserInfo
-                        .addresses;
+             return this.$store.getters.getUser.addresses;
          },
          addresses() {
              return this._addresses
