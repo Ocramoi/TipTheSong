@@ -31,9 +31,19 @@ module.exports.register = async (req: Request, res: Response) => {
             orders: []
         });
 
+        // creates the access token for the new user
+        const accessToken = jwt.sign(
+            {
+                id: user._id,
+                isAdmin: user.isAdmin,
+            }, 
+            SECRET, 
+            {expiresIn:"1d"}
+        );
+
         // Saves the new user
         const userCreated = await user.save(user);
-        return res.status(200).send(userCreated);
+        return res.status(200).send({user, accessToken});
     } catch (e) { // If the is any errors with the data
         logger.error(e);
         return res.status(500).send(`Erro ao cadastrar usuário: ${e}`);
@@ -56,6 +66,7 @@ module.exports.login = async (req: Request, res: Response) => {
             return res.status(403).send("Erro ao logar usuário: Senha inválida");
         }
 
+        // creates the access token for the logged user
         const accessToken = jwt.sign(
             {
                 id: user._id,
