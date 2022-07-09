@@ -4,7 +4,6 @@ const state = () => ({
   productList: null,
   currentProduct: null,
   currentLoaded: null,
-  sugestions: [],
   cartProducts: {},
   cartProductsLoaded: null,
 });
@@ -18,9 +17,6 @@ const mutations = {
   },
   setCurrentLoaded(state, cur) {
     state.currentLoaded = cur;
-  },
-  setSugestions(state, items) {
-    state.sugestions = items;
   },
   setCartProducts(state, items) {
     state.cartProducts = items;
@@ -48,25 +44,13 @@ const actions = {
     commit('setCurrentLoaded', false);
     await api.get(`product/${id}`)
              .then(response => {
-               commit("setCurrentProduct", response.data)
+               commit("setCurrentProduct", response.data);
              })
              .catch(err => {
                console.log(`Erro ao carregar produto: ${err}`);
                commit("setCurrentProduct", null);
              });
     commit('setCurrentLoaded', true);
-  },
-
-  // TODO deixar isso como uma função do back que é chamada ainda no load product, 
-  // ou salvar as sugestões como um atributo de product
-  async getSugestions({ commit, state }, id) { 
-    let shuffled = state.productList
-        .filter(p => p._id != id)
-        .map(value => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)  
-        .map(({ value }) => value)
-        .slice(0, 3);
-    commit('setSugestions', shuffled);
   },
 
   // Loads the cart with the products   
@@ -145,7 +129,6 @@ const getters = {
   getProductList(state) { return state.productList; },
   getCurrentProduct(state) { return state.currentProduct; },
   getCurrentLoaded(state) { return state.currentLoaded; },
-  getSugestions(state) { return state.sugestions; },
   getCartProducts(state) { return state.cartProducts; },
   getCartProductsLoaded(state) { return state.cartProductsLoaded; },
 };

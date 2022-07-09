@@ -57,9 +57,6 @@
      },
      async created() { this.loadFromId(); },
      computed: {
-         sugestions() {
-             return this.$store.getters.getSugestions;
-         },
          id() {
              return this.$route.params.idProduct;
          },
@@ -69,6 +66,9 @@
          loaded() {
              return this.$store.getters.getCurrentLoaded;
          },
+         sugestions() {
+             return this.product?.suggestions;
+         },
      },
      watch: {
          id() { this.loadFromId(); },
@@ -76,7 +76,6 @@
      methods: {
          loadFromId() {
              this.$store.dispatch('loadProduct', this.id);
-             this.$store.dispatch('getSugestions', this.id);
              window.scrollTo(0,0);
          },
          addToCart() {
