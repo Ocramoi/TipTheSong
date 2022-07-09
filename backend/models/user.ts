@@ -12,7 +12,9 @@ const userSchema = new mongoose.Schema({
     cards: [
         { type: mongoose.Schema.Types.ObjectId, ref: "Card" }
     ],
-    orders: Array
+    orders: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "Order" }
+    ],
 });
 
 export default mongoose.model('User', userSchema);
