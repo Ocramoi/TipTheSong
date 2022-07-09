@@ -90,28 +90,33 @@
                      id: id,
                      content: '<i class="fa-solid fa-trash"></i>',
                      style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
-                     class: "clickableIcon trashIcon",
+                     class: "clickableIcon",
                  },
                  {
                      content: this.createContent(id),
                      class: "outterContent",
                  },
                  this.products[id]?.price,
-                 this.cartList[id] || -1,
+                 {
+                     content: '<i class="fa-solid fa-minus-circle"></i>' + this.cartList[id] + '<i class="fa-solid fa-plus-circle"></i>',
+                     style: "display: flex; align-items: center; width: 100%; height: 100%; max-width: min-content; z-index: 10;",
+                     class: "clickableIcon",
+                 },
+                //  this.cartList[id] || -1, // show the amount of products
                  (this.cartList[id] || -1) * this.products[id]?.price,
              ]);
          },
      },
      methods: {
          createContent(id) {
-             return `<a href="/product/${id}" class="innerContent"><img src="${this.products[id]?.img}" /><div class="productContainer"><h3 style="margin:0;padding:0">${this.products[id]?.name}</h3><span>${this.products[id]?.shortDescription}</span></div></a>`;
+             return `<a href="/product/${id}" class="innerContent"><img src="${this.products[id]?.frontCover}" /><div class="productContainer"><h3 style="margin:0;padding:0">${this.products[id]?.title}</h3><span>${this.products[id]?.shortDescription}</span></div></a>`;
          },
          captureClick(id) {
              if (!id) return;
              console.log(id);
              this.$store.dispatch('removeFromCart', {
                  id: id,
-                 qnt: 1,
+                 qnt: this.cartList[id],
              });
          },
      },
@@ -234,6 +239,5 @@
  :deep(h3) {
     padding: 0;
  }
-
 
 </style>

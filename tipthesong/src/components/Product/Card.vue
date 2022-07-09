@@ -14,6 +14,16 @@
         <hr />
 
         <div class="interact" v-if="interact">
+            <button class="cartButton" type="button" @click="decrease">
+                <i class="fa fa-minus" aria-hidden="true"></i>
+            </button>
+            <p class="roundInfo"> {{ this.amount }} </p>
+            <button class="cartButton" type="button" @click="increase">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="interact" v-if="interact">
             <button class="cartButton" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>
             </button>
@@ -30,17 +40,26 @@
              type: Object,
              required: true,
          },
-         interact:  {
+         interact: {
              type: Boolean,
              required: false,
              default: true,
          },
      },
      methods: {
+         increase() {
+            this.amount++
+         },
+         decrease() {
+            if (this.amount - 1 < 1)
+                return
+            else
+                this.amount--
+         },
          addToCart() {
              this.$store.dispatch('addToCart', {
-                 id: this.product.id,
-                 qnt: 1,
+                 id: this.product._id,
+                 qnt: this.amount,
              });
          },
          goToCart() {
@@ -48,6 +67,11 @@
             this.$router.push('/cart')
          },
      },
+     data() {
+        return {
+            amount: 1,
+        }
+     }
  }
 </script>
 
@@ -140,6 +164,22 @@
 
 button {
     font-size: 0.775rem;
+}
+
+.roundInfo {
+    text-transform: uppercase;
+    border: 0;
+    background: var(--secondary-dark);
+    color: currentColor;
+    padding: 10px;
+    border-radius: 2rem;
+    font-weight: bold;
+    transition: 0.4s;
+    cursor: pointer;
+    width: max-content;
+    color: var(--white);
+    text-align: center;
+    width: 33%;
 }
 
 </style>

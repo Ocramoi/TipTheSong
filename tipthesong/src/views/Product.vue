@@ -11,6 +11,15 @@
                 <h2> R$ {{ product?.price.toFixed(2) }} </h2>
                 <p> {{ product?.longDescription }} </p>
                 <br/>
+                <div class="amountInfo">
+                    <button class="cartButton" type="button" @click="decrease">
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
+                    <p class="roundInfo"> {{ this.amount }} </p>
+                    <button class="cartButton" type="button" @click="increase">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
                 <div class="interact">
                     <button class="cartButton" @click="addToCart">
                         <i class="fa-solid fa-cart-plus"></i>
@@ -53,7 +62,9 @@
      },
      props: {},
      data() {
-         return {};
+         return {
+            amount: 1,
+         };
      },
      async created() { this.loadFromId(); },
      computed: {
@@ -74,14 +85,23 @@
          id() { this.loadFromId(); },
      },
      methods: {
+         increase() {
+            this.amount++
+         },
+         decrease() {
+            if (this.amount - 1 < 1)
+                return
+            else
+                this.amount--
+         },
          loadFromId() {
              this.$store.dispatch('loadProduct', this.id);
              window.scrollTo(0,0);
          },
          addToCart() {
              this.$store.dispatch('addToCart', {
-                 id: this.product.id,
-                 qnt: 1,
+                 id: this.product._id,
+                 qnt: this.amount,
              });
          },
          goToCart() {
@@ -176,6 +196,32 @@
 
  .notFound > div {
      text-align: center;
+ }
+
+ .amountInfo {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-evenly;
+     align-items: center;
+     width: 200px;
+     gap: 1rem;
+     padding-bottom: 0.5rem;
+ }
+
+ .roundInfo {
+    text-transform: uppercase;
+    border: 0;
+    background: var(--secondary-dark);
+    color: currentColor;
+    padding: 10px;
+    border-radius: 2rem;
+    font-weight: bold;
+    transition: 0.4s;
+    cursor: pointer;
+    width: max-content;
+    color: var(--white);
+    text-align: center;
+    width: 100%;
  }
 
 </style>
