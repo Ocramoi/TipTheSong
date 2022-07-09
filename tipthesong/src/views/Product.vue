@@ -3,13 +3,13 @@
         <button class="goBack" @click="this.$router.back()">
             <i class="fa-solid fa-arrow-left" /> 
         </button>
-        <h1>{{ product?.name }} - {{ product?.artists.join(', ') }} ({{ product?.released }})</h1>
+        <h1>{{ product?.title }} - {{ product?.artists.join(', ') }} ({{ product?.launchDate }})</h1>
 
         <div class="productInfoBox"> 
-            <img :src="product?.img">
+            <img :src="product?.frontCover">
             <div class="productInfoText">
                 <h2> R$ {{ product?.price.toFixed(2) }} </h2>
-                <p> {{ product?.description }} </p>
+                <p> {{ product?.longDescription }} </p>
                 <br/>
                 <div class="interact">
                     <button class="cartButton" @click="addToCart">

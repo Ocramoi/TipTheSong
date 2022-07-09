@@ -1,3 +1,5 @@
+import api from "../api";
+
 // TODO VALORES PADRÃO PARA TESTE LOCAL
 const defaultProducts = [
   {
@@ -108,7 +110,7 @@ const defaultProducts = [
 ];
 
 const state = () => ({
-  productList: defaultProducts, // TODO carregar do banco
+  productList: null,
   currentProduct: null,
   currentLoaded: null,
   sugestions: [],
@@ -121,7 +123,7 @@ const mutations = {
     state.productList = list;
   },
   setProductId(state, id) {
-    state.currentProduct = state.productList.find(product => product.id == id) || null;
+    state.currentProduct = state.productList.find(product => product._id == id) || null;
   },
   setCurrentLoaded(state, cur) {
     state.currentLoaded = cur;
@@ -134,96 +136,113 @@ const mutations = {
   },
   setCartProductsLoaded(state, cur) {
     state.cartProductsLoaded = cur;
-  },
-  addToProductList(state, product) {
-    state.productList.push(product);
-  },
-  removeFromProductList(state, product) {
-    let idxModification = null;
-    for (let i = 0; i < state.productList.length; ++i) {
-      let cur = state.productList[i];
-      if (cur.id !== product.id) continue;
-      idxModification = i; break;
-    }
-
-    if (idxModification === null) return;
-    state.productList.splice(idxModification, 1);
-  },
-  upsertAlbum(state, product) {
-    if (!product.id) {
-      product.id = state.productList.length + 1;
-      product.soldAmount = 0;
-      state.productList.push(product);
-      return;
-    } else {
-      let idxModification = null;
-      for (let i = 0; i < state.productList.length; ++i) {
-        let cur = state.productList[i];
-        if (cur.id !== product.id) continue;
-        idxModification = i; break;
-      }
-      
-      if (idxModification === null) {
-        product.id = state.productList.length + 1;
-        state.productList.push(product);
-        return;
-      }
-
-      state.productList[idxModification] = {
-        ...state.productList[idxModification],
-        ...product,
-      };
-    }
-    
   }
 };
 
 const actions = {
-  // loadProductList({ commit }, ) {}, // TODO carregar do banco
+  //Loads the product list for the products page
+  async loadProducts({ commit }) {
+    console.log("PRODUCTS");
+    await api.get("product/")
+      .then(productList => {
+        console.log
+        commit("setProductList", productList.data);
+      })
+      .catch(err => {
+        console.log(`Erro ao carregar lista de produtos: ${err}`);
+        commit("setProductList", defaultProducts);
+      });
+  }, 
+
+  // Loads a product for a product page
   async loadProduct({ commit }, id) {
     commit('setCurrentLoaded', false);
     commit('setProductId', id);
     commit('setCurrentLoaded', true);
   },
-  async getSugestions({ commit }, id) { // TODO vai ser feito pelo back
-    let shuffled = defaultProducts
-        .filter(p => p.id != id)
+
+  // TODO deixar isso como uma função do back que é chamada ainda no load product, 
+  // ou salvar as sugestões como um atributo de product
+  async getSugestions({ commit, state }, id) { 
+    let shuffled = state.productList
+        .filter(p => p._id != id)
         .map(value => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
+        .sort((a, b) => a.sort - b.sort)  
         .map(({ value }) => value)
         .slice(0, 3);
     commit('setSugestions', shuffled);
   },
-  async loadCart({ commit }, items) {
+
+  // Loads the cart with the products   
+  async loadCart({ commit, state }, items) {
     commit('setCartProductsLoaded', false);
+    
+    // Searches for ids that match 
+    // TODO melhor passar isso pro state
     const cartIds = Object.keys(items);
     let cartInfos = {};
     for (const id of cartIds) {
-      cartInfos[id] = defaultProducts.find(p => p.id == id);
+      cartInfos[id] = state.productList.find(p => p._id == id);
     }
+
     commit('setCartProducts', cartInfos);
     commit('setCartProductsLoaded', true);
   },
-  async removeFromProductList({ commit }, payload) {
-    commit('removeFromProductList', {
-      id: payload?.id,
-    });
-  },
-  async upsertAlbum( { commit }, payload) {
-    commit('upsertAlbum', {
-      id: payload?.id,
-      name: payload?.title,
-      released: payload?.launchDate,
-      img: payload?.frontCover,
+
+  // Adds a product to the product list
+  async addProduct( { dispatch }, payload) {
+    await api.post('admin/product/', {
+      title: payload?.title,
+      launchDate: payload?.launchDate,
+      frontCover: payload?.frontCover,
       artists: payload?.artists,
       genres: payload?.genres,
       shortDescription: payload?.shortDescription,
-      description: payload?.longDescription,
+      longDescription: payload?.longDescription,
       extraInfo: payload?.extraInfo,
       price: payload?.price,
       amountStock: payload?.amountInStock
     })
-  }
+    .then(() => {
+      dispatch("loadProducts");
+    })
+    .catch(err => {
+      console.log(`Erro ao adicionar produto da lista: ${err}`);
+    });
+  },
+
+  // Updates a product from the product list
+  async updateProduct( { dispatch }, payload) {
+    await api.put(`admin/product/${payload?.id}`, {
+      title: payload?.title,
+      launchDate: payload?.launchDate,
+      frontCover: payload?.frontCover,
+      artists: payload?.artists,
+      genres: payload?.genres,
+      shortDescription: payload?.shortDescription,
+      longDescription: payload?.longDescription,
+      extraInfo: payload?.extraInfo,
+      price: payload?.price,
+      amountStock: payload?.amountInStock
+    })
+    .then(() => {
+      dispatch("loadProducts");
+    })
+    .catch(err => {
+      console.log(`Erro ao adicionar produto da lista: ${err}`);
+    });
+  },
+
+  // Deletes a product from the product list
+  async deleteProduct({ dispatch }, payload) {
+    await api.delete(`admin/product/${payload?.id}`)
+      .then(() => {
+        dispatch("loadProducts");
+      })
+      .catch(err => {
+        console.log(`Erro ao excluir produto da lista: ${err}`);
+      });
+  }  
 };
 
 const getters = {

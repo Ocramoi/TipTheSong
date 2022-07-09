@@ -12,12 +12,12 @@
         <AlbumCollection
             v-for="(collection, idx) in collections"
             :key="idx"
-            :title="collection"
+            :title="collection"     
             :albuns="products" />
     </div>
 </template>
 
-<script type="text/javascript">
+<script type="text/javascript"> 
  import AlbumCollection from '../components/Home/AlbumCollection';
 
  export default {
@@ -45,6 +45,9 @@
              return this.$store.getters.getProductList;
          },
      },
+     created() {
+            this.$store.dispatch('loadProducts');
+     }
  };
 </script>
 

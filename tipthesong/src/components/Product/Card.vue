@@ -1,12 +1,12 @@
 <template>
     <div class="card">
-        <router-link :to="`/product/${product?.id}`">
-            <img class="image" :src="product?.img">
+        <router-link :to="`/product/${product?._id}`">
+            <img class="image" :src="product?.frontCover">
         </router-link>
 
-        <router-link :to="`/product/${product?.id}`">
+        <router-link :to="`/product/${product?._id}`">
             <div class="description">
-                <h3> {{ product?.name }} </h3>
+                <h3> {{ product?.title }} </h3>
                 <p> R${{ product?.price.toFixed(2) }} </p>
             </div>
         </router-link>
