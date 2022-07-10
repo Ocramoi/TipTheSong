@@ -150,6 +150,7 @@
 
 <script>
  export default {
+     inject: ['notyf'],
      props: {
          current: {
              type: Object,
@@ -223,6 +224,19 @@
                     price: this.price,
                     amountInStock: this.amountInStock
              });
+
+            if (this.$store.getters.getProductError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao adicionar produto!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Produto adicionado com sucesso!",
+                    });
+                this.close()
+            }
          },
          async updateProduct() {
              await this.$store.dispatch("updateProduct", {
@@ -238,6 +252,19 @@
                     price: this.price,
                     amountInStock: this.amountInStock
              });
+
+            if (this.$store.getters.getProductError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao atualizar produto!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Produto atualizado com sucesso!",
+                    });
+                this.close();
+            }
          }
 
 

@@ -22,6 +22,7 @@
  import FlexTable from '../../components/App/FlexTable.vue';
 
  export default {
+     inject: ['notyf'],
      name: "AdminAdmins",
      components: {
          FlexTable,
@@ -72,6 +73,18 @@
         },
         async demoteUser(id) {
             await this.$store.dispatch('demoteUser', { userId: id });
+
+            if (this.$store.getters.getUserError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao rebaixar usuário!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Usuário rebaixado com sucesso!",
+                });
+            }
         }
      }
  }

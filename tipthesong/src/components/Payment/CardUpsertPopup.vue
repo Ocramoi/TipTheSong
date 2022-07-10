@@ -88,17 +88,19 @@ export default {
             const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
             await this.$store.dispatch('addCard', validInfo);
 
-            if (!this.$store.getters.getUserLoaded) {
+            if (this.$store.getters.getUserError) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao editar endereço!",
-                     });
+                         message: "Erro ao adicionar cartão!",
+                    });
             } else {
-                  this.notyf.open({
+                this.notyf.open({
                          type: 'success',
-                         message: "Endereço editado com sucesso!",
-                     });
+                         message: "Cartão adicionado com sucesso!",
+                    });
+                this.$emit('togglePopup');
             }
+
         }
     }
 }

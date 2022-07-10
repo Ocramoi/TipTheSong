@@ -55,9 +55,21 @@
                 return this.deleteCard(id)
         },
         async deleteCard(id) {
-            this.$store.dispatch('deleteCard', {
+            await this.$store.dispatch('deleteCard', {
                 cardId: id
-            })
+            });
+
+            if (this.$store.getters.getUserError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao deletar cartão!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Cartão deletado com sucesso!",
+                    });
+            }
         },
      },
      computed: {

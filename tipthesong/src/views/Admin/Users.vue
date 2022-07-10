@@ -22,6 +22,7 @@
  import FlexTable from '../../components/App/FlexTable.vue';
 
  export default {
+     inject: ['notyf'],
      name: "AdminUsers",
      components: {
          FlexTable,
@@ -79,9 +80,33 @@
         },
         async deleteUser(id) {
             await this.$store.dispatch('deleteUser', { userId: id });
+           
+           if (this.$store.getters.getUserError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao deletar usuário!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Usuário deletado com sucesso!",
+                    });
+            }
         },
         async promoteUser(id) {
             await this.$store.dispatch('promoteUser', { userId: id });
+
+            if (this.$store.getters.getUserError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao promover usuário!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Usuário promovido com sucesso!",
+                    });
+            }
         }
      }
  }

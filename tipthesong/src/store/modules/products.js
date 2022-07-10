@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 const JWT = () => Cookies.get("jwt");
 
 const state = () => ({
+  productError: null,
   productList: null,
   currentProduct: null,
   currentLoaded: null,
@@ -26,6 +27,9 @@ const mutations = {
   },
   setCartProductsLoaded(state, cur) {
     state.cartProductsLoaded = cur;
+  },
+  setProductError(state, value) {
+    state.productError = value;
   }
 };
 
@@ -73,7 +77,9 @@ const actions = {
   },
 
   // Adds a product to the product list
-  async addProduct( { dispatch }, product) {
+  async addProduct( { dispatch, commit }, product) {
+    commit('setProductError', null);
+
     await api.post('admin/product/', {
       title: product?.title,
       launchDate: product?.launchDate,
@@ -93,14 +99,18 @@ const actions = {
     )
     .then(() => {
       dispatch("loadProducts");
+      commit('setProductError', null);
     })
     .catch(err => {
       console.log(`Erro ao adicionar produto da lista: ${err}`);
+      commit('setProductError', err);
     });
   },
 
   // Updates a product from the product list
-  async updateProduct( { dispatch }, { productId, ...product }) {
+  async updateProduct( { dispatch, commit }, { productId, ...product }) {
+    commit('setProductError', null);
+
     await api.put(`admin/product/${productId}`, {
       title: product?.title,
       launchDate: product?.launchDate,
@@ -120,14 +130,18 @@ const actions = {
     )
     .then(() => {
       dispatch("loadProducts");
+      commit('setProductError', null);
     })
     .catch(err => {
       console.log(`Erro ao adicionar produto da lista: ${err}`);
+      commit('setProductError', err);
     });
   },
 
   // Deletes a product from the product list
-  async deleteProduct({ dispatch }, { productId }) {
+  async deleteProduct({ dispatch, commit }, { productId }) {
+    commit('setProductError', null);
+
     await api.delete(`admin/product/${productId}`,
         {
           headers: {
@@ -137,9 +151,11 @@ const actions = {
     )
       .then(() => {
         dispatch("loadProducts");
+        commit('setProductError', null);
       })
       .catch(err => {
         console.log(`Erro ao excluir produto da lista: ${err}`);
+        commit('setProductError', err);  
       });
   }  
 };
@@ -150,6 +166,7 @@ const getters = {
   getCurrentLoaded(state) { return state.currentLoaded; },
   getCartProducts(state) { return state.cartProducts; },
   getCartProductsLoaded(state) { return state.cartProductsLoaded; },
+  getProductError(state) {return state.productError;}
 };
 
 export default {

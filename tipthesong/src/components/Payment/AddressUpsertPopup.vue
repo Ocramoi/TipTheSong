@@ -107,7 +107,7 @@
                             placeholder=""/>
                     </div>
                 </div>
-                <button type="button"  v-on="create ? {click: addAddress} : {click:editAddress}" @click="$emit('togglePopup')">{{ create ? "Adicionar" : "Editar" }}</button>
+                <button type="button"  v-on="create ? {click: addAddress} : {click:editAddress}">{{ create ? "Adicionar" : "Editar" }}</button>
             </form>
         </div>
     </div>
@@ -150,32 +150,34 @@
             const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
             await this.$store.dispatch('addAddress', validInfo);
 
-            if (!this.$store.getters.getUserLoaded) {
+           if (this.$store.getters.getUserError) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao editar endereço!",
-                     });
+                         message: "Erro ao adicionar endereço!",
+                    });
             } else {
-                  this.notyf.open({
+                this.notyf.open({
                          type: 'success',
-                         message: "Endereço editado com sucesso!",
-                     });
+                         message: "Endereço adicionado com sucesso!",
+                    });
+                this.$emit('togglePopup');
             }
          },
          async editAddress() {
             const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
             await this.$store.dispatch('updateAddress', {addressId: validInfo._id, ...validInfo});
 
-            if (!this.$store.getters.getUserLoaded) {
+            if (this.$store.getters.getUserError) {
                 this.notyf.open({
-                    type: 'error',
-                         message: "Erro ao salvar endereço!",
-                     });
+                         type: 'error',
+                         message: "Erro ao atualizar endereço!",
+                    });
             } else {
                 this.notyf.open({
-                    type: 'success',
-                         message: "Endereço salvo com sucesso!",
-                     });
+                         type: 'success',
+                         message: "Endereço atualizado com sucesso!",
+                    });
+                this.$emit('togglePopup');
             }
          },
          loadValues(payload) {

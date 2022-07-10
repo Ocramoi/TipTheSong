@@ -77,6 +77,11 @@ export default {
              }
          },
     },
+    beforeCreate() {
+        if (this.$store.getters.getIsLogged && !this.$store.getters.getPermDenied) {
+            this.$router.push({ name : 'AdminHomepage'});
+        }
+    },
 }
 </script>
 

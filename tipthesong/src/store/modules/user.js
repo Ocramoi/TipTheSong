@@ -4,16 +4,19 @@ import Cookies from 'js-cookie';
 const JWT = () => Cookies.get("jwt");
 
 const state = () => ({
+  userError: null,
   authReq: null,
   user: null,  
   userLoaded: false,
-  address: null,
   users: null,
   admins: null,
   unauthNotyf: false,
 });
 
 const mutations = {
+  setUserError(state, value) {
+    state.userError = value;
+  },
   setAuthReq(state, value) {
     state.authReq = value;
   },
@@ -25,9 +28,6 @@ const mutations = {
   },
   setUserLoaded(state, value) {
     state.userLoaded = value;
-  },
-  setAddress(state, value) {
-    state.address = value;
   },
   setAdmins(state, value) {
     state.admins = value;
@@ -150,7 +150,7 @@ const actions = {
 
   // Adds an card to a user
   async addCard({ commit, dispatch, state }, card) {
-    commit("setUserLoaded", false);
+    commit("setUserError", null);
 
     await api.post("card/", 
         {
@@ -167,15 +167,17 @@ const actions = {
     )
             .then(async () => {
                 await dispatch("loadUser");
+                commit("setUserError", null);
              })
             .catch(err => {  
-               console.log(`Erro ao adicionar cartão: ${err}`);
+                console.log(`Erro ao adicionar cartão: ${err}`);
+                commit("setUserError", err);
              });
   },
 
   // Deletes a card from a user
   async deleteCard({ commit, dispatch, state }, { cardId }) {
-    commit("setUserLoaded", false);
+    commit("setUserError", null);
 
     await api.delete(`card/${cardId}`,
         {
@@ -189,15 +191,17 @@ const actions = {
     )
             .then(async () => {
                 await dispatch("loadUser");
+                commit("setUserError", null);
              })
             .catch(err => {  
                console.log(`Erro ao deletar cartão: ${err}`);
+               commit("setUserError", err);
              });
   },
 
   // Adds an address to a user
   async addAddress({ commit, dispatch, state }, address) {
-    commit("setUserLoaded", false);
+    commit("setUserError", null);
 
     await api.post("address/", 
         {
@@ -218,15 +222,17 @@ const actions = {
     )
             .then(async () => {
                 await dispatch("loadUser");
+                commit("setUserError", null);
              })
             .catch(err => {  
-               console.log(`Erro ao adicionar endereço: ${err}`);
+                console.log(`Erro ao adicionar endereço: ${err}`);
+                commit("setUserError", err);
              });
   },
 
   // Deletes an address from a user
   async updateAddress({ commit, dispatch }, { addressId, ...updateAddress }) {
-    commit("setUserLoaded", false);
+    commit("setUserError", null);
     
     await api.put(`address/${addressId}`, 
         updateAddress, {
@@ -237,15 +243,17 @@ const actions = {
     )
             .then(async () => {
                 await dispatch("loadUser");
+                commit("setUserError", null);
              })
             .catch(err => {  
-               console.log(`Erro ao atualizar endereço: ${err}`);
+                console.log(`Erro ao atualizar endereço: ${err}`);
+                commit("setUserError", err);
              });
   },
 
   // Deletes a address from a user
   async deleteAddress({ commit, dispatch, state }, { addressId }) {
-    commit("setUserLoaded", false);
+    commit("setUserError", null);
 
     await api.delete(`address/${addressId}`,
         {
@@ -259,9 +267,11 @@ const actions = {
     )
             .then(async () => {
                 await dispatch("loadUser");
+                commit("setUserError", null);
              })
             .catch(err => {  
-               console.log(`Erro ao deletar endereço: ${err}`);
+                console.log(`Erro ao deletar endereço: ${err}`);
+                commit("setUserError", err);
              });
   },
 
@@ -327,7 +337,7 @@ const actions = {
 
   // Promotes an user to admin if the user that requested it is an admin
   async promoteUser({ dispatch, commit }, { userId }) {
-    commit("setUsers", null);
+    commit("setUserError", null);
     
     await api.put(`admin/promote/${userId}`, {},
         {
@@ -337,17 +347,18 @@ const actions = {
         },
     )
             .then(async () => {
-              dispatch("loadUsers");
+                dispatch("loadUsers");
+                commit("setUserError", null);
             })
             .catch(err => {  
-              console.log(`Erro ao promover usuário: ${err}`);
-              commit("setUsers", null);
-             });
+                console.log(`Erro ao promover usuário: ${err}`);
+                commit("setUserError", err);
+            });
   },
   
   // Promotes an user to admin if the user that requested it is an admin
   async demoteUser({ dispatch, commit }, { userId }) {
-    commit("setAdmins", null);
+    commit("setUserError", null);
     
     await api.put(`admin/demote/${userId}`, {},
         {
@@ -357,12 +368,13 @@ const actions = {
         },
     )
             .then(async () => {
-              dispatch("loadAdmins");
+                dispatch("loadAdmins");
+                commit("setUserError", null);
             })
             .catch(err => {  
               console.log(`Erro ao promover usuário: ${err}`);
-              commit("setAdmins", null);
-             });
+              commit("setUserError", err);
+            });
   },
 
 };
@@ -371,7 +383,7 @@ const getters = {
   getAuthReceived(state) { return state.authReq; },
   getIsLogged(state) { return state.user != null; },
   getUser(state) { return state.user; },
-  getAddress(state) { return state.address; },
+  getUserError(state) { return state.userError; },
   getUserLoaded(state) { return state.userLoaded; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
   getPermDenied(state) { return !state.user.isAdmin; },

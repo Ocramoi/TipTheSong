@@ -30,6 +30,7 @@
  import AlbumUpsertPopup from '../../components/Admin/AlbumUpsertPopup';
 
  export default {
+     inject: ['notyf'],
      name: "AdminProducts",
      components: {
          FlexTable,
@@ -101,6 +102,18 @@
          },
          async deleteProduct(id) {
             await this.$store.dispatch('deleteProduct', { productId: id });
+
+            if (this.$store.getters.getProductError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao deletar produto!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Produto deletado com sucesso!",
+                    });
+            }
          },
      },
  }

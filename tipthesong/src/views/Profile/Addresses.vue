@@ -66,9 +66,21 @@
              }
          },
          async deleteAddress(id) {
-            this.$store.dispatch('deleteAddress', {
+            await this.$store.dispatch('deleteAddress', {
                 addressId: id,
             });
+
+            if (this.$store.getters.getUserError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao deletar endereço!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Endereço deletado com sucesso!",
+                    });
+            }
          }
      },
      computed: {
