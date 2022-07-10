@@ -12,15 +12,15 @@
                 <h2>FORMA DE PAGAMENTO</h2>
                 <form id="paymentMethods">
                     <h3 style="grid-column: span 4">Seus Cartões</h3>
-                    <p v-if="mycards != null && mycards.lenght > 0"></p>
-                    <p v-if="mycards != null && mycards.lenght > 0"></p>
-                    <p v-if="mycards != null && mycards.lenght > 0">Nome no cartão</p>
-                    <p v-if="mycards != null && mycards.lenght > 0">Data de vencimento</p>
-                    <template v-for="card in mycards" :key="card.id">
-                        <input type="radio" v-model="selectedPaymentMethod" :name="card.name" v-bind:value="card.id">
-                        <p> {{card.name}}</p>
-                        <p> {{card.owner}}</p>
-                        <p> {{card.dueDate}} </p>
+                    <p v-if="cards != null && cards.length > 0"></p>
+                    <p v-if="cards != null && cards.length > 0"></p>
+                    <p v-if="cards != null && cards.length > 0">Nome no cartão</p>
+                    <p v-if="cards != null && cards.length > 0">Data de vencimento</p>
+                    <template v-for="card in cards" :key="card._id">
+                        <input type="radio" v-model="selectedPaymentMethod" :name="card.cardNumber" v-bind:value="card._id">
+                        <p> {{card.cardNumber}}</p>
+                        <p> {{card.ownerName}}</p>
+                        <p> {{card.dueData}} </p>
                     </template>
                     <a href="#" style="grid-column: span 4" v-on:click="cardPopup = true">+ Adicionar um cartão</a>
                     <CardUpsertPopup v-if="cardPopup" @togglePopup="TriggerCardPopup" />
@@ -41,15 +41,16 @@
             <div class="card">
                 <h2>ENDEREÇO DE ENTREGA</h2>
                 <form id="addresses">
-                    <h3 style="grid-column: span 3">Seus Endereços</h3>
-                    <p v-if="myaddresses != null && myaddresses.lenght > 0"></p>
-                    <p v-if="myaddresses != null && myaddresses.lenght > 0">Nome</p>
-                    <p v-if="myaddresses != null && myaddresses.lenght > 0">Telefone</p>
-                    <template v-for="address in myaddresses" :key="address.id">
-                        <input type="radio" v-model="selectedAddress" :name="address.info" v-bind:value="address.id">
-                        <p> {{address.info}}</p>
-                        <p> {{address.refName}}</p>
-                        <p> {{address.refPhone}} </p>
+                    <h3 style="grid-column: span 4">Seus Endereços</h3>
+                    <p v-if="addresses != null "></p>
+                    <p v-if="addresses != null && addresses.length > 0"></p>
+                    <p v-if="addresses != null && addresses.length > 0">Nome</p>
+                    <p v-if="addresses != null && addresses.length > 0">Telefone</p>
+                    <template v-for="address in addresses" :key="address._id">
+                        <input type="radio" v-model="selectedAddress" :name="address.address" v-bind:value="address._id">
+                        <p> {{address.address}}</p>
+                        <p> {{address.name}}</p>
+                        <p> {{address.phone}} </p>
                     </template>
                     <a href="#" style="grid-column: span 3" v-on:click="addressPopup = true">+ Adicionar um endereço de entrega</a>
                     <AddressUpsertPopup v-if="addressPopup" @togglePopup="TriggerAddressPopup" />
@@ -80,20 +81,6 @@ export default {
             addressPopup: false,
             selectedPaymentMethod: null,
             selectedAddress: null,
-            mycards: [
-                {
-                    id: '111',
-                    name: "(Crédito) Mastercard terminando em 1234",
-                    owner: "MILENA C SILVA",
-                    dueDate: "12/22",
-                },
-                {
-                    id: '121',
-                    name: "(Crédito) Mastercard terminando em 1234",
-                    owner: "MILENA C SILVA",
-                    dueDate: "12/22",
-                }
-            ],
         }
     },
     methods: {
@@ -103,6 +90,27 @@ export default {
         TriggerAddressPopup() {
             this.addressPopup = !this.addressPopup;
         },
+    },
+    computed: {
+        cards() {
+            return this.$store.getters.getUser?.cards.map(card => 
+                card = {
+                    _id: card._id,
+                    cardNumber: card.cardNumber.substr(-4),
+                    ownerName: card.ownerName,     
+                    dueData: card.dueData,
+                });
+         },
+
+        addresses() {
+            return this.$store.getters.getUser?.addresses.map(address => 
+                address = {
+                    _id: address._id,
+                    address: address.address,
+                    name: address.name,
+                    phone: address.phone,
+                });
+         },
     }
 }
 </script>
@@ -134,7 +142,7 @@ export default {
 }
 #addresses {
     display: grid;
-    grid-template-columns: 1.25rem repeat(2, auto);
+    grid-template-columns: 1.25rem repeat(3, auto);
     column-gap: 0.5rem;
 }
 

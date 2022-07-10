@@ -57,7 +57,7 @@
                     content: card.ownerName,     
                 }, {
                     id: card._id,
-                    content:card.dueDate,
+                    content: card.dueData,
                 }]);
          },
      },

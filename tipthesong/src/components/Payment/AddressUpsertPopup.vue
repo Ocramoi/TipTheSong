@@ -107,7 +107,7 @@
                             placeholder=""/>
                     </div>
                 </div>
-                <button type="button" class="addBtn" v-on="create ? {click: addAddress} : {click:editAddress}">{{ create ? "Adicionar" : "Editar" }}</button>
+                <button type="button"  v-on="create ? {click: addAddress} : {click:editAddress}">{{ create ? "Adicionar" : "Editar" }}</button>
             </form>
         </div>
     </div>
@@ -229,8 +229,4 @@
      width: 100%;
  }
 
-
- .addBtn {
-     height: min-content;
- }
 </style>

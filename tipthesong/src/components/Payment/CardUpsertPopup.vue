@@ -23,13 +23,13 @@
                 </div>
 
                 <div>
-                <label for="dueDate">Data de Validade</label>
+                <label for="dueData">Data de Validade</label>
                 <br>
                 <input
                     type="text"
-                    name="dueDate"
+                    name="dueData"
                     class="inputFill"
-                    v-model="info.dueDate"
+                    v-model="info.dueData"
                     required
                     placeholder="mm/yyyy"/>
                 </div>
@@ -77,7 +77,7 @@ export default {
         return {
             info: {
                 cardNumber: null,
-                dueDate: null,
+                dueData: null,
                 ownerName: null,
                 securityCode: null
             }
@@ -138,4 +138,5 @@ form {
 label {
     margin-bottom: 10px;
 }
+
 </style>
