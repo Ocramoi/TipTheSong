@@ -75,16 +75,6 @@ module.exports.deleteCard = async(req: Request, res: Response) => {
             .catch(err => {
                 return res.status(400).send(err);
             });
-
-        // TODO remove leagcy v
-        // const owner = await UserModel.findById(card.userId);
-        // let index = owner.cards.indexOf(id);
-        // if (index !== -1) {
-        //     owner.cards.splice(index, 1);
-        // }
-        // await owner.save();
-
-        // res.status(200).send("Cartão deletado com sucesso");
     } catch (e) {
         logger.error(e);
         return res.status(500).send(`Error: ${e}`);

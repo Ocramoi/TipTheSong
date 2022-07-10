@@ -174,13 +174,16 @@ const actions = {
   },
 
   // Deletes a card from a user
-  async deleteCard({ commit, dispatch }, { cardId }) {
+  async deleteCard({ commit, dispatch, state }, { cardId }) {
     commit("setUserLoaded", false);
 
     await api.delete(`card/${cardId}`,
         {
           headers: {
             "authorization": `Bearer ${JWT()}`,
+          },
+          data: {
+            userId: state.user._id
           }
         },
     )
@@ -221,24 +224,6 @@ const actions = {
              });
   },
 
-  // Gets an address from user
-  async getAddress({ commit }, { addressId }) {
-    await api.get(`address/${addressId}`,
-        {
-          headers: {
-            "authorization": `Bearer ${JWT()}`,
-          }
-        }
-    )
-            .then(response => {
-              commit("setAddress", response.data);
-            })
-            .catch(err => {  
-              console.log(`Erro encontrar endereço: ${err}`);
-              commit("setAddress", null);
-             });
-  },
-
   // Deletes an address from a user
   async updateAddress({ commit, dispatch }, { addressId, ...updateAddress }) {
     commit("setUserLoaded", false);
@@ -259,13 +244,16 @@ const actions = {
   },
 
   // Deletes a address from a user
-  async deleteAddress({ commit, dispatch }, { addressId }) {
+  async deleteAddress({ commit, dispatch, state }, { addressId }) {
     commit("setUserLoaded", false);
 
     await api.delete(`address/${addressId}`,
         {
           headers: {
             "authorization": `Bearer ${JWT()}`,
+          },
+          data: {
+            userId: state.user._id
           }
         },
     )

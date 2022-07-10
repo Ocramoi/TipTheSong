@@ -29,13 +29,13 @@
      name: "ProfilePayment",
      data() {
          return {
+             cardPopup: false,
              tableTitles: [
                  "",
                  "Nome do cartão",
                  "Titular",
                  "Vencimento",
              ],
-             cardPopup: false,
          };
      },
      components: {
@@ -56,7 +56,7 @@
         },
         async deleteCard(id) {
             this.$store.dispatch('deleteCard', {
-                cardId: id,
+                cardId: id
             })
         },
      },
