@@ -51,7 +51,7 @@
          };
      },
      async created() {
-        this.$store.dispatch('loadProducts');
+        await this.$store.dispatch('loadProducts');
      },
      computed: {
          productList() {
@@ -100,9 +100,7 @@
              }
          },
          async deleteProduct(id) {
-            await this.$store.dispatch('deleteProduct', {
-                 productId: id,
-             });
+            await this.$store.dispatch('deleteProduct', { productId: id });
          },
      },
  }
