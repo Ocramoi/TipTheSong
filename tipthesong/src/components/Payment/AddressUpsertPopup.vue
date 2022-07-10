@@ -107,7 +107,7 @@
                             placeholder=""/>
                     </div>
                 </div>
-                <button type="button"  v-on="create ? {click: addAddress} : {click:editAddress}">{{ create ? "Adicionar" : "Editar" }}</button>
+                <button type="button"  v-on="create ? {click: addAddress} : {click:editAddress}" @click="$emit('togglePopup')">{{ create ? "Adicionar" : "Editar" }}</button>
             </form>
         </div>
     </div>
@@ -190,7 +190,7 @@
                          this.info[key] = null;
                      });
                  console.log(this.info);
-                console.log(Object.entries(this.info));
+                 console.log(Object.entries(this.info));
                  this.create = true;
              }
          },

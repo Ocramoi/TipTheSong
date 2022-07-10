@@ -5,8 +5,9 @@
             <div class="profileBox">
                 <h2> MEUS ENDEREÇOS </h2>
                 <FlexTable
-                    @clicked="handleEvent"
                     v-if="addresses.length"
+                    @clicked="handleEvent"
+                    class="flexTable"
                     :titles="tableTitles"
                     :values="addresses" />
                 <span v-else>Nenhum endereço cadastrado por enquanto!</span>
@@ -34,9 +35,10 @@
          return {
              addressPopup: false,
              tableTitles: [
+                 "", 
                  "Endereço",
                  "Nome",
-                 "Telefone"
+                 "Telefone",
              ],
              current: null,
          };
@@ -52,12 +54,24 @@
          },
          handleEvent(e) {
              if (e == null) return;
-             this.current = {
-                 id: e,
-                 ...this._addresses.find(address => address._id == e),
-             };
-             this.addressPopup = true;
+
+             const [action, id] = e;
+             if (action == 'upsert') {
+                 this.current = {
+                     id: id,
+                     ...this._addresses.find(address => address._id == id),
+                 };
+                this.addressPopup = true;
+             } else if (action == 'delete') {
+                return this.deleteAddress(id)
+             }
          },
+         // Tá dando erro pra deletar o endereço do banco
+         async deleteAddress(id) {
+            this.$store.dispatch('deleteAddress', {
+                addressId: id,
+            });
+         }
      },
      computed: {
          _addresses() {
@@ -65,16 +79,23 @@
          },
          addresses() {
             return this._addresses.map(address =>
-                [{
+            [
+                {
+                     id: ["delete", address._id],
+                     content: '<i class="fa-solid fa-trash"></i>',
+                     style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
+                     class: "clickableIcon trashCan",
+                },
+                {
                     content: address.address,
-                    id: address._id,
+                    id: ['upsert', address._id],
                 }, {
                     content: address.name,
-                    id: address._id,
+                    id: ['upsert', address._id],
                 }, {
                     content: address.phone,
-                    id: address._id,
-                },
+                    id: ['upsert', address._id],
+                }
             ]);
          },
      },
