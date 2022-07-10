@@ -65,7 +65,6 @@
                 return this.deleteAddress(id)
              }
          },
-         // Tá dando erro pra deletar o endereço do banco
          async deleteAddress(id) {
             this.$store.dispatch('deleteAddress', {
                 addressId: id,
