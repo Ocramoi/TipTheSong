@@ -7,7 +7,6 @@
                 <FlexTable
                     v-if="addresses.length"
                     @clicked="handleEvent"
-                    class="flexTable"
                     :titles="tableTitles"
                     :values="addresses" />
                 <span v-else>Nenhum endereço cadastrado por enquanto!</span>
@@ -79,14 +78,12 @@
          },
          addresses() {
             return this._addresses.map(address =>
-            [
-                {
+                [{
                      id: ["delete", address._id],
                      content: '<i class="fa-solid fa-trash"></i>',
                      style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
                      class: "clickableIcon trashCan",
-                },
-                {
+                }, {
                     content: address.address,
                     id: ['upsert', address._id],
                 }, {
@@ -95,8 +92,7 @@
                 }, {
                     content: address.phone,
                     id: ['upsert', address._id],
-                }
-            ]);
+                }]);
          },
      },
  }
