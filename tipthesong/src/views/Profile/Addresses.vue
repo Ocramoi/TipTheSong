@@ -10,8 +10,8 @@
                     :titles="tableTitles"
                     :values="addresses" />
                 <span v-else>Nenhum endereço cadastrado por enquanto!</span>
-                <button @click="current = null; addressPopup = true">
-                    Adicionar Endereço
+                <button class="addBtn" @click="current = null; addressPopup = true">
+                    <i class="fa-solid fa-plus"></i>
                 </button>
                 <AddressUpsertPopup
                     v-show="addressPopup"
@@ -28,6 +28,7 @@
  import AddressUpsertPopup from '../../components/Payment/AddressUpsertPopup.vue'
 
  export default {
+     inject: ['notyf'],
      name: "ProfileAddresses",
      data() {
          return {
@@ -53,29 +54,28 @@
              if (e == null) return;
              this.current = {
                  id: e,
-                 ...this._addresses[e],
+                 ...this._addresses.find(address => address._id == e),
              };
              this.addressPopup = true;
          },
      },
      computed: {
          _addresses() {
-             return this.$store.getters.getUser.addresses;
+            return this.$store.getters.getUser?.addresses
          },
          addresses() {
-             return this._addresses
-                        .map((address, idx) => [
-                            {
-                                content: address.address,
-                                id: idx,
-                            }, {
-                                content: address.name,
-                                id: idx,
-                            }, {
-                                content: address.phone,
-                                id: idx,
-                            },
-                        ]);
+            return this._addresses.map(address =>
+                [{
+                    content: address.address,
+                    id: address._id,
+                }, {
+                    content: address.name,
+                    id: address._id,
+                }, {
+                    content: address.phone,
+                    id: address._id,
+                },
+            ]);
          },
      },
  }

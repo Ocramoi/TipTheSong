@@ -12,12 +12,14 @@ module.exports.createCard = async(req: Request, res: Response) => {
         
         if (!user) return res.status(404).send("Error");
 
-        // Creates a new card TODO CHECK should create inside user
-        // const card = new CardModel(body);
-        // const cardCreated = await card.save();
+        // Creates a new card 
+        const card = new CardModel(body);
+        const cardCreated = await card.save();
+        if (!cardCreated) return res.status(500).send("Erro ao criar cartão");
         
-        // Adds it to the user cards
-        user.cards.push(body);
+        // Adds it to the user addresss
+        // @ts-ignore
+        user.cards = [...user.cards, cardCreated._id];
         user.save()
             .then(userUpdated => {
                 return res.status(200).send(userUpdated);

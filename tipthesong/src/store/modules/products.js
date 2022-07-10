@@ -58,7 +58,7 @@ const actions = {
     commit('setCartProductsLoaded', false);
     
     // Searches for ids that match 
-    // TODO melhor passar isso pro state
+    // TODO melhor passar isso pro mutations
     const cartIds = Object.keys(items);
     let cartInfos = {};
     for (const id of cartIds) {

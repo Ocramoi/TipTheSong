@@ -19,6 +19,7 @@
  import FlexTable from '../../components/App/FlexTable.vue';
 
  export default {
+     inject: ['notyf'],
      name: "ProfileOrders",
      data() {
          return {

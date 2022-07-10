@@ -17,7 +17,7 @@
                     type="text"
                     name="cardNumber"
                     class="inputFill"
-                    v-model="cardNumber"
+                    v-model="info.cardNumber"
                     required
                     placeholder="xxxx xxxx xxxx xxxx"/>
                 </div>
@@ -29,7 +29,7 @@
                     type="text"
                     name="dueDate"
                     class="inputFill"
-                    v-model="dueDate"
+                    v-model="info.dueDate"
                     required
                     placeholder="mm/yyyy"/>
                 </div>
@@ -43,7 +43,7 @@
                     type="text"
                     name="ownerName"
                     class="inputFill"
-                    v-model="ownerName"
+                    v-model="info.ownerName"
                     required
                     placeholder="Nome no Cartão"/>
                 </div>
@@ -57,7 +57,7 @@
                     type="text"
                     name="securityCode"
                     class="inputFill"
-                    v-model="securityCode"
+                    v-model="info.securityCode"
                     required
                     placeholder="xxx"/>
                 </div>
@@ -72,21 +72,33 @@
 
 <script>
 export default {
-    data() {
+    inject: ['notyf'],
+    data() {  
         return {
-            cardNumber: null,
-            dueDate: null,
-            ownerName: null,
-            securityCode: null
+            info: {
+                cardNumber: null,
+                dueDate: null,
+                ownerName: null,
+                securityCode: null
+            }
         }
     },
     methods: {
         async addCard(){
-            let lastDigits = (Array.from(this.cardNumber).splice(-4));
-            let cardString = `(Crédito) Mastercard terminando em ${lastDigits.join('')}`;
-            await this.$store.dispatch('addToUserInfoCards', {
-                card: [cardString, this.ownerName, this.dueDate]
-            })
+            const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
+            await this.$store.dispatch('addCard', validInfo);
+
+            if (!this.$store.getters.getUserLoaded) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao editar endereço!",
+                     });
+            } else {
+                  this.notyf.open({
+                         type: 'success',
+                         message: "Endereço editado com sucesso!",
+                     });
+            }
         }
     }
 }

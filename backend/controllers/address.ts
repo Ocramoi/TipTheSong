@@ -12,14 +12,15 @@ module.exports.createAddress = async(req: Request, res: Response) => {
         const user = await UserModel.findById(body.userId); 
         if (!user) return res.status(404).send("Error");
 
-        // Creates a new address TODO CHECK should create inside user
-        // const address = new AddressModel(body);
-        // const addressCreated = await address.save();
-        // if (!addressCreated) return res.status(500).send("Erro ao criar endereço");
+        // Creates a new address 
+        const address = new AddressModel(body);
+        const addressCreated = await address.save();
+        if (!addressCreated) return res.status(500).send("Erro ao criar endereço");
         
         // Adds it to the user addresss
-        user.addresses.push(body);
-        user.save()
+        // @ts-ignore
+        user.addresses = [...user.addresses, addressCreated._id];
+        user.save() 
             .then(userUpdated => {
                 return res.status(200).send(userUpdated);
             })

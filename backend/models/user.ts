@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     password: String,
     isAdmin: Boolean,
     addresses: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "Address" }
+        { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
     ],
     cards: [
         { type: mongoose.Schema.Types.ObjectId, ref: "Card" }

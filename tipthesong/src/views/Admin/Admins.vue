@@ -116,16 +116,6 @@
      }
  }
 
- .addBtn {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     border-radius: 100%;
-     aspect-ratio: 1 / 1;
-     width: min-content;
- }
-
-
  .bts {
      margin-top: 1rem;
      display: flex;

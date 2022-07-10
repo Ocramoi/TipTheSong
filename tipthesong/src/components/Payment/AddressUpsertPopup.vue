@@ -70,17 +70,6 @@
                             required
                             placeholder=""/>
                     </div>
-                    <div>
-                        <label for="houseNum">Número da Residência</label>
-                        <br>
-                        <input
-                            type="text"
-                            name="houseNum"
-                            class="inputFill"
-                            v-model="info.complemment"
-                            required
-                            placeholder=""/>
-                    </div>
                 </div>
                 <div>
                     <label for="extra">Complemento</label>
@@ -89,7 +78,7 @@
                         type="text"
                         name="extra"
                         class="inputFill"
-                        v-model="info.extra"
+                        v-model="info.complemment"
                         required
                         placeholder=""/>
                 </div>
@@ -118,7 +107,7 @@
                             placeholder=""/>
                     </div>
                 </div>
-                <button type="button" class="addBtn" @click="addAddress">{{ create ? "Adicionar" : "Editar" }}</button>
+                <button type="button" class="addBtn" v-on="create ? {click: addAddress} : {click:editAddress}">{{ create ? "Adicionar" : "Editar" }}</button>
             </form>
         </div>
     </div>
@@ -127,6 +116,7 @@
 
 <script>
  export default {
+     inject: ['notyf'],
      name: "AddressUpsertPopup",
      props: {
          current: {
@@ -144,12 +134,11 @@
              info: {
                  id: null,
                  name: null,
-                 address: null,
                  phone: null,
                  country: null,
                  postalCode: null,
+                 address: null,
                  complemment: null,
-                 extra: null,
                  state: null,
                  city: null,
              },
@@ -158,13 +147,41 @@
      },
      methods: {
          async addAddress(){
-             this.$store.dispatch('upsertAddress', this.info);
+            const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
+            await this.$store.dispatch('addAddress', validInfo);
+
+            if (!this.$store.getters.getUserLoaded) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao editar endereço!",
+                     });
+            } else {
+                  this.notyf.open({
+                         type: 'success',
+                         message: "Endereço editado com sucesso!",
+                     });
+            }
+         },
+         async editAddress() {
+            const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
+            await this.$store.dispatch('updateAddress', {addressId: validInfo._id, ...validInfo});
+
+            if (!this.$store.getters.getUserLoaded) {
+                this.notyf.open({
+                    type: 'error',
+                         message: "Erro ao salvar endereço!",
+                     });
+            } else {
+                this.notyf.open({
+                    type: 'success',
+                         message: "Endereço salvo com sucesso!",
+                     });
+            }
          },
          loadValues(payload) {
              if (payload) {
-                 this.info = {
-                     ...payload,
-                 };
+                 delete payload.__v;
+                 this.info = Object.assign({}, payload);
                  this.create = false;
              } else {
                  Object
@@ -172,6 +189,8 @@
                      .forEach(key => {
                          this.info[key] = null;
                      });
+                 console.log(this.info);
+                console.log(Object.entries(this.info));
                  this.create = true;
              }
          },

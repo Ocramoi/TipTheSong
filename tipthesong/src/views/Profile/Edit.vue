@@ -126,10 +126,9 @@ export default {
                  email: this.newEmail,
                  curPassword: this.curPassword,
                  newPassword: this.newPassword,
-                 
             });
 
-            if (!this.$store.getters.getUserUpdated) {
+            if (!this.$store.getters.getUserLoaded) {
                 this.notyf.open({
                          type: 'error',
                          message: "Erro ao salvar alterações!",

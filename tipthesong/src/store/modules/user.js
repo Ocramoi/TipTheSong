@@ -6,8 +6,9 @@ const JWT = () => Cookies.get("jwt");
 const state = () => ({
   authReq: null,
   user: null,
+  address: null,
   unauthNotyf: false,
-  userUpdated: false,
+  userLoaded: false,
 });
 
 const mutations = {
@@ -20,8 +21,11 @@ const mutations = {
   setUnauthNotyf(state, value) {
     state.unauthNotyf = value;
   },
-  setUserUpdated(state, value) {
-    state.userUpdated = value;
+  setUserLoaded(state, value) {
+    state.userLoaded = value;
+  },
+  setAddress(state, value) {
+    state.address = value;
   }
 };
 
@@ -34,11 +38,7 @@ const actions = {
       "user/login", {
         email: login.email,
         password: login.password,
-      }, /* {
-        headers: {
-          "Authorization": `Bearer ${JWT()}`,
-        }
-      }, */
+      },
     )
              .then(response => {
                const { user, accessToken } = response.data;
@@ -90,8 +90,35 @@ const actions = {
     commit("setUser", null);
   },
 
-  async updateUserInfo({ commit, state }, updated) {
-    commit("setUserUpdated", false);
+  async unauthNotyf({ commit }, state) {
+    commit("setUnauthNotyf", state);
+  },
+
+  // Loads user (used after updating info)
+  async loadUser({commit, state}) {
+    commit("setUserLoaded", false);
+    await api.get(`user/${state.user?._id}`,
+         {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
+              .then(response => {
+                console.log(response.data);
+                commit("setUser", response.data);
+                commit("setUserLoaded", true);
+             })
+             .catch(err => {
+                console.log(`Erro ao carregar usuário: ${err}`);
+                commit("setUserLoaded", false);
+             });
+
+
+  },
+
+  // Updates user info
+  async updateUserInfo({ dispatch, state }, updated) {
     await api.put(`user/${state.user?._id}`, 
         {
           name: updated.name,
@@ -105,23 +132,120 @@ const actions = {
           }
         },
     )
-              .then(response => {
-               console.log(response.data);
-               commit("setUser", response.data);
-               commit("setUserUpdated", true);
+              .then(async () => {
+                await dispatch("loadUser");
              })
-             .catch(err => {
+             .catch(err => {  
                console.log(`Erro ao atualizar informações: ${err}`);
-               commit("setUserUpdated", false);
              });
-  }
+  },
+
+  // Adds an card to a user
+  async addCard({ commit, dispatch, state }, card) {
+    commit("setUserLoaded", false);
+
+    await api.post("card/", 
+        {
+          cardNumber: card.cardNumber,
+          dueData: card.dueData,
+          ownerName: card.ownerName,
+          securityCode: card.securityCode,
+          userId: state.user?._id
+        }
+    )
+            .then(async () => {
+                await dispatch("loadUser");
+             })
+            .catch(err => {  
+               console.log(`Erro ao adicionar cartão: ${err}`);
+             });
+  },
+
+  // Deletes a card from a user
+  async deleteCard({ commit, dispatch }, { cardId }) {
+    commit("setUserLoaded", false);
+
+    await api.delete(`card/${cardId}`,)
+            .then(async () => {
+                await dispatch("loadUser");
+             })
+            .catch(err => {  
+               console.log(`Erro ao deletar cartão: ${err}`);
+             });
+  },
+
+  // Adds an address to a user
+  async addAddress({ commit, dispatch, state }, address) {
+    commit("setUserLoaded", false);
+
+    await api.post("address/", 
+        {
+          name: address.name,
+          phone: address.phone,
+          country: address.country,
+          postalCode: address.postalCode,
+          address: address.address,
+          complemment: address.complemment,
+          state: address.state,
+          city:  address.city,
+          userId: state.user?._id
+        }
+    )
+            .then(async () => {
+                await dispatch("loadUser");
+             })
+            .catch(err => {  
+               console.log(`Erro ao adicionar endereço: ${err}`);
+             });
+  },
+
+  // Gets an address from user
+  async getAddress({ commit }, { addressId }) {
+    await api.get(`address/${addressId}`)
+            .then(response => {
+              commit("setAddress", response.data);
+            })
+            .catch(err => {  
+              console.log(`Erro encontrar endereço: ${err}`);
+              commit("setAddress", null);
+             });
+  },
+
+  // Deletes an address from a user
+  async updateAddress({ commit, dispatch }, { addressId, ...updateAddress }) {
+    commit("setUserLoaded", false);
+    
+    await api.put(`address/${addressId}`, updateAddress)
+            .then(async () => {
+                await dispatch("loadUser");
+             })
+            .catch(err => {  
+               console.log(`Erro ao atualizar endereço: ${err}`);
+             });
+  },
+
+  // Deletes a address from a user
+  async deleteAddress({ commit, dispatch }, { addressId }) {
+    commit("setUserLoaded", false);
+
+    await api.delete(`address/${addressId}`,)
+            .then(async () => {
+                await dispatch("loadUser");
+             })
+            .catch(err => {  
+               console.log(`Erro ao deletar endereço: ${err}`);
+             });
+  },
+  
+
 };
 
 const getters = {
   getAuthReceived(state) { return state.authReq; },
   getIsLogged(state) { return state.user != null; },
   getUser(state) { return state.user; },
-  getUserUpdated(state) { return state.userUpdated; },
+  getAddress(state) { return state.address; },
+  getUserLoaded(state) { return state.userLoaded; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
   getPermDenied(state) { return !state?.user?.isAdmin || true; },
 };
