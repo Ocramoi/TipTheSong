@@ -1,19 +1,10 @@
 <template>
-    <AdminUpsert
-        :class="{ 'hide': !popupEdit }"
-        @togglePopup="popupEdit = !popupEdit"
-        :payload="admin" />
-
-    <AdminUpsert
-        :class="{ 'hide': !popupCreate }"
-        @togglePopup="popupCreate = !popupCreate" />
-
     <div class="container">
         <div class="innerContainer">
             <h2>ADMINISTRADORES CADASTRADOS</h2>
             <div class="productBox">
                 <FlexTable
-                    @clicked="handleClick"
+                    @clicked="handleEvent"
                     :titles="tableTitles"
                     :values="admins"
                     rowHeight="4rem"/>
@@ -23,22 +14,17 @@
             <router-link :to="{ name: 'AdminHomepage'}">
                 <button class="backBtn">VOLTAR</button>
             </router-link>
-            <button class="addBtn" @click="popupCreate = !popupCreate">
-                <i class="fa-solid fa-plus"></i>
-            </button>
         </div>
     </div>
 </template>
 
 <script>
  import FlexTable from '../../components/App/FlexTable.vue';
- import AdminUpsert from '../../components/Admin/AdminUpsertPopup';
 
  export default {
      name: "AdminAdmins",
      components: {
          FlexTable,
-         AdminUpsert,
      },
      data() {
          return {
@@ -48,52 +34,45 @@
                  "Usertag",
                  "Email"
              ],
-             admin: null,
-             popupEdit: false,
-             popupCreate: false,
          };
      },
      async created() {
-         this.$store.getters.getAdminList;
+        this.$store.dispatch('loadAdmins');
      },
      computed: {
-         adminList() {
-            return this.$store.getters.getAdminList;
-         },
          admins() {
-            const _admins = this.adminList;
-
-            return _admins?.map(admin => [
+            return this.$store.getters.getAdmins?.map(admin => [
                 {
-                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    content: '<i class="clickableIcon fa-solid fa-arrow-down"></i>',
                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                    id: parseInt(admin?.id),
+                    id: ['demote', admin._id],
                 }, {
                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
                     style: "height: 100%; display: block; margin: 0 auto;",
+                    id: ['upsert']
                 }, 
                 {
-                    content: `${admin?.name}#${admin?.id}`,
-                    style: "cursor: pointer",
-                    id: ["upsert", admin?.id],
-                },
-                admin?.email,
+                    id: ['upsert'],
+                    content: admin.name,
+                }, {
+                    id: ['upsert'],
+                    content: admin.email,
+                }
             ]);
-         },
+         }
      },
      methods: {
-         handleClick(e) {
-             console.log(e)
-             if(!e) return;
-             else if (e[0] == 'upsert') this.admin = this.adminList.find(admin => admin.id == e[1]);
-             else if (typeof(e) == 'number') return this.removeIdx(e);
-             this.popupEdit = true;
-         },
-         removeIdx(id) {
-             this.$store.dispatch('removeFromAdminList', {
-                id: id,
-             })
-         },
+        handleEvent(e) {
+            if (e == null) return;
+          
+            const [action, id] = e;
+            if (action == 'demote') {
+                return this.demoteUser(id);
+            }
+        },
+        async demoteUser(id) {
+            await this.$store.dispatch('demoteUser', { userId: id });
+        }
      }
  }
 </script>

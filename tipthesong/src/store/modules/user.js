@@ -5,10 +5,12 @@ const JWT = () => Cookies.get("jwt");
 
 const state = () => ({
   authReq: null,
-  user: null,
-  address: null,
-  unauthNotyf: false,
+  user: null,  
   userLoaded: false,
+  address: null,
+  users: null,
+  admins: null,
+  unauthNotyf: false,
 });
 
 const mutations = {
@@ -26,7 +28,13 @@ const mutations = {
   },
   setAddress(state, value) {
     state.address = value;
-  }
+  },
+  setAdmins(state, value) {
+    state.admins = value;
+  },
+  setUsers(state, value) {
+    state.users = value;
+  },
 };
 
 const actions = {
@@ -236,8 +244,7 @@ const actions = {
     commit("setUserLoaded", false);
     
     await api.put(`address/${addressId}`, 
-        updateAddress,
-        {
+        updateAddress, {
           headers: {
             "authorization": `Bearer ${JWT()}`,
           }
@@ -269,7 +276,106 @@ const actions = {
                console.log(`Erro ao deletar endereço: ${err}`);
              });
   },
+
+  // Load the users if user that requested it is an admin
+  async loadUsers({ commit }) {
+    commit("setUsers", null);
+
+    await api.get('admin/users',
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
+            .then(response => {
+                commit("setUsers", response.data);
+             })
+            .catch(err => {  
+                console.log(`Erro ao carregar usuários: ${err}`);
+                commit("setUsers", null);
+             });
+  },
+
+  // Load the admins if user that requested it is an admin
+  async loadAdmins({ commit }) {
+    commit("setAdmins", null);
+
+    await api.get('admin/admins',
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
+            .then(response => {
+                commit("setAdmins", response.data);
+             })
+            .catch(err => {  
+                console.log(`Erro ao carregar usuários: ${err}`);
+                commit("setAdmins", null);
+             });
+  },
+
+  // Deletes an user if the user that requested it is an admin
+  async deleteUser({ dispatch, commit }, { userId }) {
+    commit("setUsers", null);
+    
+    await api.delete(`admin/user/${userId}`,
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
+            .then(async () => {
+              dispatch("loadUsers");
+            })
+            .catch(err => {  
+              console.log(`Erro ao deletar usuário: ${err}`);
+              commit("setUsers", null);
+             });
+  },
+
+  // Promotes an user to admin if the user that requested it is an admin
+  async promoteUser({ dispatch, commit }, { userId }) {
+    commit("setUsers", null);
+    
+    await api.put(`admin/promote/${userId}`, {},
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
+            .then(async () => {
+              dispatch("loadUsers");
+            })
+            .catch(err => {  
+              console.log(`Erro ao promover usuário: ${err}`);
+              commit("setUsers", null);
+             });
+  },
   
+  // Promotes an user to admin if the user that requested it is an admin
+  async demoteUser({ dispatch, commit }, { userId }) {
+    commit("setAdmins", null);
+    
+    await api.put(`admin/demote/${userId}`, {},
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
+            .then(async () => {
+              dispatch("loadAdmins");
+            })
+            .catch(err => {  
+              console.log(`Erro ao promover usuário: ${err}`);
+              commit("setAdmins", null);
+             });
+  },
 
 };
 
@@ -280,7 +386,9 @@ const getters = {
   getAddress(state) { return state.address; },
   getUserLoaded(state) { return state.userLoaded; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
-  getPermDenied(state) { return !state.user.isAdmin },
+  getPermDenied(state) { return !state.user.isAdmin; },
+  getUsers(state) {return state.users; },
+  getAdmins(state) {return state.admins; },
 };
 
 export default {
