@@ -108,7 +108,7 @@
                      { name: "JAZZ", selected: true },
                      { name: "BLUES", selected: true },
                      { name: "MPB", selected: true },
-                     { name: "POP", selected: true },
+                     { name: "POP", selected: true }, 
                  ],
                  artist: "",
                  price: [],

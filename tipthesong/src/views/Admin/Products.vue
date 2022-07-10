@@ -10,7 +10,7 @@
                     @clicked="handleEvent"
                     :titles="tableTitles"
                     :values="products"
-                    :center="true"
+                    :center="false"
                     rowHeight="7rem"/>
             </div>
         </div>
@@ -51,7 +51,7 @@
          };
      },
      async created() {
-        this.$store.getters.getProductList;
+        this.$store.dispatch('loadProducts');
      },
      computed: {
          productList() {
@@ -61,7 +61,7 @@
              const _products = this.productList;
              return _products?.map(product => [
                  {
-                     id: parseInt(product?._id),
+                     id: ["delete", product?._id],
                      content: '<i class="fa-solid fa-trash"></i>',
                      style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
                      class: "clickableIcon trashIcon",
@@ -70,10 +70,10 @@
                  {
                      content: this.turnToDescription(product?.title, product?.shortDescription),
                      style: "width: 100%; height: 100% !important; overflow-y: hidden; display: flex; align-itens: center; justify-content: center; ; cursor: pointer",
-                     id: ["upsert", product?.id],
+                     id: ["upsert", product?._id],
                  },
                  `R$${product?.price.toFixed(2)}`,
-                 product?.amountStock,
+                 product?.amountInStock,
                  product?.amountSold,
              ]);
          },
@@ -90,13 +90,18 @@
          },
          handleEvent(e) {
              if (e == null) return;
-             else if (e[0] == 'upsert') this.product = this.productList.find(product => product.id == e[1]);
-             else if (typeof(e) == 'number') return this.removeAlbum(e);
-             this.popupEdit = true;
+
+             const [action, id] = e;
+             if (action == 'upsert') {
+                this.product = this.productList.find(product => product._id == id);
+                this.popupEdit = true;
+             } else if (action == 'delete') {
+                return this.deleteProduct(id);
+             }
          },
-         removeAlbum(id) {
-             this.$store.dispatch('removeFromProductList', {
-                 id: id,
+         async deleteProduct(id) {
+            await this.$store.dispatch('deleteProduct', {
+                 productId: id,
              });
          },
      },

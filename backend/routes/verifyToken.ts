@@ -21,14 +21,14 @@ module.exports.verifyToken = (req: Request, res: Response, next: NextFunction) =
 
 module.exports.verifyTokenAndAuth = (req: Request, res: Response, next: NextFunction) => {
     module.exports.verifyToken(req, res, () => {
-        if (req.body.user.id == req.params.id || req.body.user.isAdmin) return next();
-        return res.status(403).send("Usuário autorizado");
+        if (req.body.user.id == req.params.id || req.body.user.isAdmin || req.body.user.id == req.body.userId ) return next();
+        return res.status(403).send("Usuário não autorizado");
     });
 }  
 
 module.exports.verifyTokenAndAdmin = (req: Request, res: Response, next: NextFunction) => {
     module.exports.verifyToken(req, res, () => {
         if (req.body.user.isAdmin) return next();
-        return res.status(403).send("Usuário autorizado");
+        return res.status(403).send("Usuário não autorizado");
     });
 }  

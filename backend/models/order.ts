@@ -7,4 +7,4 @@ const orderSchema = new mongoose.Schema({
     userId: mongoose.Types.ObjectId
 });
 
-module.exports = mongoose.model('Order', orderSchema);
+export default mongoose.model('Order', orderSchema);

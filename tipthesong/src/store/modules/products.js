@@ -1,4 +1,7 @@
 import api from "../api";
+import Cookies from 'js-cookie';
+
+const JWT = () => Cookies.get("jwt");
 
 const state = () => ({
   productList: null,
@@ -70,19 +73,24 @@ const actions = {
   },
 
   // Adds a product to the product list
-  async addProduct( { dispatch }, payload) {
+  async addProduct( { dispatch }, product) {
     await api.post('admin/product/', {
-      title: payload?.title,
-      launchDate: payload?.launchDate,
-      frontCover: payload?.frontCover,
-      artists: payload?.artists,
-      genres: payload?.genres,
-      shortDescription: payload?.shortDescription,
-      longDescription: payload?.longDescription,
-      extraInfo: payload?.extraInfo,
-      price: payload?.price,
-      amountStock: payload?.amountInStock
-    })
+      title: product?.title,
+      launchDate: product?.launchDate,
+      frontCover: product?.frontCover,
+      artists: product?.artists,
+      genres: product?.genres,
+      shortDescription: product?.shortDescription,
+      longDescription: product?.longDescription,
+      extraInfo: product?.extraInfo,
+      price: product?.price,
+      amountStock: product?.amountInStock
+    }, {
+        headers: {
+         "authorization": `Bearer ${JWT()}`,
+        }
+      }
+    )
     .then(() => {
       dispatch("loadProducts");
     })
@@ -92,19 +100,24 @@ const actions = {
   },
 
   // Updates a product from the product list
-  async updateProduct( { dispatch }, payload) {
-    await api.put(`admin/product/${payload?.id}`, {
-      title: payload?.title,
-      launchDate: payload?.launchDate,
-      frontCover: payload?.frontCover,
-      artists: payload?.artists,
-      genres: payload?.genres,
-      shortDescription: payload?.shortDescription,
-      longDescription: payload?.longDescription,
-      extraInfo: payload?.extraInfo,
-      price: payload?.price,
-      amountStock: payload?.amountInStock
-    })
+  async updateProduct( { dispatch }, { productId, ...product }) {
+    await api.put(`admin/product/${productId}`, {
+      title: product?.title,
+      launchDate: product?.launchDate,
+      frontCover: product?.frontCover,
+      artists: product?.artists,
+      genres: product?.genres,
+      shortDescription: product?.shortDescription,
+      longDescription: product?.longDescription,
+      extraInfo: product?.extraInfo,
+      price: product?.price,
+      amountInStock: product?.amountInStock
+    }, {
+        headers: {
+          "authorization": `Bearer ${JWT()}`,
+        }
+      }
+    )
     .then(() => {
       dispatch("loadProducts");
     })
@@ -114,8 +127,14 @@ const actions = {
   },
 
   // Deletes a product from the product list
-  async deleteProduct({ dispatch }, payload) {
-    await api.delete(`admin/product/${payload?.id}`)
+  async deleteProduct({ dispatch }, { productId }) {
+    await api.delete(`admin/product/${productId}`,
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        }
+    )
       .then(() => {
         dispatch("loadProducts");
       })

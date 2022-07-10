@@ -151,7 +151,11 @@ const actions = {
           ownerName: card.ownerName,
           securityCode: card.securityCode,
           userId: state.user?._id
-        }
+        }, {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
     )
             .then(async () => {
                 await dispatch("loadUser");
@@ -165,7 +169,13 @@ const actions = {
   async deleteCard({ commit, dispatch }, { cardId }) {
     commit("setUserLoaded", false);
 
-    await api.delete(`card/${cardId}`,)
+    await api.delete(`card/${cardId}`,
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
             .then(async () => {
                 await dispatch("loadUser");
              })
@@ -189,7 +199,11 @@ const actions = {
           state: address.state,
           city:  address.city,
           userId: state.user?._id
-        }
+        }, {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
     )
             .then(async () => {
                 await dispatch("loadUser");
@@ -201,7 +215,13 @@ const actions = {
 
   // Gets an address from user
   async getAddress({ commit }, { addressId }) {
-    await api.get(`address/${addressId}`)
+    await api.get(`address/${addressId}`,
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        }
+    )
             .then(response => {
               commit("setAddress", response.data);
             })
@@ -215,7 +235,14 @@ const actions = {
   async updateAddress({ commit, dispatch }, { addressId, ...updateAddress }) {
     commit("setUserLoaded", false);
     
-    await api.put(`address/${addressId}`, updateAddress)
+    await api.put(`address/${addressId}`, 
+        updateAddress,
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
             .then(async () => {
                 await dispatch("loadUser");
              })
@@ -228,7 +255,13 @@ const actions = {
   async deleteAddress({ commit, dispatch }, { addressId }) {
     commit("setUserLoaded", false);
 
-    await api.delete(`address/${addressId}`,)
+    await api.delete(`address/${addressId}`,
+        {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
             .then(async () => {
                 await dispatch("loadUser");
              })
@@ -247,7 +280,7 @@ const getters = {
   getAddress(state) { return state.address; },
   getUserLoaded(state) { return state.userLoaded; },
   getUnauthNotyf(state) { return state.unauthNotyf; },
-  getPermDenied(state) { return !state?.user?.isAdmin || true; },
+  getPermDenied(state) { return !state.user.isAdmin },
 };
 
 export default {

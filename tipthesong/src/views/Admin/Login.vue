@@ -3,13 +3,13 @@
         <div class="card">
             <h2> ÁREA DO ADMINISTRADOR </h2>
             <form method="POST" action="submit">
-                <label for="userMail">Email de Administrador</label>
+                <label for="email">Email de Administrador</label>
                 <br />
                 <input
                     type="text"
-                    name="userMail"
+                    name="email"
                     class="inputFill"
-                    v-model="userMail"
+                    v-model="email"
                     placeholder="Seu email..." 
                     required />
 
@@ -46,7 +46,7 @@ export default {
     inject: ['notyf'],
     data() {
         return {
-            userMail: null,
+            email: null,
             password: null,
             remember: false,
         }
@@ -54,10 +54,10 @@ export default {
     methods: {
         async login() {
             await this.$store.dispatch("auth", {
-                 user: this.userMail,
-                 pass: this.password,
+                 email: this.email,
+                 password: this.password,
             });
-
+            
             if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',

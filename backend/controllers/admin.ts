@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { logger } from '../logger';
 
-const ProductModel = require('../models/product');
-const UserModel = require('../models/user');
-const AddressModel = require('../models/address');
-const OrderModel = require('../models/order');
-const CardModel = require('../models/card');
+import UserModel from '../models/user';
+import ProductModel from '../models/product';
+import AddressModel from '../models/address';
+import OrderModel from '../models/order';
+import CardModel from '../models/card';
+
 
 module.exports.createProduct = async (req: Request, res: Response) => {
     const body = req.body;
@@ -25,7 +26,7 @@ module.exports.createProduct = async (req: Request, res: Response) => {
             amountSold: 0
         });
         
-        const createdProduct = await product.save(product);
+        const createdProduct = await product.save();
         return res.status(200).send(createdProduct);
     } catch (e) {
         logger.error(e);

@@ -140,7 +140,7 @@
                 </div>
 
                 <div>
-                    <button class="center" type="button" @click="upsertAlbum"> {{ popupTitle }} </button>
+                    <button class="center" type="button" v-on="current ? {click: updateProduct} : {click: addProduct}"> {{ popupTitle }} </button>
                 </div>
             </form>
         </div>
@@ -169,6 +169,7 @@
              extraInfo: null,
              price: null,
              amountInStock: null,
+             amountSold: null,
          }
      },
      watch: {
@@ -196,34 +197,50 @@
              this.genres.splice(idx, 1);
          },
          loadValues(payload) {
-             this.id = payload?.id || undefined;
-             this.title = payload.name || null;
-             this.launchDate = payload.released || null;
-             this.frontCover = payload.img || null;
+             this.id = payload?._id || undefined;
+             this.title = payload.title || null;
+             this.launchDate = payload.launchDate || null;
+             this.frontCover = payload.frontCover || null;
              this.artists = payload.artists || [''];
              this.genres = payload.genres || [''];
              this.shortDescription = payload.shortDescription || null;
-             this.longDescription = payload.description || null;
+             this.longDescription = payload.longDescription || null;
              this.extraInfo = payload.extraInfo || null;
              this.price = payload.price || null;
-             this.amountInStock = payload.amountStock || null;
+             this.amountInStock = payload.amountInStock || null;
+             this.amountSold = payload.amountSold || null;
          },
-         upsertAlbum() {
-             this.$store.dispatch("upsertAlbum", {
-                 id: this.id,
-                 title: this.title,
-                 launchDate: this.launchDate,
-                 frontCover: this.frontCover,
-                 artists: this.artists,
-                 genres: this.genres,
-                 shortDescription: this.shortDescription,
-                 longDescription: this.longDescription,
-                 extraInfo: this.extraInfo,
-                 price: this.price,
-                 amountInStock: this.amountInStock
+         async addProduct() {
+             await this.$store.dispatch("addProduct", {
+                    title: this.title,
+                    launchDate: this.launchDate,
+                    frontCover: this.frontCover,
+                    artists: this.artists,
+                    genres: this.genres,
+                    shortDescription: this.shortDescription,
+                    longDescription: this.longDescription,
+                    extraInfo: this.extraInfo,
+                    price: this.price,
+                    amountInStock: this.amountInStock
              });
-             this.close();
          },
+         async updateProduct() {
+             await this.$store.dispatch("updateProduct", {
+                    productId: this.id,
+                    title: this.title,
+                    launchDate: this.launchDate,
+                    frontCover: this.frontCover,
+                    artists: this.artists,
+                    genres: this.genres,
+                    shortDescription: this.shortDescription,
+                    longDescription: this.longDescription,
+                    extraInfo: this.extraInfo,
+                    price: this.price,
+                    amountInStock: this.amountInStock
+             });
+         }
+
+
      },
      computed: {
          popupTitle() {
