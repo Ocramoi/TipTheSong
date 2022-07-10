@@ -97,12 +97,7 @@
                      class: "outterContent",
                  },
                  this.products[id]?.price,
-                 {
-                     content: '<i class="fa-solid fa-minus-circle"></i>' + this.cartList[id] + '<i class="fa-solid fa-plus-circle"></i>',
-                     style: "display: flex; align-items: center; width: 100%; height: 100%; max-width: min-content; z-index: 10;",
-                     class: "clickableIcon",
-                 },
-                //  this.cartList[id] || -1, // show the amount of products
+                 this.cartList[id] || -1,
                  (this.cartList[id] || -1) * this.products[id]?.price,
              ]);
          },
@@ -113,12 +108,12 @@
          },
          captureClick(id) {
              if (!id) return;
-             console.log(id);
+
              this.$store.dispatch('removeFromCart', {
                  id: id,
                  qnt: this.cartList[id],
              });
-         },
+         }
      },
  }
 </script>
