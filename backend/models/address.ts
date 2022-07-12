@@ -9,7 +9,10 @@ const addressSchema = new mongoose.Schema({
     complemment: String,
     state: String,
     city:  String,
-    userId: mongoose.Types.ObjectId
+    userId: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+    }
 });
 
 export default mongoose.model('Address', addressSchema);

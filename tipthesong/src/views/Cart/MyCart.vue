@@ -66,7 +66,9 @@
      },
      computed: {
          subTotal() {
-             return this.productList.reduce((prev, cur) => prev + cur[cur.length - 1], 0);
+             const cartIds = Object.keys(this.cartList),
+                   prices = cartIds?.map(id => (this.cartList[id] || -1) * this.products[id]?.price);
+             return prices.reduce((prev, cur) => prev + cur, 0);
          },
          calcDelivery() {
              if (this.productList.length == 0)
@@ -96,9 +98,9 @@
                      content: this.createContent(id),
                      class: "outterContent",
                  },
-                 this.products[id]?.price,
+                 `R$${this.products[id]?.price.toFixed(2)}`,
                  this.cartList[id] || -1,
-                 (this.cartList[id] || -1) * this.products[id]?.price,
+                 `R$${((this.cartList[id] || -1) * this.products[id]?.price).toFixed(2)}`,
              ]);
          },
      },
@@ -113,7 +115,7 @@
                  id: id,
                  qnt: this.cartList[id],
              });
-         }
+         },
      },
  }
 </script>

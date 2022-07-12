@@ -7,28 +7,27 @@
 </template>
 
 <script>
-    export default {
-        name: 'EndItem',
-        data() {
-            return {
-                item: {
-                    id: 1,
-                    name: 'Now, Not Yet (2019) - halfalive',
-                    quantity: 1,
-                    price: '90.00',
-                }
-            }
-        },
-    }
+ export default {
+     name: 'EndItem',
+     props: {
+         item: {
+             type: Object,
+             required: true,
+         },
+     },
+     data() {
+         return {};
+     },
+ }
 </script>
 
 <style scoped>
-    .cardItem {
-        padding: 1rem;
-        background-color: var(--primary-light);
+ .cardItem {
+     padding: 1rem;
+     background-color: var(--primary-light);
 
-        box-shadow: 5px 5px 10px var(--primary-dark);
-        box-sizing: border-box;
-        border-radius: 5px; 
-    }
+     box-shadow: 5px 5px 10px var(--primary-dark);
+     box-sizing: border-box;
+     /* border-radius: 5px;  */
+ }
 </style>

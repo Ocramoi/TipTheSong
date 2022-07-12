@@ -4,7 +4,24 @@ const orderSchema = new mongoose.Schema({
     date: Date,
     status: String,
     total:  Number,
-    userId: mongoose.Types.ObjectId
+    products: [
+        { type: mongoose.Types.ObjectId, ref: "Product" }
+    ],
+    userId: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+    },
+    method: String, // TODO Deveria ser um enum de tipos válidos no bancokkk
+    cardId: {
+        type: mongoose.Types.ObjectId,
+        ref: "Card",
+        required: false,
+        default: null,
+    },
+    addressId: {
+        type: mongoose.Types.ObjectId,
+        ref: "Address",
+    },
 });
 
 export default mongoose.model('Order', orderSchema);

@@ -108,8 +108,8 @@ module.exports.updateUserInfo = async(req: Request, res: Response) => {
 
     try {
         const user = await UserModel.findById(id);
-        if (!user) throw new Error("User não encontrado");
-      
+        if (!user) return res.status(400).send("Usuário não encontrado");
+
         if (!curPassword || !newPassword) {
             user.name = name && name.trim() !== "" ? name.trim() : user.name;
             user.phone = phone && phone.trim() !== "" ? phone.trim() : user.phone;
@@ -119,7 +119,7 @@ module.exports.updateUserInfo = async(req: Request, res: Response) => {
 
             // Check if given password matches user.password
             if (!isValid) {
-                return res.status(400).send("Erro ao atualizar usuário: Senha inválida");
+                return res.status(403).send("Erro ao atualizar usuário: Senha inválida");
             }
 
             user.password = await bcrypt.hash(newPassword, 10);

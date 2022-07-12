@@ -6,11 +6,10 @@ import CardModel from '../models/card';
 
 module.exports.createCard = async(req: Request, res: Response) => { 
     const body = req.body;
-   
+
     try {
         const user = await UserModel.findById(body.userId); 
-        
-        if (!user) return res.status(404).send("Error");
+        if (!user) return res.status(404).send("Erro: Usuário não encontrado");
 
         // Creates a new card 
         const card = new CardModel(body);

@@ -29,8 +29,8 @@
                 <br />
                 <br />
 
-                <input type="checkbox" name="remember" v-model="remember"  />
-                <label for="remember">Lembre-se de mim</label>
+                <!-- <input type="checkbox" name="remember" v-model="remember"  />
+                     <label for="remember">Lembre-se de mim</label> -->
 
                 <br />
                 <br />

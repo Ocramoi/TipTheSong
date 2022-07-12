@@ -12,17 +12,17 @@
         </router-link>
 
         <hr />
-
-        <div class="interact" v-if="interact">
-            <button class="cartButton" type="button" @click="decrease">
-                <i class="fa fa-minus" aria-hidden="true"></i>
-            </button>
-            <p class="roundInfo"> {{ this.amount }} </p>
-            <button class="cartButton" type="button" @click="increase">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-        </div>
-
+        <!--
+             <div class="interact" v-if="interact">
+             <button class="cartButton" type="button" @click="decrease">
+             <i class="fa fa-minus" aria-hidden="true"></i>
+             </button>
+             <p class="roundInfo"> {{ this.amount }} </p>
+             <button class="cartButton" type="button" @click="increase">
+             <i class="fa fa-plus" aria-hidden="true"></i>
+             </button>
+             </div>
+        -->
         <div class="interact" v-if="interact">
             <button class="cartButton" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>
@@ -48,13 +48,13 @@
      },
      methods: {
          increase() {
-            this.amount++
+            this.amount++;
          },
          decrease() {
             if (this.amount - 1 < 1)
-                return
+                return;
             else
-                this.amount--
+                this.amount--;
          },
          addToCart() {
              this.$store.dispatch('addToCart', {
@@ -63,14 +63,14 @@
              });
          },
          goToCart() {
-            this.addToCart()
-            this.$router.push('/cart')
+            this.addToCart();
+            this.$router.push('/cart');
          },
      },
      data() {
         return {
             amount: 1,
-        }
+        };
      }
  }
 </script>

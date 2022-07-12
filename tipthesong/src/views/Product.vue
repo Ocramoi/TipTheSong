@@ -217,7 +217,6 @@
     border-radius: 2rem;
     font-weight: bold;
     transition: 0.4s;
-    cursor: pointer;
     width: max-content;
     color: var(--white);
     text-align: center;

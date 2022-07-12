@@ -1,5 +1,12 @@
+import api from "../api";
+import Cookies from 'js-cookie';
+
+const JWT = () => Cookies.get("jwt");
+
 const state = () => ({
   cartList: {},
+  currentOrder: null,
+  orderSuccess: null,
 });
 
 const mutations = {
@@ -14,6 +21,12 @@ const mutations = {
   },
   setCart(state, items) {
     state.cartList = items;
+  },
+  setCurrentOrder(state, order) {
+    state.currentOrder = order;
+  },
+  setOrderSuccess(state, v) {
+    state.orderSuccess = v;
   },
 };
 
@@ -30,10 +43,36 @@ const actions = {
       qnt: payload?.qnt
     });
   },
+  setCurrentOrder({ commit }, orderInfo) {
+    commit("setCurrentOrder", orderInfo);
+  },
+  async finishOrder({ commit, }, info) {
+    commit("setOrderSucess", null);
+
+    await api.post("order/",
+        {
+          // INFO
+          a: info?.a,
+        }, {
+          headers: {
+            "authorization": `Bearer ${JWT()}`,
+          }
+        },
+    )
+            .then(() => {
+                commit("setOrderSuccess", true);
+             })
+            .catch(err => {
+                console.log(`Erro ao adicionar cartão: ${err}`);
+                commit("setOrderSuccess", false);
+             });
+  },
 };
 
 const getters = {
   getCartList(state) { return state.cartList; },
+  getOrderInfo(state) { return state.currentOrder; },
+  getOrderSuccess(state) { return state.orderSuccess; },
 };
 
 export default {
