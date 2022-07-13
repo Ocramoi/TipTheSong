@@ -7,10 +7,13 @@
                 </label>
                 <input v-model="search" type="text" name="search" placeholder="Pesquisar..."  v-on:keyup.enter="searchBar"/>
             </div>
-            <img
-                class="topbarLogo"
-                :src="require('../../assets/Global/logo-v1.svg')"
-                alt="Logo" />
+            
+            <router-link to="/" class="topbarButton">
+                <img
+                    class="topbarLogo"
+                    :src="require('../../assets/Global/logo-v1.svg')"
+                    alt="Logo" />
+            </router-link>
             <div class="personal">
                 <router-link
                     to="/login">
@@ -152,13 +155,14 @@
      max-width: 7rem;
      transition: 0.4s;
      cursor: pointer;
+     transition: transform .8s ease-in-out; 
  }
 
- .topbarLogo:hover {
-     transform: scale(1.1);
+.topbarLogo:hover {
+     transform: rotate(360deg) scale(1.1);
      transform-origin: center center;
  }
-
+ 
  .personal {
      width: 30%;
      max-width: 400px;
