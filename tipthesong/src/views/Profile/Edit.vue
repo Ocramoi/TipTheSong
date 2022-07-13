@@ -128,10 +128,11 @@ export default {
                  newPassword: this.newPassword,
             });
 
+            const error = this.$store.getters.getUserError;
             if (!this.$store.getters.getUserLoaded) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao salvar alterações!",
+                         message: error,
                      });
             } else {
                   this.notyf.open({

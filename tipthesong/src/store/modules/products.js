@@ -97,13 +97,13 @@ const actions = {
         }
       }
     )
-    .then(() => {
-      dispatch("loadProducts");
+    .then(async () => {
+      await dispatch("loadProducts");
       commit('setProductError', null);
     })
     .catch(err => {
-      console.log(`Erro ao adicionar produto da lista: ${err}`);
-      commit('setProductError', err);
+      console.log(`Erro ao adicionar produto: ${err}`);
+      commit('setProductError', "Erro ao adicionar produto");
     });
   },
 
@@ -128,13 +128,13 @@ const actions = {
         }
       }
     )
-    .then(() => {
-      dispatch("loadProducts");
+    .then(async () => {
+      await dispatch("loadProducts");
       commit('setProductError', null);
     })
     .catch(err => {
-      console.log(`Erro ao adicionar produto da lista: ${err}`);
-      commit('setProductError', err);
+      console.log(`Erro ao atualizar produto: ${err}`);
+      commit('setProductError', "Erro ao atualizar produto!");
     });
   },
 
@@ -149,13 +149,13 @@ const actions = {
           }
         }
     )
-      .then(() => {
-        dispatch("loadProducts");
+      .then(async () => {
+        await dispatch("loadProducts");
         commit('setProductError', null);
       })
       .catch(err => {
         console.log(`Erro ao excluir produto da lista: ${err}`);
-        commit('setProductError', err);  
+        commit('setProductError', "Erro ao excluir produto da lista");  
       });
   }  
 };

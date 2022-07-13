@@ -74,10 +74,12 @@
         async demoteUser(id) {
             await this.$store.dispatch('demoteUser', { userId: id });
 
-            if (this.$store.getters.getUserError) {
+
+            const error = this.$store.getters.getUserError; 
+            if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao rebaixar usuário!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({

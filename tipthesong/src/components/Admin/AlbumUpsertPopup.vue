@@ -225,10 +225,11 @@
                     amountInStock: this.amountInStock
              });
 
-            if (this.$store.getters.getProductError) {
+            const error = this.$store.getters.getProductError;
+            if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao adicionar produto!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({
@@ -253,10 +254,11 @@
                     amountInStock: this.amountInStock
              });
 
-            if (this.$store.getters.getProductError) {
+            const error = this.$store.getters.getProductError;
+            if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao atualizar produto!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({

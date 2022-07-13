@@ -150,10 +150,11 @@
             const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
             await this.$store.dispatch('addAddress', validInfo);
 
-           if (this.$store.getters.getUserError) {
+            const error = this.$store.getters.getUserError;
+           if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao adicionar endereço!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({
@@ -167,10 +168,11 @@
             const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
             await this.$store.dispatch('updateAddress', {addressId: validInfo._id, ...validInfo});
 
+            const error = this.$store.getters.getUserError;
             if (this.$store.getters.getUserError) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao atualizar endereço!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({
