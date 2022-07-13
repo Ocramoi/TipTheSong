@@ -24,10 +24,11 @@
                     <input
                         type="number"
                         name="launchDate"
+                        v-mask="'####'"
                         class="inputFill"
                         v-model="launchDate"
                         required
-                        placeholder="19xx" />
+                        placeholder="Ano que o album foi lançado..." />
                 </div>
                 <div>
                     <label for="frontCover">Capa</label>
@@ -37,7 +38,7 @@
                         class="inputFill"
                         v-model="frontCover"
                         required
-                        placeholder="Selecione a capa do álbum" />
+                        placeholder="Url da capa..." />
                 </div>
                 <div>
                     <label for="artist">Artista(s)</label>
@@ -149,8 +150,14 @@
 
 
 <script>
+import useVuelidate from '@vuelidate/core';
+import { required, url, numeric } from '@vuelidate/validators';
+
  export default {
      inject: ['notyf'],
+     setup () {
+        return { v$: useVuelidate()}
+     },
      props: {
          current: {
              type: Object,
@@ -171,6 +178,19 @@
              price: null,
              amountInStock: null,
              amountSold: null,
+         }
+     },
+     validations () {
+         return {           
+            title: {required},
+            launchDate: {required},     
+            frontCover: {required, url},     
+            artists: {required},     
+            genres: {required},     
+            shortDescription: {required},     
+            longDescription: {required},      
+            price: {required, numeric},     
+            amountInStock: {required, numeric},     
          }
      },
      watch: {
@@ -212,6 +232,8 @@
              this.amountSold = payload.amountSold || null;
          },
          async addProduct() {
+             if (!await this.validate()) return;
+
              await this.$store.dispatch("addProduct", {
                     title: this.title,
                     launchDate: this.launchDate,
@@ -240,6 +262,8 @@
             }
          },
          async updateProduct() {
+             if (!await this.validate()) return;
+
              await this.$store.dispatch("updateProduct", {
                     productId: this.id,
                     title: this.title,
@@ -267,6 +291,19 @@
                     });
                 this.close();
             }
+         },
+         async validate () {
+            const isFormCorrect = await this.v$.$validate()
+            if (!isFormCorrect) {
+                this.notyf.open({
+                     type: 'error',
+                     message: "Erro ao salvar produto: Por favor preencha os campos corretamente!",
+                 });
+                 
+                 return false;
+            }
+
+            return true;
          }
 
 

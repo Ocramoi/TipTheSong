@@ -2,7 +2,8 @@
     <div class="container">
         <div class="card">
             <h3>Já possui uma conta?</h3>
-            <br />
+            <!-- <p v-for="error of errorsLogin" :key="error.$uid"> {{ error.$property}}: {{ error.$message }}!</p> -->
+
             <form>
                 <label for="lEmail">Email:</label>
                 <br />
@@ -13,7 +14,6 @@
                     v-model="lEmail"
                     required
                     placeholder="Seu nome de usuário/email..." />
-
                 <br />
                 <br />
 
@@ -44,7 +44,8 @@
 
         <div class="card">
             <h3>Ainda não possui conta no site? Cadastre-se agora</h3>
-            <br />
+            <!-- <p v-for="error of errorsRegister" :key="error.$uid"> {{ error.$property}}: {{ error.$message }}!</p> -->
+
             <form>
                 <label for="rEmail">Endereço de email:</label>
                 <br />
@@ -78,6 +79,7 @@
                         <input
                             type="tel"
                             class="inputFill"
+                            v-mask="'(##) 9####-####'"
                             name="rPhone"
                             v-model="rPhone"
                             required
@@ -94,6 +96,7 @@
                     class="inputFill"
                     name="rPassword"
                     v-model="rPassword"
+                    required
                     placeholder="Senha de conta..." />
 
                 <br />
@@ -106,6 +109,7 @@
                     class="inputFill"
                     name="rConfirmPassword"
                     v-model="rConfirmPassword"
+                    required
                     placeholder="Repita a senha..." />
 
                 <br />
@@ -120,11 +124,18 @@
 </template>
 
 <script type="text/javascript">
+import useVuelidate from '@vuelidate/core';
+import { required, email, minLength, requiredIf} from '@vuelidate/validators';
+
  export default {
      name: "LoginSignUp",
      inject: ['notyf'],
+     setup () {
+        return { v$: useVuelidate()}
+     },
      data() {
          return {
+             error: "",
              lEmail: "",
              lPassword: "",
              remember: false,
@@ -135,8 +146,49 @@
              rConfirmPassword: "",
          };
      },
+     validations () {
+         return {
+             lEmail: {
+                        required,
+                        email                    
+                    },
+             lPassword: {
+                        required
+                    },
+             rEmail: {
+                        required,
+                        email
+             },
+             rName: {
+                        required
+             },
+             rPhone: {
+                        required
+             },
+             rPassword: {
+                        required,
+                        minLengthValue: minLength(8),
+             },
+             rConfirmPassword: {
+                        requiredIf: requiredIf(this.rPassword)
+             }
+         }
+     },
      methods: {
          async login() {
+            await this.v$.$reset();
+            
+            await this.v$.lEmail.$touch();
+            await this.v$.lPassword.$touch();
+           
+            if (this.invalidate(this.v$.$errors, "Erro no login")) {
+                this.notyf.open({
+                     type: 'error',
+                     message: this.error,
+                 });
+                return;
+            }
+
              await this.$store.dispatch("auth", {
                  email: this.lEmail,
                  password: this.lPassword,
@@ -144,7 +196,7 @@
              if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',
-                     message: "Erro ao logar!",
+                     message: "Erro ao logar: Usuário ou senha inválidos!",
                  });
              } else {
                  this.notyf.open({
@@ -155,10 +207,18 @@
              }
          },
         async register() {
-            if (this.rPassword != this.rConfirmPassword) {
+            await this.v$.$reset();
+
+            await this.v$.rEmail.$touch();
+            await this.v$.rName.$touch();
+            await this.v$.rPassword.$touch();
+            await this.v$.rConfirmPassword.$touch();
+            await this.v$.rPhone.$touch();
+
+            if (this.invalidate(this.v$.$errors, "Erro no cadastro")) {
                 this.notyf.open({
                      type: 'error',
-                     message: "Erro ao cadastrar: Senhas não batem!",
+                     message: this.error,
                  });
                 return;
             }
@@ -173,7 +233,7 @@
              if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',
-                     message: "Erro ao cadastrar!",
+                     message: "Erro ao cadastrar: Email já cadastrado!",
                  });
              } else {
                  this.notyf.open({
@@ -183,9 +243,22 @@
                  this.$router.push("/profile");
              }
          },
+        invalidate(errors, message) {
+             if (!errors) return false;
+             if (errors.length == 0) return false;
+             
+             if (errors.length == 1) {
+                 this.error = `${message}:${errors[0].$property} ${errors[0].$message}!`
+             } else {
+                 this.error = `${message}: Preencha os campos corretamente!`
+             }
+
+             return true;
+         }
      },
  };
 </script>
+
 
 <style type="text/css" media="screen" scoped>
  .container {
@@ -230,4 +303,18 @@
  .inputDouble div {
      flex: 1 0 150px;
  }
+
+ p {
+     padding: 0;
+     color: var(--secondary-light) !important;
+     font-weight: bold;
+     font-style: italic;
+     font-size: 0.75rem;
+ }
+
+ h3 {
+     padding: 0;
+     padding-bottom: 5px;
+ }
+
 </style>
