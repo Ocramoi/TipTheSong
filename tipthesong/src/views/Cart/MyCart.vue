@@ -13,7 +13,7 @@
                     @clicked="captureClick"
                     class="flexTable"
                     rowHeight="5rem"
-                    :titles="['', 'Produto', 'Preço', 'Quantidade', 'Total']"
+                    :titles="['', 'Produto', 'Preço', 'Quantidade', 'Total', '', '']"
                     :values="productList" />
                 <span v-else>Nenhum produto no carrinho!</span>
             </div>
@@ -89,7 +89,7 @@
              const cartIds = Object.keys(this.cartList);
              return cartIds?.map(id => [
                  {
-                     id: id,
+                     id: `clear ${id}`,
                      content: '<i class="fa-solid fa-trash"></i>',
                      style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
                      class: "clickableIcon",
@@ -101,6 +101,16 @@
                  `R$${this.products[id]?.price.toFixed(2)}`,
                  this.cartList[id] || -1,
                  `R$${((this.cartList[id] || -1) * this.products[id]?.price).toFixed(2)}`,
+                 {
+                     id: `+ ${id}`,
+                     content: '<button class="clickableIcon pmIcon"><span>+</span></button>',
+                     class: "pmContainer",
+                 },
+                 {
+                     id: `- ${id}`,
+                     content: '<button class="clickableIcon pmIcon"><span>-</span></button>',
+                     class: "pmContainer",
+                 },
              ]);
          },
      },
@@ -108,13 +118,34 @@
          createContent(id) {
              return `<a href="/product/${id}" class="innerContent"><img src="${this.products[id]?.frontCover}" /><div class="productContainer"><h3 style="margin:0;padding:0">${this.products[id]?.title}</h3><span>${this.products[id]?.shortDescription}</span></div></a>`;
          },
-         captureClick(id) {
-             if (!id) return;
+         captureClick(cmdId) {
+             if (!cmdId) return;
+             const cmd = cmdId?.split(' ')[0],
+                   id = cmdId?.split(' ')[1];
 
-             this.$store.dispatch('removeFromCart', {
-                 id: id,
-                 qnt: this.cartList[id],
-             });
+             switch (cmd) {
+                 case 'clear':
+                     this.$store.dispatch('removeFromCart', {
+                         id: id,
+                         qnt: this.cartList[id],
+                     });
+                     break;
+                 case '+':
+                     if (this.products[id].amountInStock === 0) break;
+                     this.$store.dispatch('addToCart', {
+                         product: this.products[id],
+                         qnt: 1,
+                     });
+                     break;
+                 case '-':
+                     this.$store.dispatch('removeFromCart', {
+                         id: id,
+                         qnt: 1,
+                     });
+                     break;
+                 default:
+                     break;
+             }
          },
      },
  }
@@ -235,6 +266,19 @@
 
  :deep(h3) {
     padding: 0;
+ }
+
+ :deep(.pmIcon) {
+     width: min-content;
+     aspect-ratio: 1 / 1;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ :deep(.pmIcon > span) {
+     flex: 0 0 min-content;
+     font-size: 0.9em;
  }
 
 </style>
