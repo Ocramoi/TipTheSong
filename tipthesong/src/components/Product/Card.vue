@@ -12,17 +12,7 @@
         </router-link>
 
         <hr />
-        <!--
-             <div class="interact" v-if="interact">
-             <button class="cartButton" type="button" @click="decrease">
-             <i class="fa fa-minus" aria-hidden="true"></i>
-             </button>
-             <p class="roundInfo"> {{ this.amount }} </p>
-             <button class="cartButton" type="button" @click="increase">
-             <i class="fa fa-plus" aria-hidden="true"></i>
-             </button>
-             </div>
-        -->
+
         <div class="interact" v-if="interact">
             <button class="cartButton" @click="addToCart">
                 <i class="fa-solid fa-cart-plus"></i>

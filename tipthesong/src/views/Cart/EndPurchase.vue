@@ -121,6 +121,7 @@
              return cartIds?.map(id => {
                  return {
                      id: id,
+                     img: this.products[id]?.frontCover,
                      name: this.products[id]?.title,
                      quantity: this.cartList[id] || -1,
                      price: `R$${((this.cartList[id] || -1) * this.products[id]?.price).toFixed(2)}`,

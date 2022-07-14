@@ -19,18 +19,19 @@
                             class="inputFill"
                             v-model="info.name"
                             required
-                            placeholder="Nome"/>
+                            placeholder="Nome do remetente..."/>
                     </div>
                     <div>
                         <label for="phone">Telefone</label>
                         <br>
                         <input
-                            type="text"
+                            type="tel"
                             name="phone"
+                            v-mask="'(##) 9####-####'"
                             class="inputFill"
                             v-model="info.phone"
                             required
-                            placeholder="(dd) 9xxxx-xxxx"/>
+                            placeholder="Telefone para contato..."/>
                     </div>
                 </div>
 
@@ -44,18 +45,19 @@
                             class="inputFill"
                             v-model="info.country"
                             required
-                            placeholder=""/>
+                            placeholder="Pais..."/>
                     </div>
                     <div>
                         <label for="postalCode">CEP</label>
                         <br>
                         <input
-                            type="text"
+                            type="tel"
+                            v-mask="'#####-###'"
                             name="postalCode"
                             class="inputFill"
                             v-model="info.postalCode"
                             required
-                            placeholder=""/>
+                            placeholder="CEP..."/>
                     </div>
                 </div>
                 <div class="innerFlexContainer">
@@ -68,7 +70,7 @@
                             class="inputFill"
                             v-model="info.address"
                             required
-                            placeholder=""/>
+                            placeholder="Endereço..."/>
                     </div>
                 </div>
                 <div>
@@ -80,7 +82,7 @@
                         class="inputFill"
                         v-model="info.complemment"
                         required
-                        placeholder=""/>
+                        placeholder="Complemento..."/>
                 </div>
                 <div></div>
                 <div class="innerFlexContainer">
@@ -93,7 +95,7 @@
                             class="inputFill"
                             v-model="info.state"
                             required
-                            placeholder=""/>
+                            placeholder="Estado..."/>
                     </div>
                     <div>
                         <label for="city">Cidade</label>
@@ -104,7 +106,7 @@
                             class="inputFill"
                             v-model="info.city"
                             required
-                            placeholder=""/>
+                            placeholder="Cidade..."/>
                     </div>
                 </div>
                 <button type="button"  v-on="create ? {click: addAddress} : {click:editAddress}">{{ create ? "Adicionar" : "Editar" }}</button>
@@ -115,8 +117,14 @@
 
 
 <script>
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+
  export default {
      inject: ['notyf'],
+     setup () {
+        return { v$: useVuelidate()}
+     },
      name: "AddressUpsertPopup",
      props: {
          current: {
@@ -132,28 +140,43 @@
      data() {
          return {
              info: {
-                 id: null,
-                 name: null,
-                 phone: null,
-                 country: null,
-                 postalCode: null,
-                 address: null,
-                 complemment: null,
-                 state: null,
-                 city: null,
+                 id: "",
+                 name: "",
+                 phone: "",
+                 country: "",
+                 postalCode: "",
+                 address: "",
+                 complemment: "",
+                 state: "",
+                 city: "",
              },
              create: true,
          };
      },
+     validations () {
+         return {
+            info: {
+                name: {required},
+                phone: {required},     
+                country: {required},     
+                postalCode: {required},     
+                address: {required},     
+                state: {required},     
+                city: {required},     
+            } 
+         }
+     },
      methods: {
          async addAddress(){
-            const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
-            await this.$store.dispatch('addAddress', validInfo);
+            if (!await this.validate()) return;
 
-           if (this.$store.getters.getUserError) {
+           await this.$store.dispatch('addAddress', this.info);
+
+           const error = this.$store.getters.getUserError;
+           if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao adicionar endereço!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({
@@ -164,13 +187,16 @@
             }
          },
          async editAddress() {
+            if (!await this.validate()) return;
+
             const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
             await this.$store.dispatch('updateAddress', {addressId: validInfo._id, ...validInfo});
 
+            const error = this.$store.getters.getUserError;
             if (this.$store.getters.getUserError) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao atualizar endereço!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({
@@ -196,6 +222,19 @@
                  this.create = true;
              }
          },
+         async validate () {
+            const isFormCorrect = await this.v$.$validate()
+            if (!isFormCorrect) {
+                this.notyf.open({
+                     type: 'error',
+                     message: "Erro ao salvar endereço: Por favor preencha os campos corretamente!",
+                 });
+                 
+                 return false;
+            }
+
+            return true;
+         }
      }
  }
 </script>

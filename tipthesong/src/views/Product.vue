@@ -11,16 +11,17 @@
                 <h2> R$ {{ product?.price.toFixed(2) }} </h2>
                 <p> {{ product?.longDescription }} </p>
                 <br/>
-                <div class="amountInfo">
-                    <button class="cartButton" type="button" @click="decrease">
-                        <i class="fa fa-minus" aria-hidden="true"></i>
-                    </button>
-                    <p class="roundInfo"> {{ this.amount }} </p>
-                    <button class="cartButton" type="button" @click="increase">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                </div>
+
                 <div class="interact">
+                     <div class="amountInfo">     
+                         <button class="amntBtn" type="button" @click="increase">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <p class="roundInfo"> {{ this.amount }} </p>
+                        <button class="amntBtn" type="button" @click="decrease">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
                     <button class="cartButton" @click="addToCart">
                         <i class="fa-solid fa-cart-plus"></i>
                     </button>
@@ -167,7 +168,7 @@
      flex: 0 0 min-content !important;
  }
 
- .buyNow {
+ .buyNow, .roundInfo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,29 +199,33 @@
      text-align: center;
  }
 
+ .amntBtn {
+    margin: 0;
+    display: flex;
+    font-size: 0.75rem;
+    padding: 0.25rem;
+    align-items: center;
+    border-radius: 100%;
+    aspect-ratio: 1 / 1;
+    width: min-content;
+ }
+
  .amountInfo {
-     display: flex;
-     flex-direction: row;
-     justify-content: space-evenly;
-     align-items: center;
-     width: 200px;
-     gap: 1rem;
-     padding-bottom: 0.5rem;
+    max-width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
  }
 
  .roundInfo {
     text-transform: uppercase;
-    border: 0;
-    background: var(--secondary-dark);
-    color: currentColor;
-    padding: 10px;
-    border-radius: 2rem;
     font-weight: bold;
-    transition: 0.4s;
+    padding: 0.2rem;
     width: max-content;
-    color: var(--white);
     text-align: center;
     width: 100%;
  }
+
 
 </style>

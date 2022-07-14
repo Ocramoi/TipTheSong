@@ -20,7 +20,8 @@
                         <label for="newPhone">Telefone</label>
                         <br>
                         <input
-                            type="text"
+                            type="tel"
+                            v-mask="'(##) 9####-####'"
                             class="inputFill"
                             name="newPhone"
                             v-model="newPhone"
@@ -93,7 +94,7 @@ export default {
     inject: ['notyf'],
     data() {
         return {
-            error: false,
+            error: "",
             newUserName: null,
             newPhone: null,
             newEmail: null,
@@ -111,12 +112,33 @@ export default {
         }
     },
     methods: {
-        async saveChanges() {
+        checkFormError () {
+            if (!this.newUserName && !this.newPhone &&
+               !this.newEmail && !this.curPassword &&
+               !this.newPassword && !this.confirmNewPassword) {
+                   this.error = "Erro ao salvar alterações: Não há nada a ser feito aqui!"
+                   console.log(this.error);
+                   return true;
+               }
+
             if (this.newPassword && this.newPassword != this.confirmNewPassword) {
+                this.error = "Erro ao salvar alterações: Senhas não batem!"
+                return true;
+            }
+
+            if (this.curPassword && !this.newPassword) {
+                this.error = "Erro ao salvar alterações: Insira a nova senha!"
+                return true;
+            }
+
+            return false;
+        },
+        async saveChanges() {
+            if (this.checkFormError()) {
                 this.notyf.open({
-                     type: 'error',
-                     message: "Erro ao salvar alterações: Senhas não batem!",
-                 });
+                         type: 'error',
+                         message: this.error,
+                     });
                 return;
             }
 
@@ -128,10 +150,11 @@ export default {
                  newPassword: this.newPassword,
             });
 
+            const error = this.$store.getters.getUserError;
             if (!this.$store.getters.getUserLoaded) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao salvar alterações!",
+                         message: error,
                      });
             } else {
                   this.notyf.open({

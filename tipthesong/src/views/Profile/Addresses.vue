@@ -70,10 +70,11 @@
                 addressId: id,
             });
 
-            if (this.$store.getters.getUserError) {
+            const error = this.$store.getters.getUserError;
+            if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao deletar endereço!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({

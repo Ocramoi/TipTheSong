@@ -20,6 +20,9 @@ dom.watch();
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 app.component("font-awesome-icon", FontAwesomeIcon);
 
+import VueTheMask from 'vue-the-mask'
+app.use(VueTheMask)
+
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 

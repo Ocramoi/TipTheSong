@@ -104,7 +104,9 @@ const actions = {
 
   // Loads user (used after updating info)
   async loadUser({commit, state}) {
+    commit("setUserError", null);
     commit("setUserLoaded", false);
+
     await api.get(`user/${state.user?._id}`,
          {
           headers: {
@@ -115,17 +117,21 @@ const actions = {
               .then(response => {
                 commit("setUser", response.data);
                 commit("setUserLoaded", true);
+                commit("setUserError", null);
              })
              .catch(err => {
                 console.log(`Erro ao carregar usuário: ${err}`);
                 commit("setUserLoaded", false);
+                commit("setUserError", `Erro ao carregar usuário: ${err}`);
              });
 
 
   },
 
   // Updates user info
-  async updateUserInfo({ dispatch, state }, updated) {
+  async updateUserInfo({ dispatch, state, commit }, updated) {
+    commit("setUserError", null);
+
     await api.put(`user/${state.user?._id}`, 
         {
           name: updated.name,
@@ -141,9 +147,11 @@ const actions = {
     )
               .then(async () => {
                 await dispatch("loadUser");
+                commit("setUserError", null);
              })
              .catch(err => {  
                console.log(`Erro ao atualizar informações: ${err}`);
+               commit("setUserError", `Erro ao atualizar informações: ${err}`);
              });
   },
 
@@ -170,7 +178,7 @@ const actions = {
              })
             .catch(err => {  
                 console.log(`Erro ao adicionar cartão: ${err}`);
-                commit("setUserError", err);
+                commit("setUserError", `Erro ao adicionar cartão: ${err}`);
              });
   },
 
@@ -194,7 +202,7 @@ const actions = {
              })
             .catch(err => {  
                console.log(`Erro ao deletar cartão: ${err}`);
-               commit("setUserError", err);
+               commit("setUserError", `Erro ao deletar cartão: ${err}`);
              });
   },
 
@@ -225,7 +233,7 @@ const actions = {
              })
             .catch(err => {  
                 console.log(`Erro ao adicionar endereço: ${err}`);
-                commit("setUserError", err);
+                commit("setUserError", `Erro ao adicionar endereço: ${err}`);
              });
   },
 
@@ -246,7 +254,7 @@ const actions = {
              })
             .catch(err => {  
                 console.log(`Erro ao atualizar endereço: ${err}`);
-                commit("setUserError", err);
+                commit("setUserError", `Erro ao atualizar endereço: ${err}`);
              });
   },
 
@@ -270,7 +278,7 @@ const actions = {
              })
             .catch(err => {  
                 console.log(`Erro ao deletar endereço: ${err}`);
-                commit("setUserError", err);
+                commit("setUserError", `Erro ao deletar endereço: ${err}`);
              });
   },
 
@@ -330,7 +338,7 @@ const actions = {
             })
             .catch(err => {  
               console.log(`Erro ao deletar usuário: ${err}`);
-              commit("setUsers", null);
+              commit("setUsers", "Erro ao deletar usuário!");
              });
   },
 
@@ -351,13 +359,18 @@ const actions = {
             })
             .catch(err => {  
                 console.log(`Erro ao promover usuário: ${err}`);
-                commit("setUserError", err);
+                commit("setUserError", "Erro ao promover usuário");
             });
   },
   
   // Promotes an user to admin if the user that requested it is an admin
-  async demoteUser({ dispatch, commit }, { userId }) {
+  async demoteUser({ dispatch, commit, state }, { userId }) {
     commit("setUserError", null);
+    
+    if (userId == state.user._id) {
+      commit("setUserError", "Você não pode se auto rebaixar!");
+      return;
+    }
     
     await api.put(`admin/demote/${userId}`, {},
         {
@@ -372,7 +385,7 @@ const actions = {
             })
             .catch(err => {  
               console.log(`Erro ao promover usuário: ${err}`);
-              commit("setUserError", err);
+              commit("setUserError", "Erro ao rebaixar usuário!");
             });
   },
 

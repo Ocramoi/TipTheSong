@@ -59,10 +59,11 @@
                 cardId: id
             });
 
-            if (this.$store.getters.getUserError) {
+            const error = this.$store.getters.getUserError;
+            if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao deletar cartão!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({

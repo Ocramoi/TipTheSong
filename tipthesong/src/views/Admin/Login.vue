@@ -32,9 +32,6 @@
                 <!-- <input type="checkbox" name="remember" v-model="remember"  />
                      <label for="remember">Lembre-se de mim</label> -->
 
-                <br />
-                <br />
-
                 <button type="submit" @click.stop.prevent="login()"> Entrar </button>
             </form>            
         </div>
@@ -42,6 +39,10 @@
 </template>
 
 <script>
+import useVuelidate from '@vuelidate/core';
+import { required, email, requiredIf} from '@vuelidate/validators';
+
+
 export default {
     inject: ['notyf'],
     data() {
@@ -51,8 +52,27 @@ export default {
             remember: false,
         }
     },
+    setup () {
+        return { v$: useVuelidate()}
+     },
+    validations () {
+        return {
+            email: {required, email},
+            password: {requiredIf: requiredIf(this.email)}
+        }
+    },
     methods: {
         async login() {
+            const isFormCorrect = await this.v$.$validate()
+            if (!isFormCorrect) {
+                this.notyf.open({
+                     type: 'error',
+                     message: "Erro no login: Por favor preencha os campos corretamente!",
+                 });
+                 
+                 return;
+            }
+
             await this.$store.dispatch("auth", {
                  email: this.email,
                  password: this.password,
@@ -61,7 +81,7 @@ export default {
             if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',
-                     message: "Erro no login!",
+                     message: "Erro no login: Usuário ou senha inválidos!",
                  });
             } else if (this.$store.getters.getPermDenied == true) {
                 this.notyf.open({

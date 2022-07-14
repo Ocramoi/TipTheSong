@@ -103,10 +103,11 @@
          async deleteProduct(id) {
             await this.$store.dispatch('deleteProduct', { productId: id });
 
-            if (this.$store.getters.getProductError) {
+            const error = this.$store.getters.getProductError;
+            if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao deletar produto!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({

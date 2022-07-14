@@ -96,10 +96,11 @@
         async promoteUser(id) {
             await this.$store.dispatch('promoteUser', { userId: id });
 
-            if (this.$store.getters.getUserError) {
+            const error = this.$store.getters.getUserError;
+            if (error) {
                 this.notyf.open({
                          type: 'error',
-                         message: "Erro ao promover usuário!",
+                         message: error,
                     });
             } else {
                 this.notyf.open({
