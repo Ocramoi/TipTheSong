@@ -12,6 +12,9 @@ const productSchema = new mongoose.Schema({
     price: Number,
     amountInStock: Number,
     amountSold: Number,
-})
+    createdAt: Date,
+}, {
+    timestamps: true,
+});
 
 export default mongoose.model('Product', productSchema);

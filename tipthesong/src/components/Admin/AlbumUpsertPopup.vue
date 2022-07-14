@@ -262,7 +262,7 @@ import { required, url, numeric } from '@vuelidate/validators';
             }
          },
          async updateProduct() {
-             if (!await this.validate()) return;
+             if (!(await this.validate())) return;
 
              await this.$store.dispatch("updateProduct", {
                     productId: this.id,

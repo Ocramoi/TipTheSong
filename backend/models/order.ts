@@ -22,6 +22,9 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "Address",
     },
+    createdAt: Date,
+}, {
+    timestamps: true,
 });
 
 export default mongoose.model('Order', orderSchema);

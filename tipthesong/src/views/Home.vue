@@ -12,8 +12,8 @@
         <AlbumCollection
             v-for="(collection, idx) in collections"
             :key="idx"
-            :title="collection"     
-            :albuns="products" />
+            :title="collection?.label || '...'"
+            :albuns="collectionLists[collection?.collection] || []" />
     </div>
 </template>
 
@@ -34,19 +34,35 @@
                  },
              ],
              collections: [
-                 "Álbuns em alta",
-                 "Novos álbuns",
-                 "Últimas unidades",
-             ]
+                 {
+                     label: "Novos álbuns",
+                     collection: "new",
+                 },
+                 {
+                     label: "Últimas unidades",
+                     collection: "last",
+                 },
+                 {
+                     label: "Descubra novos álbuns",
+                     collection: "random",
+                 },
+             ],
          };
      },
      computed: {
          products() {
              return this.$store.getters.getProductList;
          },
+         collectionLists() {
+             return this.$store.getters.getProductCollections;
+         },
      },
      created() {
-            this.$store.dispatch('loadProducts');
+         this.$store.dispatch('loadProducts');
+         this.collections.forEach(collection => this.$store.dispatch(
+             "loadProductCollection",
+             collection.collection
+         ));
      }
  };
 </script>

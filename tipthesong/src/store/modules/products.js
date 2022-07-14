@@ -10,6 +10,7 @@ const state = () => ({
   currentLoaded: null,
   cartProducts: {},
   cartProductsLoaded: null,
+  collections: {},
 });
 
 const mutations = {
@@ -30,7 +31,11 @@ const mutations = {
   },
   setProductError(state, value) {
     state.productError = value;
-  }
+  },
+  setProductCollection(state, collection) {
+    state.collections[collection.name] = collection.data;
+    console.log(state.collections);
+  },
 };
 
 const actions = {
@@ -90,7 +95,7 @@ const actions = {
       longDescription: product?.longDescription,
       extraInfo: product?.extraInfo,
       price: product?.price,
-      amountStock: product?.amountInStock
+      amountInStock: product?.amountInStock
     }, {
         headers: {
          "authorization": `Bearer ${JWT()}`,
@@ -157,7 +162,22 @@ const actions = {
         console.log(`Erro ao excluir produto da lista: ${err}`);
         commit('setProductError', "Erro ao excluir produto da lista");  
       });
-  }  
+  },
+
+  // Loads product collection by name
+  async loadProductCollection({ commit }, name) {
+    commit('setCurrentLoaded', false);
+    await api.get(`product/collection/${name}`)
+             .then(response => {
+               commit("setProductCollection", {
+                 name: name,
+                 data: response.data
+               });
+             })
+             .catch(err => {
+               console.log(`Erro ao carregar coleção: ${err}`);
+             });
+  },
 };
 
 const getters = {
@@ -166,7 +186,8 @@ const getters = {
   getCurrentLoaded(state) { return state.currentLoaded; },
   getCartProducts(state) { return state.cartProducts; },
   getCartProductsLoaded(state) { return state.cartProductsLoaded; },
-  getProductError(state) {return state.productError;}
+  getProductError(state) { return state.productError; },
+  getProductCollections(state) { return state.collections; },
 };
 
 export default {
