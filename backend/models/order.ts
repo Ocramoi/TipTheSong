@@ -3,9 +3,8 @@ import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema({
     date: Date,
     status: String,
-    total:  Number,
     products: [
-        { type: mongoose.Types.ObjectId, ref: "Product" }
+        { type: mongoose.Types.ObjectId, ref: "Product" },
     ],
     userId: {
         type: mongoose.Types.ObjectId,

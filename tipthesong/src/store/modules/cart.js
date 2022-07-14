@@ -46,25 +46,31 @@ const actions = {
   setCurrentOrder({ commit }, orderInfo) {
     commit("setCurrentOrder", orderInfo);
   },
-  async finishOrder({ commit, }, info) {
-    commit("setOrderSucess", null);
+  async finishOrder({ commit, state }, ) {
+    commit("setOrderSuccess", null);
 
-    await api.post("order/",
-        {
-          // INFO
-          a: info?.a,
-        }, {
-          headers: {
-            "authorization": `Bearer ${JWT()}`,
-          }
-        },
-    )
-            .then(() => {
-                commit("setOrderSuccess", true);
+    await api.post("order", {
+      addressId: state.currentOrder.address,
+      method: ["boleto", "pix"].includes(state.currentOrder.method) ?
+        state.currentOrder.method :
+        "card",
+      ...(!["boleto", "pix"].includes(state.currentOrder.method) ? {
+        cardId: state.currentOrder.method,
+      } : {}),
+      products: Object.keys(state.cartList),
+    }, {
+      headers: {
+        "authorization": `Bearer ${JWT()}`,
+      }
+    })
+             .then(() => {
+               commit("setOrderSuccess", true);
+               commit("setCurrentOrder", null);
+               commit("setCart", {});
              })
-            .catch(err => {
-                console.log(`Erro ao adicionar cartão: ${err}`);
-                commit("setOrderSuccess", false);
+             .catch(err => {
+               console.log(`Erro ao adicionar cartão: ${err}`);
+               commit("setOrderSuccess", false);
              });
   },
 };

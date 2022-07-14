@@ -1,5 +1,4 @@
 import express, { Router } from 'express';
-import dotenv from 'dotenv';
 
 // ROUTES
 import productRouter from './product';

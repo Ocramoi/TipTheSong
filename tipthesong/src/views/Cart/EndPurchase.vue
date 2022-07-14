@@ -88,6 +88,7 @@
 
  export default {
      name: "EndPurchase",
+     inject: ['notyf'],
      components: {
          EndItem,
      },
@@ -167,7 +168,22 @@
          },
      },
      methods: {
-         finish() {},
+         async finish() {
+             await this.$store
+                       .dispatch("finishOrder", );
+             if (this.$store.getters.getOrderSuccess) {
+                 this.notyf.open({
+                     type: "success",
+                     message: "Compra realizada com sucesso!",
+                 });
+                 this.$router.push("/profile/orders");
+             } else {
+                 this.notyf.open({
+                     type: "error",
+                     message: "Erro ao efetuar a compra! Tente novamente"
+                 });
+             }
+         },
      },
  }
 </script>

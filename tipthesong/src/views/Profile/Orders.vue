@@ -35,25 +35,28 @@
          Sidebar,
          FlexTable,
      },
+     created() {
+         this.$store.dispatch("loadUser");
+     },
      computed: {
-        orders() {
-            return this.$store.getters.getUser?.orders?.map(order => [
-                order._id,
-                order.date,
-                order.status,
-                order.total,
-            ]) || [];
-        },
+         orders() {
+             return this.$store.getters.getUser?.orders?.map(order => [
+                 order._id,
+                 new Date(order.date).toLocaleDateString('pt-BR'),
+                 order.status,
+                 `R$${order.products.reduce((prev, cur) => prev + cur.price, 0).toFixed(2)}`,
+             ]) || [];
+         },
      },
  };
 </script>
 
 <style type="text/css" media="screen" scoped>
-@import url('../../css/Profile.css');
+ @import url('../../css/Profile.css');
 
-h2 {
-    text-transform: uppercase;
-    padding: 0;
-}
+ h2 {
+     text-transform: uppercase;
+     padding: 0;
+ }
 
 </style>

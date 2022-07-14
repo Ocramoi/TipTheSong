@@ -60,7 +60,12 @@ module.exports.login = async (req: Request, res: Response) => {
             .findOne({ email: email })
             .populate("addresses")
             .populate("cards")
-            .populate("orders");
+            .populate({
+                path: "orders",
+                populate: {
+                    path: "products",
+                },
+            });
         if (!user) {
             return res.status(400).send("Erro ao logar usuário: Email não cadastrado");
         }
@@ -94,7 +99,12 @@ module.exports.getUserInfo = async(req: Request, res: Response) => {
             .findById(req.params.id)
             .populate("addresses")
             .populate("cards")
-            .populate("orders");
+            .populate({
+                path: "orders",
+                populate: {
+                    path: "products",
+                },
+            });
         return res.status(200).send(user);
     } catch (e) {
         logger.error(e);

@@ -113,7 +113,6 @@ const actions = {
         },
     )
               .then(response => {
-                console.log(response.data);
                 commit("setUser", response.data);
                 commit("setUserLoaded", true);
              })
