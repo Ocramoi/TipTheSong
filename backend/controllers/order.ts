@@ -15,6 +15,7 @@ interface OrderInfo_t {
     addressId: mongoose.Types.ObjectId,
     method: String,
     products: String[] | mongoose.Types.ObjectId[],
+    quantities: Number[],
     cardId?: mongoose.Types.ObjectId,
 };
 
@@ -38,7 +39,8 @@ module.exports.finishOrder = async(req: Request, res: Response) => {
                 userId: user._id,
                 addressId: address._id,
                 method: body.method,
-                products: body.products,
+                products: Object.keys(body.cart),
+                quantities: Object.values(body.cart),
             } as OrderInfo_t;
         } catch (e: any) {
             logger.error(e);
@@ -54,13 +56,22 @@ module.exports.finishOrder = async(req: Request, res: Response) => {
             orderInfo.cardId = card._id;
         }
 
-        const productIds = (await ProductModel.find(
+        let outOfStock = [] as string[];
+        const productObjs = (await ProductModel.find(
             { '_id': { $in: orderInfo.products } },
-            { _id: 1 },
-        )).map(product => product._id);
-        if (productIds.length !== orderInfo.products.length)
+        ));
+        if (!productObjs || productObjs.length !== orderInfo.products.length)
             return res.status(400).send("Erro: Um ou mais produtos inválidos");
-        orderInfo.products = productIds;
+        for (let i = 0; i < productObjs.length; ++i) {
+            if (orderInfo.quantities[i] > (productObjs[i].amountInStock || -1))
+                outOfStock.push((productObjs[i].title || "Título"));
+        }
+        if (outOfStock.length)
+            return res.status(405).json({
+                message: "Álbuns fora de estoque:",
+                outOfStock: outOfStock,
+            });
+        orderInfo.products = productObjs.map(product => product._id);
 
         // Creates a new order
         const order = await OrderModel.create(orderInfo);

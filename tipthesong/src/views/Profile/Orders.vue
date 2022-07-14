@@ -44,7 +44,11 @@
                  order._id,
                  new Date(order.date).toLocaleDateString('pt-BR'),
                  order.status,
-                 `R$${order.products.reduce((prev, cur) => prev + cur.price, 0).toFixed(2)}`,
+                 "R$" +
+                 order.products
+                      .map((product, idx) => product.price*order.quantities[idx])
+                      .reduce((prev, cur) => prev + cur, 0)
+                      .toFixed(2),
              ]) || [];
          },
      },

@@ -48,7 +48,7 @@
          },
          addToCart() {
              this.$store.dispatch('addToCart', {
-                 id: this.product._id,
+                 product: this.product,
                  qnt: this.amount,
              });
          },
