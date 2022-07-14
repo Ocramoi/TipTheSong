@@ -6,11 +6,14 @@
         <h1>{{ product?.title }} - {{ product?.artists?.join(', ') }} ({{ product?.launchDate }})</h1>
 
         <div class="productInfoBox"> 
-            <img :src="product?.frontCover">
+            <img
+                :src="product?.frontCover"
+                :class="{ 'outOfStock': !product?.amountInStock }">
             <div class="productInfoText">
                 <h2> R$ {{ product?.price.toFixed(2) }} </h2>
                 <p> {{ product?.longDescription }} </p>
-                <h3>Em estoque: {{ product?.amountInStock }}</h3>
+                <h3 v-if="product?.amountInStock">Em estoque: {{ product?.amountInStock }}</h3>
+                <h3 class="outOfStock" v-else>Produto fora de estoque!</h3>
                 <br/>
 
                 <div class="interact">
@@ -234,5 +237,12 @@
      width: 100%;
  }
 
+ h3.outOfStock {
+     color: var(--secondary) !important;
+ }
+
+ img.outOfStock {
+     filter: grayscale(0.7);
+ }
 
 </style>

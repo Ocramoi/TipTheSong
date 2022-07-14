@@ -162,7 +162,7 @@
                                          country: address.country,
                                          cellphone: address.phone,
                                      };
-                                 })[0];
+                                 })[0] || {};
          },
          currentOrder() {
              return this.$store.getters.getOrderInfo || null;

@@ -65,6 +65,9 @@ module.exports.finishOrder = async(req: Request, res: Response) => {
         for (let i = 0; i < productObjs.length; ++i) {
             if (orderInfo.quantities[i] > (productObjs[i].amountInStock || -1))
                 outOfStock.push((productObjs[i].title || "Título"));
+            else
+                // @ts-ignore
+                productObjs[i].amountInStock -= orderInfo.quantities[i];
         }
         if (outOfStock.length)
             return res.status(405).json({
@@ -72,6 +75,8 @@ module.exports.finishOrder = async(req: Request, res: Response) => {
                 outOfStock: outOfStock,
             });
         orderInfo.products = productObjs.map(product => product._id);
+        for (const product of productObjs)
+            await product.save();
 
         // Creates a new order
         const order = await OrderModel.create(orderInfo);
