@@ -16,7 +16,7 @@
                 <h3 class="outOfStock" v-else>Produto fora de estoque!</h3>
                 <br/>
 
-                <div class="interact">
+                <div class="interact" :class="{ 'outOfStock': !product?.amountInStock }">
                     <div class="amountInfo">
                         <button class="amntBtn" type="button" @click="increase">
                             <i class="fa fa-plus"></i>
@@ -110,14 +110,16 @@
              window.scrollTo(0,0);
          },
          addToCart() {
+             if (this.product.amountInStock === 0) return false;
              this.$store.dispatch('addToCart', {
                  product: this.product,
                  qnt: this.amount,
              });
+             return true;
          },
          goToCart() {
-             this.addToCart()
-             this.$router.push('/cart')
+             if (this.addToCart())
+                 this.$router.push('/cart');
          },
      },
  }
@@ -243,6 +245,14 @@
 
  img.outOfStock {
      filter: grayscale(0.7);
+ }
+
+ .outOfStock button {
+     pointer-events: none !important;
+ }
+
+ .interact.outOfStock {
+     display: none;
  }
 
 </style>
