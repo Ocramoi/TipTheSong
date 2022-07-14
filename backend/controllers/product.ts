@@ -3,11 +3,15 @@ import { logger } from '../logger';
 
 import ProductModel from '../models/product';
 
-const suggestions = async (genres: string[]) => {
+const suggestions = async (id: string, genres: string[]) => {
     const found = await ProductModel
         .aggregate([
-            { $match: { genres: { $in: genres } } },
             {
+                $match: {
+                    _id: { $nin: [ id ] },
+                    genres: { $in: genres },
+                }
+            }, {
                 $set: {
                     matchedCount: {
                         $size: {
@@ -33,7 +37,7 @@ module.exports.getProductById = async (req: Request, res: Response) => {
                     return res.status(400).send("Produto não achado");
                 let productObj = {
                     ...product.toObject(),
-                    suggestions: await suggestions(product.genres)
+                    suggestions: await suggestions(product._id, product.genres)
                 };
                 return res.status(200).send(productObj);
             })

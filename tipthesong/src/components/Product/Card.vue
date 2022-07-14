@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" :class="{ 'outOfStock': product?.amountInStock === 0 }">
         <router-link :to="`/product/${product?._id}`">
             <img class="image" :src="product?.frontCover">
         </router-link>
@@ -47,14 +47,16 @@
                 this.amount--;
          },
          addToCart() {
+             if (this.product.amountInStock === 0) return false;
              this.$store.dispatch('addToCart', {
-                 id: this.product._id,
+                 product: this.product,
                  qnt: this.amount,
              });
+             return true;
          },
          goToCart() {
-            this.addToCart();
-            this.$router.push('/cart');
+            if (this.addToCart())
+                this.$router.push('/cart');
          },
      },
      data() {
@@ -96,6 +98,14 @@
  .card:hover {
      transform: scale(1.02);
      transform-origin: center center;
+ }
+
+ .card.outOfStock {
+     filter: grayscale(0.7);
+ }
+
+ .card.outOfStock:hover {
+     transform: none;
  }
 
  .description {
@@ -152,24 +162,28 @@
      padding: 0;
  }
 
-button {
-    font-size: 0.775rem;
-}
+ button {
+     font-size: 0.775rem;
+ }
 
-.roundInfo {
-    text-transform: uppercase;
-    border: 0;
-    background: var(--secondary-dark);
-    color: currentColor;
-    padding: 10px;
-    border-radius: 2rem;
-    font-weight: bold;
-    transition: 0.4s;
-    cursor: pointer;
-    width: max-content;
-    color: var(--white);
-    text-align: center;
-    width: 33%;
-}
+ .outOfStock button {
+     pointer-events: none !important;
+ }
+
+ .roundInfo {
+     text-transform: uppercase;
+     border: 0;
+     background: var(--secondary-dark);
+     color: currentColor;
+     padding: 10px;
+     border-radius: 2rem;
+     font-weight: bold;
+     transition: 0.4s;
+     cursor: pointer;
+     width: max-content;
+     color: var(--white);
+     text-align: center;
+     width: 33%;
+ }
 
 </style>

@@ -7,6 +7,7 @@ const state = () => ({
   cartList: {},
   currentOrder: null,
   orderSuccess: null,
+  outOfStock: null,
 });
 
 const mutations = {
@@ -28,13 +29,19 @@ const mutations = {
   setOrderSuccess(state, v) {
     state.orderSuccess = v;
   },
+  setOutOfStock(state, titles) {
+    state.outOfStock = titles;
+  },
 };
 
 const actions = {
-  addToCart({ commit }, payload) {
+  addToCart({ commit, state }, payload) {
+    console.log(payload.product);
+    if (payload.product.amountInStock < (state.cartList[payload.product._id] || 0) + payload.qnt)
+      return;
     commit('addToCart', {
-      id: payload?.id,
-      qnt: payload?.qnt
+      id: payload.product._id,
+      qnt: payload.qnt
     });
   },
   removeFromCart({ commit }, payload) {
@@ -57,7 +64,7 @@ const actions = {
       ...(!["boleto", "pix"].includes(state.currentOrder.method) ? {
         cardId: state.currentOrder.method,
       } : {}),
-      products: Object.keys(state.cartList),
+      cart: state.cartList,
     }, {
       headers: {
         "authorization": `Bearer ${JWT()}`,
@@ -67,10 +74,15 @@ const actions = {
                commit("setOrderSuccess", true);
                commit("setCurrentOrder", null);
                commit("setCart", {});
+               commit("setOutOfStock", null);
              })
              .catch(err => {
                console.log(`Erro ao adicionar cartão: ${err}`);
                commit("setOrderSuccess", false);
+               if (err.response?.status == 405)
+                 commit("setOutOfStock", err.response?.data?.outOfStock);
+               else
+                 commit("setOutOfStock", null);
              });
   },
 };
@@ -79,6 +91,7 @@ const getters = {
   getCartList(state) { return state.cartList; },
   getOrderInfo(state) { return state.currentOrder; },
   getOrderSuccess(state) { return state.orderSuccess; },
+  getOutOfStock(state) { return state.outOfStock; },
 };
 
 export default {

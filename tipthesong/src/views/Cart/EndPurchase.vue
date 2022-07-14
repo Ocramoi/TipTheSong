@@ -162,7 +162,7 @@
                                          country: address.country,
                                          cellphone: address.phone,
                                      };
-                                 })[0];
+                                 })[0] || {};
          },
          currentOrder() {
              return this.$store.getters.getOrderInfo || null;
@@ -183,6 +183,13 @@
                      type: "error",
                      message: "Erro ao efetuar a compra! Tente novamente"
                  });
+                 if (this.$store.getters.getOutOfStock) {
+                     this.notyf.open({
+                         type: "error",
+                         message: `A quantidade desejada dos seguintes álbuns está indisponível:` +
+                                  this.$store.getters.getOutOfStock.join(";")
+                     });
+                 }
              }
          },
      },
