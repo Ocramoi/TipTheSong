@@ -102,14 +102,7 @@
              filterVisible: true,
              filters: {
                  album: "",
-                 genres: [
-                     { name: "RAP", selected: true },
-                     { name: "ROCK", selected: true },
-                     { name: "JAZZ", selected: true },
-                     { name: "BLUES", selected: true },
-                     { name: "MPB", selected: true },
-                     { name: "POP", selected: true }, 
-                 ],
+                 genres: [],
                  artist: "",
                  price: [],
                  year: [],
@@ -118,6 +111,13 @@
      },
      beforeMount() {
          this.clearFilters();
+     },
+     async created() {
+         this.$store.dispatch('loadProducts');
+         this.setGenres();
+         this.$store
+             .dispatch("loadGenres")
+             .then(() => this.setGenres());
      },
      mounted () {
         this.filters.album = this.query ? this.query : "";
@@ -128,6 +128,15 @@
          },
      },
      methods: {
+         setGenres() {
+             this.filters.genres = [];
+             this.$store.getters.getGenres?.forEach(genre =>
+                 this.filters.genres.push({
+                     name: genre,
+                     selected: true,
+                 })
+             );
+         },
          clearFilters() {
              this.filters.price = [ this.minPrice, this.maxPrice ];
              this.filters.year = [ this.minYear, this.maxYear ];
@@ -194,9 +203,6 @@
              });
          },
      },
-    created() {
-        this.$store.dispatch('loadProducts');
-     }
  }
 
 </script>

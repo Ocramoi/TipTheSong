@@ -93,3 +93,15 @@ module.exports.getCollection = async (req: Request, res: Response) => {
         return res.status(500).send(`Erro ao carregar coleção`);
     }
 };
+
+module.exports.getGenres = async (_req: Request, res: Response) => {
+    ProductModel
+        .distinct("genres")
+        .then(genres => {
+            return res.status(200).send(genres);
+        })
+        .catch(err => {
+            logger.error(err);
+            return res.status(500).send("Não foi possível encontrar os gêneros");
+        })
+};

@@ -11,6 +11,7 @@ const state = () => ({
   cartProducts: {},
   cartProductsLoaded: null,
   collections: {},
+  genres: [],
 });
 
 const mutations = {
@@ -34,7 +35,9 @@ const mutations = {
   },
   setProductCollection(state, collection) {
     state.collections[collection.name] = collection.data;
-    console.log(state.collections);
+  },
+  setGenres(state, genres) {
+    state.genres = genres;
   },
 };
 
@@ -166,7 +169,6 @@ const actions = {
 
   // Loads product collection by name
   async loadProductCollection({ commit }, name) {
-    commit('setCurrentLoaded', false);
     await api.get(`product/collection/${name}`)
              .then(response => {
                commit("setProductCollection", {
@@ -176,6 +178,17 @@ const actions = {
              })
              .catch(err => {
                console.log(`Erro ao carregar coleção: ${err}`);
+             });
+  },
+
+  // Loads product genres
+  async loadGenres({ commit }, ) {
+    await api.get(`product/genres`)
+             .then(response => {
+               commit("setGenres", response.data);
+             })
+             .catch(err => {
+               console.log(`Erro ao carregar gêneros: ${err}`);
              });
   },
 };
@@ -188,6 +201,7 @@ const getters = {
   getCartProductsLoaded(state) { return state.cartProductsLoaded; },
   getProductError(state) { return state.productError; },
   getProductCollections(state) { return state.collections; },
+  getGenres(state) { return state.genres; },
 };
 
 export default {
