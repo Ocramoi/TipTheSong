@@ -152,19 +152,24 @@ Para compilar para produção:
 yarn build
 ```
 
+Para rodar o servidor, na pasta backend basta rodar:
+```
+yarn run dev
+```
+Vale o adendo de que no repositório não temos o .env do banco, ou seja, é possível rodar o banco, mas não é possível acessá-lo.
+
 ## Problemas
 Todos os problemas que foram citados anteriormente nesse documento, foram resolvidos ao integrar o frontend com o backend. 
-
-Outro problema existente é a falta da funcionalidade de adicionar/editar novos endereços. Foi decidido pela não implementação dessa funcionalidade na simulação, pois a mesma funciona do mesmo jeito que a adição/edição de endereços. A falta da funcionalidade será resolvida juntamente com a implementação do servidor.
-
-Mesmo sem estar logado é possível adicionar produtos ao carrinho. Porém não é possível acessar a página de carrinho sem estar logado. Essa problema será arrumado quando fizermos a integração com o servidor.
 
 ## Comentários
 *Homenagem aos paulistinhas de menta que nos acompanharam nessa trajetória*
 
 ## Reviews:
 [Review da Milestone 1](https://drive.google.com/file/d/1u9YdB2jHsU6PN_XvezgvMbzt3af5cu-a/view?usp=sharing)
+
 [Review da Milestone 2](https://drive.google.com/file/d/1wBV1UUMXi_KrsCjqDOGNRJnl4LqCbHnC/view?usp=sharing)
+
+[Review da Milestone 3](https://drive.google.com/file/d/1SO7_YUfmAzz_Z9fKjTdguAP04Kr0N5Hp/view?usp=sharing)
 
 ## Timeline
 - **release/v2.0.0**: Entrega do *Milestone 2*, 21/06/2022
