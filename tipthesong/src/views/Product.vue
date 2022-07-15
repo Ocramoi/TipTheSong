@@ -62,6 +62,7 @@
 
  export default {
      name: "Product",
+     inject: ['notyf'],
      components: {
          AlbumCollection
      },
@@ -110,10 +111,14 @@
              window.scrollTo(0,0);
          },
          addToCart() {
-             if (this.product.amountInStock === 0) return false;
+             if (this.product.amountInStock <= 0) return false;
              this.$store.dispatch('addToCart', {
                  product: this.product,
                  qnt: this.amount,
+             });
+             this.notyf.open({
+                 type: "success",
+                 message: `Álbu${this.amount <= 1 ? 'm' : 'ns'} adicionado com sucesso ao carrinho`,
              });
              return true;
          },
