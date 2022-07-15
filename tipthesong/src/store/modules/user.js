@@ -334,11 +334,13 @@ const actions = {
         },
     )
             .then(async () => {
-              dispatch("loadUsers");
+              await dispatch("loadUsers");
+              commit("setUsers", null);
             })
             .catch(err => {  
               console.log(`Erro ao deletar usuário: ${err}`);
               commit("setUsers", "Erro ao deletar usuário!");
+              commit("setUsers", err);
              });
   },
 
