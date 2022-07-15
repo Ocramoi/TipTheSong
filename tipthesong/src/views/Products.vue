@@ -102,14 +102,7 @@
              filterVisible: true,
              filters: {
                  album: "",
-                 genres: [
-                     { name: "RAP", selected: true },
-                     { name: "ROCK", selected: true },
-                     { name: "JAZZ", selected: true },
-                     { name: "BLUES", selected: true },
-                     { name: "MPB", selected: true },
-                     { name: "POP", selected: true },
-                 ],
+                 genres: [],
                  artist: "",
                  price: [],
                  year: [],
@@ -118,6 +111,13 @@
      },
      beforeMount() {
          this.clearFilters();
+     },
+     async created() {
+         this.$store.dispatch('loadProducts');
+         this.setGenres();
+         this.$store
+             .dispatch("loadGenres")
+             .then(() => this.setGenres());
      },
      mounted () {
         this.filters.album = this.query ? this.query : "";
@@ -128,6 +128,15 @@
          },
      },
      methods: {
+         setGenres() {
+             this.filters.genres = [];
+             this.$store.getters.getGenres?.forEach(genre =>
+                 this.filters.genres.push({
+                     name: genre,
+                     selected: true,
+                 })
+             );
+         },
          clearFilters() {
              this.filters.price = [ this.minPrice, this.maxPrice ];
              this.filters.year = [ this.minYear, this.maxYear ];
@@ -147,10 +156,10 @@
              return this.products.reduce((prev, cur) => Math.max(prev, cur?.price), Number.NEGATIVE_INFINITY);
          },
          minYear() {
-             return this.products.reduce((prev, cur) => Math.min(prev, cur?.released), Number.POSITIVE_INFINITY);
+             return this.products.reduce((prev, cur) => Math.min(prev, cur?.launchDate), Number.POSITIVE_INFINITY);
          },
          maxYear() {
-             return this.products.reduce((prev, cur) => Math.max(prev, cur?.released), Number.NEGATIVE_INFINITY);
+             return this.products.reduce((prev, cur) => Math.max(prev, cur?.launchDate), Number.NEGATIVE_INFINITY);
          },
          products() {
              return this.$store.getters?.getProductList || [];
@@ -172,11 +181,11 @@
                                if (artist.toLowerCase().includes(strip)) return true;
                            return false;
                        },
-                       // Filtro de album
+                       // Filtro de nome
                        (product) => {
                            const strip = this.filters.album.trim().toLowerCase();
                            if (strip === "") return true;
-                           return product.name.toLowerCase().includes(strip);
+                           return product.title.toLowerCase().includes(strip);
                        },
                        // Filtro de preço
                        (product) => {
@@ -184,7 +193,7 @@
                        },
                        // Filtro de lançamento
                        (product) => {
-                           return product.released >= this.filters.year[0] && product.released <= this.filters.year[1];
+                           return product.launchDate >= this.filters.year[0] && product.launchDate <= this.filters.year[1];
                        },
                    ];
              return this.products.filter(product => {
@@ -193,7 +202,7 @@
                  return true;
              });
          },
-     }
+     },
  }
 
 </script>

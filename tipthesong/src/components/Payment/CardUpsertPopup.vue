@@ -14,24 +14,26 @@
                 <label for="cardNumber">Número do Cartão</label>
                 <br>
                 <input
-                    type="text"
+                    type="tel"
                     name="cardNumber"
+                    v-mask="'#### #### #### ####'"
                     class="inputFill"
-                    v-model="cardNumber"
+                    v-model="info.cardNumber"
                     required
-                    placeholder="xxxx xxxx xxxx xxxx"/>
+                    placeholder="Numero do cartão..."/>
                 </div>
 
                 <div>
-                <label for="dueDate">Data de Validade</label>
+                <label for="dueData">Data de Validade</label>
                 <br>
                 <input
-                    type="text"
-                    name="dueDate"
+                    type="tel"
+                    name="dueData"
+                    v-mask="'##/##'"
                     class="inputFill"
-                    v-model="dueDate"
+                    v-model="info.dueData"
                     required
-                    placeholder="mm/yyyy"/>
+                    placeholder="Data de validade..."/>
                 </div>
             </div>
 
@@ -43,9 +45,9 @@
                     type="text"
                     name="ownerName"
                     class="inputFill"
-                    v-model="ownerName"
+                    v-model="info.ownerName"
                     required
-                    placeholder="Nome no Cartão"/>
+                    placeholder="Nome no Cartão..."/>
                 </div>
             </div>
 
@@ -54,12 +56,13 @@
                 <label for="securityCode">Código de Segurança</label>
                 <br>
                 <input
-                    type="text"
+                    type="tel"
                     name="securityCode"
+                    v-mask="'###'"
                     class="inputFill"
-                    v-model="securityCode"
+                    v-model="info.securityCode"
                     required
-                    placeholder="xxx"/>
+                    placeholder="Código de Segurança..."/>
                 </div>
 
                 <button type="button" @click="addCard"> Adicionar </button>
@@ -71,22 +74,63 @@
 
 
 <script>
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+
 export default {
-    data() {
+    inject: ['notyf'],
+    setup () {
+        return { v$: useVuelidate()}
+     },
+    data() {  
         return {
-            cardNumber: null,
-            dueDate: null,
-            ownerName: null,
-            securityCode: null
+            info: {
+                cardNumber: null,
+                dueData: null,
+                ownerName: null,
+                securityCode: null
+            }
         }
     },
+    validations () {
+         return {
+            info: {
+                cardNumber: {required},
+                dueData: {required},     
+                ownerName: {required},     
+                securityCode: {required},     
+            } 
+         }
+     },
     methods: {
         async addCard(){
-            let lastDigits = (Array.from(this.cardNumber).splice(-4));
-            let cardString = `(Crédito) Mastercard terminando em ${lastDigits.join('')}`;
-            await this.$store.dispatch('addToUserInfoCards', {
-                card: [cardString, this.ownerName, this.dueDate]
-            })
+            const isFormCorrect = await this.v$.$validate();
+
+            if (!isFormCorrect) {
+                this.notyf.open({
+                     type: 'error',
+                     message: "Erro ao salvar cartão: Por favor preencha os campos corretamente!",
+                 });
+                 
+                 return;
+            }
+
+            const validInfo = Object.fromEntries(Object.entries(this.info).filter(([, v]) => v != null && v && String.toString(v).trim() != ""));
+            await this.$store.dispatch('addCard', validInfo);
+
+            if (this.$store.getters.getUserError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao adicionar cartão!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Cartão adicionado com sucesso!",
+                    });
+                this.$emit('togglePopup');
+            }
+
         }
     }
 }
@@ -126,4 +170,5 @@ form {
 label {
     margin-bottom: 10px;
 }
+
 </style>

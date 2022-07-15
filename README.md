@@ -129,7 +129,7 @@ Para testar as funcionalidades temos:
     Entrando na página do perfil do usuário o mesmo pode adicionar ou editar endereços para entrega.
 
 ## Resultados dos Testes
-Pelos testes realizados, temos um bom funcionamento em todos os casos. Espera-se poucos problemas durante a integração com o servidor.
+Pelos testes realizados, temos um bom funcionamento em todos os casos. Não houveram problemas ao integrar com o servidor.
 
 ## Executando o código
 Para você poder executar o código é necessário 
@@ -153,16 +153,14 @@ yarn build
 ```
 
 ## Problemas
-Como foi solicitado um teste das funcionalidades sem a utilização do servidor em si, estamos usando local storage. Dado isso ao adicionarmos novos admins eles serão adicionados, porém não é possível logar com esses admins. O mesmo se acontece com o usuário, onde é possível a criação porém não é possível logar.
-
-Esses problemas ocorrem devido ao uso do local storage, quando for implementado o servidor, esses problemas não serão mantidos.
+Todos os problemas que foram citados anteriormente nesse documento, foram resolvidos ao integrar o frontend com o backend. 
 
 Outro problema existente é a falta da funcionalidade de adicionar/editar novos endereços. Foi decidido pela não implementação dessa funcionalidade na simulação, pois a mesma funciona do mesmo jeito que a adição/edição de endereços. A falta da funcionalidade será resolvida juntamente com a implementação do servidor.
 
 Mesmo sem estar logado é possível adicionar produtos ao carrinho. Porém não é possível acessar a página de carrinho sem estar logado. Essa problema será arrumado quando fizermos a integração com o servidor.
 
 ## Comentários
-*None*
+*Homenagem aos paulistinhas de menta que nos acompanharam nessa trajetória*
 
 ## Reviews:
 [Review da Milestone 1](https://drive.google.com/file/d/1u9YdB2jHsU6PN_XvezgvMbzt3af5cu-a/view?usp=sharing)
@@ -170,3 +168,4 @@ Mesmo sem estar logado é possível adicionar produtos ao carrinho. Porém não 
 
 ## Timeline
 - **release/v2.0.0**: Entrega do *Milestone 2*, 21/06/2022
+- **release/v3.1.0**: Entrega do *Milestone 3*, 09/07/2022

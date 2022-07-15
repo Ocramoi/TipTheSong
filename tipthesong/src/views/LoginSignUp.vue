@@ -2,28 +2,28 @@
     <div class="container">
         <div class="card">
             <h3>Já possui uma conta?</h3>
-            <br />
+            <!-- <p v-for="error of errorsLogin" :key="error.$uid"> {{ error.$property}}: {{ error.$message }}!</p> -->
+
             <form>
-                <label for="userMail">Nome de usuário ou email:</label>
+                <label for="lEmail">Email:</label>
                 <br />
                 <input
                     type="text"
                     class="inputFill"
-                    name="userMail"
-                    v-model="userMail"
+                    name="lEmail"
+                    v-model="lEmail"
                     required
                     placeholder="Seu nome de usuário/email..." />
-
                 <br />
                 <br />
 
-                <label for="userMail">Senha:</label>
+                <label for="lEmail">Senha:</label>
                 <br />
                 <input
                     type="password"
                     class="inputFill"
-                    name="userMail"
-                    v-model="passLogin"
+                    name="lEmail"
+                    v-model="lPassword"
                     required
                     placeholder="Sua senha..." />
 
@@ -44,15 +44,16 @@
 
         <div class="card">
             <h3>Ainda não possui conta no site? Cadastre-se agora</h3>
-            <br />
-            <form method="POST" action="">
-                <label for="rMail">Endereço de email:</label>
+            <!-- <p v-for="error of errorsRegister" :key="error.$uid"> {{ error.$property}}: {{ error.$message }}!</p> -->
+
+            <form>
+                <label for="rEmail">Endereço de email:</label>
                 <br />
                 <input
                     type="email"
                     class="inputFill"
-                    name="rMail"
-                    v-model="rMail"
+                    name="rEmail"
+                    v-model="rEmail"
                     required
                     placeholder="Email de cadastro..." />
 
@@ -61,25 +62,26 @@
 
                 <div class="inputDouble">
                     <div>
-                        <label for="rUser">Usuário:</label>
+                        <label for="rName">Nome:</label>
                         <br />
                         <input
                             type="text"
                             class="inputFill"
-                            name="rUser"
-                            v-model="rUSer"
+                            name="rName"
+                            v-model="rName"
                             required
-                            placeholder="Nome de usuário..." />
+                            placeholder="Nome..." />
                     </div>
 
                     <div>
-                        <label for="rTel">Telefone:</label>
+                        <label for="rPhone">Telefone:</label>
                         <br />
                         <input
                             type="tel"
                             class="inputFill"
-                            name="rTel"
-                            v-model="rTel"
+                            v-mask="'(##) 9####-####'"
+                            name="rPhone"
+                            v-model="rPhone"
                             required
                             placeholder="Telefone..." />
                     </div>
@@ -87,31 +89,33 @@
 
                 <br />
 
-                <label for="rPass">Senha:</label>
+                <label for="rPassword">Senha:</label>
                 <br />
                 <input
                     type="password"
                     class="inputFill"
-                    name="rPass"
-                    v-model="rPass"
+                    name="rPassword"
+                    v-model="rPassword"
+                    required
                     placeholder="Senha de conta..." />
 
                 <br />
                 <br />
 
-                <label for="rConf">Confirmar senha:</label>
+                <label for="rConfirmPassword">Confirmar senha:</label>
                 <br />
                 <input
                     type="password"
                     class="inputFill"
-                    name="rConf"
-                    v-model="rConf"
+                    name="rConfirmPassword"
+                    v-model="rConfirmPassword"
+                    required
                     placeholder="Repita a senha..." />
 
                 <br />
                 <br />
 
-                <button>
+                <button @click="register"  type="button">
                     Cadastrar
                 </button>
             </form>
@@ -120,34 +124,81 @@
 </template>
 
 <script type="text/javascript">
+import useVuelidate from '@vuelidate/core';
+import { required, email, minLength, requiredIf} from '@vuelidate/validators';
+
  export default {
      name: "LoginSignUp",
      inject: ['notyf'],
+     setup () {
+        return { v$: useVuelidate()}
+     },
      data() {
          return {
-             userMail: "",
-             passLogin: "",
+             error: "",
+             lEmail: "",
+             lPassword: "",
              remember: false,
-             rMail: "",
-             rUser: "",
-             rTel: "",
-             rPass: "",
-             rConf: "",
+             rEmail: "",
+             rName: "",
+             rPhone: "",
+             rPassword: "",
+             rConfirmPassword: "",
          };
+     },
+     validations () {
+         return {
+             lEmail: {
+                        required,
+                        email                    
+                    },
+             lPassword: {
+                        required
+                    },
+             rEmail: {
+                        required,
+                        email
+             },
+             rName: {
+                        required
+             },
+             rPhone: {
+                        required
+             },
+             rPassword: {
+                        required,
+                        minLengthValue: minLength(8),
+             },
+             rConfirmPassword: {
+                        requiredIf: requiredIf(this.rPassword)
+             }
+         }
      },
      methods: {
          async login() {
-             await this.$store.dispatch("auth", {
-                 user: this.userMail,
-                 pass: this.passLogin,
-             });
+            await this.v$.$reset();
             
-            if (!this.$store.getters.getIsLogged) {
+            await this.v$.lEmail.$touch();
+            await this.v$.lPassword.$touch();
+           
+            if (this.invalidate(this.v$.$errors, "Erro no login")) {
+                this.notyf.open({
+                     type: 'error',
+                     message: this.error,
+                 });
+                return;
+            }
+
+             await this.$store.dispatch("auth", {
+                 email: this.lEmail,
+                 password: this.lPassword,
+             });
+             if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',
-                     message: "Erro no login!",
+                     message: "Erro ao logar: Usuário ou senha inválidos!",
                  });
-            } else {
+             } else {
                  this.notyf.open({
                      type: 'success',
                      message: "Logado com sucesso!",
@@ -155,9 +206,59 @@
                  this.$router.push("/profile");
              }
          },
+        async register() {
+            await this.v$.$reset();
+
+            await this.v$.rEmail.$touch();
+            await this.v$.rName.$touch();
+            await this.v$.rPassword.$touch();
+            await this.v$.rConfirmPassword.$touch();
+            await this.v$.rPhone.$touch();
+
+            if (this.invalidate(this.v$.$errors, "Erro no cadastro")) {
+                this.notyf.open({
+                     type: 'error',
+                     message: this.error,
+                 });
+                return;
+            }
+
+             await this.$store.dispatch("register", {
+                 name: this.rName,
+                 phone: this.rPhone,
+                 email: this.rEmail,
+                 password: this.rPassword,
+
+             });
+             if (!this.$store.getters.getIsLogged) {
+                 this.notyf.open({
+                     type: 'error',
+                     message: "Erro ao cadastrar: Email já cadastrado!",
+                 });
+             } else {
+                 this.notyf.open({
+                     type: 'success',
+                     message: "Cadastrado com sucesso!",
+                 });
+                 this.$router.push("/profile");
+             }
+         },
+        invalidate(errors, message) {
+             if (!errors) return false;
+             if (errors.length == 0) return false;
+             
+             if (errors.length == 1) {
+                 this.error = `${message}:${errors[0].$property} ${errors[0].$message}!`
+             } else {
+                 this.error = `${message}: Preencha os campos corretamente!`
+             }
+
+             return true;
+         }
      },
  };
 </script>
+
 
 <style type="text/css" media="screen" scoped>
  .container {
@@ -202,4 +303,18 @@
  .inputDouble div {
      flex: 1 0 150px;
  }
+
+ p {
+     padding: 0;
+     color: var(--secondary-light) !important;
+     font-weight: bold;
+     font-style: italic;
+     font-size: 0.75rem;
+ }
+
+ h3 {
+     padding: 0;
+     padding-bottom: 5px;
+ }
+
 </style>

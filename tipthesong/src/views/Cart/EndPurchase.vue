@@ -15,22 +15,22 @@
                     <div>
                         <h3>ENDEREÇO</h3>
                         <div class="card">
-                            <span> {{ client.name }} </span>
+                            <span> - {{ address.name }} </span>
                             <br>
-                            <span> {{ client.address }} </span>
+                            <span> - {{ address.address }} </span>
                             <br>
-                            <span> {{ client.city }}, {{ client.state }} {{ client.CEP }} </span>
+                            <span> - {{ address.CEP }} - {{ address.city }}, {{ address.state }} </span>
                             <br>
-                            <span> {{ client.country }} </span>
+                            <span> - {{ address.country }} </span>
                             <br>
-                            <span> {{ client.cellphone }} </span>
+                            <span> - {{ address.cellphone }} </span>
                         </div>
                     </div>
 
                     <div>
                         <h3>FORMA DE PAGAMENTO</h3>
                         <div class="card">
-                            <span> {{ client.payment }} </span>
+                            <div v-html="payment" />
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,10 @@
                 <div class="itens">
                     <h3> ITENS </h3>
                     <div class="item">
-                        <EndItem v-for="item in items" :key="item.id" />
+                        <EndItem
+                            v-for="item in productList"
+                            :item="item"
+                            :key="item.id" />
                     </div>
                 </div>
             </div>
@@ -53,7 +56,7 @@
                         <span>Itens:</span>
                     </div>
                     <div class="totalRow">
-                        <span> R$180,00 </span>
+                        <span> R${{ subTotal.toFixed(2) }} </span>
                     </div>
                 </div>
                 <div class="innerFlexContainer">
@@ -61,7 +64,7 @@
                         <span>Frete e taxas:</span>
                     </div>
                     <div class="totalRow">
-                        <span> R$10,00 </span>
+                        <span> R${{ calcDelivery.toFixed(2) }} </span>
                     </div>
                 </div>
                 <div class="innerFlexContainer">
@@ -69,13 +72,11 @@
                         <span style = "font-weight: bold"> TOTAL: </span>
                     </div>
                     <div class="totalRow">
-                        <span style = "font-weight: bold"> R$190,00 </span>
+                        <span style = "font-weight: bold"> R${{ total.toFixed(2) }} </span>
                     </div>
                 </div>
                 
-                <router-link to="/order" custom v-slot="{ navigate }"> 
-                    <button  v-on:click="navigate" role="link"> FINALIZAR PEDIDO </button>
-                </router-link>
+                <button @click="finish"> FINALIZAR PEDIDO </button>
             </div>
         </div>
     </div>
@@ -83,128 +84,203 @@
 </template>
 
 <script>
-    import EndItem from "../../components/Payment/EndItem";
+ import EndItem from "../../components/Payment/EndItem";
 
-    export default {
-        components: {
-            EndItem,
-        },
-        data() {
-            return {
-                items: [
-                    {
-                        id: 1,
-                        name: 'Now, Not Yet (2019) - halfalive',
-                        quantity: 1,
-                        price: '90.00',
-                    },
-                    {
-                        id: 2,
-                        name: 'Now, Not Yet (2019) - halfalive',
-                        quantity: 1,
-                        price: '90.00',
-                    }
-                ],
-                client: {
-                    name: 'MILENA CORREA SILVA',
-                    address: 'Rua Paulo Americo 289 apt 42 Jardim Lutfalla',
-                    city: 'São Carlos',
-                    state: 'SP',
-                    CEP: '13567594',
-                    country: 'Brasil',
-                    cellphone: '55+ 24 988380238',
-                    payment: 'Boleto',
-                }
-            }
-        }
-    }
+ export default {
+     name: "EndPurchase",
+     inject: ['notyf'],
+     components: {
+         EndItem,
+     },
+     data() {
+         return {};
+     },
+     computed: {
+         subTotal() {
+             const cartIds = Object.keys(this.cartList),
+                   prices = cartIds?.map(id => (this.cartList[id] || -1) * this.products[id]?.price);
+             return prices.reduce((prev, cur) => prev + cur, 0);
+         },
+         calcDelivery() {
+             if (this.productList.length == 0)
+                 return 0;
+             else
+                 return 10;
+         },
+         total() {
+             return this.subTotal + this.calcDelivery;
+         },
+         products() {
+             return this.$store.getters.getCartProducts;
+         },
+         cartList() {
+             return this.$store.getters.getCartList;
+         },
+         productList() {
+             const cartIds = Object.keys(this.cartList);
+             return cartIds?.map(id => {
+                 return {
+                     id: id,
+                     img: this.products[id]?.frontCover,
+                     name: this.products[id]?.title,
+                     quantity: this.cartList[id] || -1,
+                     price: `R$${((this.cartList[id] || -1) * this.products[id]?.price).toFixed(2)}`,
+                 };
+             });
+         },
+         cards() {
+             return this.$store.getters.getUser?.cards.map(card => {
+                 return {
+                     _id: card._id,
+                     cardNumber: card.cardNumber.substr(-4),
+                     ownerName: card.ownerName,
+                     dueDate: card.dueData,
+                 };
+             });
+         },
+         payment() {
+             if (["boleto", "pix"].includes(this.currentOrder?.method)) {
+                 return this.currentOrder?.method;
+             } else {
+                 let card = this.cards
+                                .filter(c => c._id == this.currentOrder?.method)[0];
+                 return `Cartão: ${card?.ownerName}<br/>${card?.cardNumber} - ${card?.dueDate}`;
+             }
+         },
+         address() {
+             return this.$store
+                        .getters
+                        .getUser?.addresses
+                                 .filter(address => address._id == this.currentOrder?.address)
+                                 .map(address => {
+                                     return {
+                                         name: address.name,
+                                         address: `${address.address}, ${address.complemment}`,
+                                         city: address.city,
+                                         state: address.state,
+                                         CEP: address.postalCode,
+                                         country: address.country,
+                                         cellphone: address.phone,
+                                     };
+                                 })[0] || {};
+         },
+         currentOrder() {
+             return this.$store.getters.getOrderInfo || null;
+         },
+     },
+     methods: {
+         async finish() {
+             await this.$store
+                       .dispatch("finishOrder", );
+             if (this.$store.getters.getOrderSuccess) {
+                 this.notyf.open({
+                     type: "success",
+                     message: "Compra realizada com sucesso!",
+                 });
+                 this.$router.push("/profile/orders");
+             } else {
+                 this.notyf.open({
+                     type: "error",
+                     message: "Erro ao efetuar a compra! Tente novamente"
+                 });
+                 if (this.$store.getters.getOutOfStock) {
+                     this.notyf.open({
+                         type: "error",
+                         message: `A quantidade desejada dos seguintes álbuns está indisponível:` +
+                                  this.$store.getters.getOutOfStock.join(";")
+                     });
+                 }
+             }
+         },
+     },
+ }
 </script>
 
 <style scoped>
-@import url('../../css/Cart.css');
+ @import url('../../css/Cart.css');
 
-    h3 {
-        padding: 0;
-        margin: 0;
-    }
-    
-    .allInfo {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        flex: 1 0 100%;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: center;
-    }
-     
-    .allInfo > * {
-        flex: 1;
-    }
+ h3 {
+     padding: 0;
+     margin: 0;
+ }
 
-    .cart {
-        display: flex;
-        gap: 50px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: stretch;
-        flex: 1;
-        min-width: 300px;
-    }
+ .allInfo {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 2rem;
+     flex: 1 0 100%;
+     flex-direction: row;
+     align-items: flex-start;
+     justify-content: center;
+ }
 
-    .cart > * {
-        flex: 1;
-        min-width: 300px;
-    }
+ .allInfo > * {
+     flex: 1;
+ }
 
-    .cartTotals {
-        max-width: 400px;
-        min-width: min-content;
-        gap: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+ .cart {
+     display: flex;
+     gap: 50px;
+     flex-direction: row;
+     flex-wrap: wrap;
+     align-items: stretch;
+     flex: 1;
+     min-width: 300px;
+ }
 
-    .cartInfo {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
+ .cart > * {
+     flex: 1;
+     min-width: 300px;
+ }
 
-    .innerFlexContainer {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-    
-    .card {
-        margin-top: 0.5rem;
-        padding: 1rem;
-        background-color: var(--primary-light);
-        box-shadow: 5px 5px 10px var(--primary-dark);
-        box-sizing: border-box;
-        border-radius: 5px;
-    }
+ .cartTotals {
+     max-width: 400px;
+     min-width: min-content;
+     gap: 1rem;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+ }
 
-    .itens {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
+ .cartInfo {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 1rem;
+ }
 
-    .item {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        align-items: stretch;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
-    }
+ .innerFlexContainer {
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: space-between;
+ }
 
-    .totalRow {
-        display: contents;
-    }
+ .card {
+     margin-top: 0.5rem;
+     padding: 1rem;
+     background-color: var(--primary-light);
+     box-shadow: 5px 5px 10px var(--primary-dark);
+     box-sizing: border-box;
+     /* border-radius: 5px; */
+ }
+
+ .itens {
+     display: flex;
+     flex-direction: column;
+     width: 100%;
+ }
+
+ .item {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-around;
+     flex-wrap: wrap;
+     align-items: stretch;
+     gap: 0.5rem;
+     margin-top: 0.5rem;
+ }
+
+ .totalRow {
+     display: contents;
+ }
 </style>

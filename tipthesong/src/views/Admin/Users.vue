@@ -4,7 +4,7 @@
             <h2>Usuários</h2>
             <div class="productBox">
                 <FlexTable
-                    @clicked="removeFromId"
+                    @clicked="handleEvent"
                     :titles="tableTitles"
                     :values="users"
                     rowHeight="4rem"/>
@@ -22,6 +22,7 @@
  import FlexTable from '../../components/App/FlexTable.vue';
 
  export default {
+     inject: ['notyf'],
      name: "AdminUsers",
      components: {
          FlexTable,
@@ -31,58 +32,83 @@
              tableTitles: [
                  "",
                  "",
+                 "",
                  "Usertag",
                  "Email"
              ],
-             users: [], // TODO computed do back
          };
      },
-     created() {
-         this.users = [ // TODO computed do back
-             [
-                 {
-                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     id: 0,
-                 }, {
-                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                     style: "height: 100%; display: block; margin: 0 auto;",
-                 }, 
-                 {
-                     content: `${this.user.name}#${this.user.id}`,
-                     id: "upsert",
-                 },
-                 this.user.email,
-             ], [
-                 {
-                     content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
-                     style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
-                     id: 0,
-                 }, {
-                     content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
-                     style: "height: 100%; display: block; margin: 0 auto;",
-                 }, 
-                 {
-                    content: `${this.user.name}#${this.user.id}`,
-                    id: "upsert", 
-                 },
-                 this.user.email,
-             ]
-         ];
+     async created() {
+        this.$store.dispatch('loadUsers');
      },
      computed: {
-         user() { // TODO remover quando carregando do back
-             return {
-                 id: "999",
-                 name: "Robertin",
-                 email: "robertin@gmail.com",
-             };
-         },
+         users() {
+            return this.$store.getters.getUsers?.map(user => [
+                {
+                    content: '<i class="clickableIcon fa-solid fa-trash trashIcon"></i>',
+                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                    id: ['delete', user._id],
+                }, {
+                    content: '<i class="clickableIcon fa-solid fa-arrow-up"></i>',
+                    style: "display: flex; width: 100%; justify-content: center; align-itens: center;",
+                    id: ['promote', user._id],
+                }, {
+                    content: `<img class="userPhoto" src="${require('../../assets/Profile/do-utilizador.png')}" />`,
+                    style: "height: 100%; display: block; margin: 0 auto;",
+                    id: ['upsert']
+                }, 
+                {
+                    id: ['upsert'],
+                    content: user.name,
+                }, {
+                    id: ['upsert'],
+                    content: user.email,
+                }
+            ]);
+         }
      },
      methods: {
-         removeFromId(idx) {
-             this.users.splice(idx, 1);
-         },
+        handleEvent(e) {
+            if (e == null) return;
+          
+            const [action, id] = e;
+            if (action == 'delete') {
+                return this.deleteUser(id);
+            } else if (action == 'promote') {
+                return this.promoteUser(id);
+            }
+        },
+        async deleteUser(id) {
+            await this.$store.dispatch('deleteUser', { userId: id });
+           
+           if (this.$store.getters.getUserError) {
+                this.notyf.open({
+                         type: 'error',
+                         message: "Erro ao deletar usuário!",
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Usuário deletado com sucesso!",
+                    });
+            }
+        },
+        async promoteUser(id) {
+            await this.$store.dispatch('promoteUser', { userId: id });
+
+            const error = this.$store.getters.getUserError;
+            if (error) {
+                this.notyf.open({
+                         type: 'error',
+                         message: error,
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Usuário promovido com sucesso!",
+                    });
+            }
+        }
      }
  }
 </script>

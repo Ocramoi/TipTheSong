@@ -20,7 +20,8 @@
                         <label for="newPhone">Telefone</label>
                         <br>
                         <input
-                            type="text"
+                            type="tel"
+                            v-mask="'(##) 9####-####'"
                             class="inputFill"
                             name="newPhone"
                             v-model="newPhone"
@@ -93,7 +94,7 @@ export default {
     inject: ['notyf'],
     data() {
         return {
-            error: false,
+            error: "",
             newUserName: null,
             newPhone: null,
             newEmail: null,
@@ -107,48 +108,61 @@ export default {
     },
     computed: {
         user() {
-            return this.$store.getters.getUserInfo;
+            return this.$store.getters.getUser;
         }
     },
     methods: {
+        checkFormError () {
+            if (!this.newUserName && !this.newPhone &&
+               !this.newEmail && !this.curPassword &&
+               !this.newPassword && !this.confirmNewPassword) {
+                   this.error = "Erro ao salvar alterações: Não há nada a ser feito aqui!"
+                   console.log(this.error);
+                   return true;
+               }
+
+            if (this.newPassword && this.newPassword != this.confirmNewPassword) {
+                this.error = "Erro ao salvar alterações: Senhas não batem!"
+                return true;
+            }
+
+            if (this.curPassword && !this.newPassword) {
+                this.error = "Erro ao salvar alterações: Insira a nova senha!"
+                return true;
+            }
+
+            return false;
+        },
         async saveChanges() {
-            this.error = false;
-
-            if (this.newUserName) {
-                await this.$store.dispatch("setUserName", {name: this.newUserName});
-                this.newUserName = null;
+            if (this.checkFormError()) {
+                this.notyf.open({
+                         type: 'error',
+                         message: this.error,
+                     });
+                return;
             }
 
-            if (this.newPhone) {
-                await this.$store.dispatch("setUserPhone", {phone: this.newPhone});
-                this.newPhone = null;
-            }
+            await this.$store.dispatch("updateUserInfo", {
+                 name: this.newUserName,
+                 phone: this.newPhone,
+                 email: this.newEmail,
+                 curPassword: this.curPassword,
+                 newPassword: this.newPassword,
+            });
 
-            if (this.newEmail) {
-                await this.$store.dispatch("setUserEmail", {email: this.newEmail});
-                this.newEmail = null;
+            const error = this.$store.getters.getUserError;
+            if (!this.$store.getters.getUserLoaded) {
+                this.notyf.open({
+                         type: 'error',
+                         message: error,
+                     });
+            } else {
+                  this.notyf.open({
+                         type: 'success',
+                         message: "Alterações salvas com sucesso!",
+                     });
             }
-
-            if (this.newPassword) {
-                if (!this.confirmNewPassword || this.confirmNewPassword != this.newPassword) {
-                    this.notyf.open({
-                        type: 'error',
-                        message: "Novas senhas não batem!",
-                    });
-                    this.error = true;
-                } else if (this.curPassword != this.user.pass) {
-                    this.notyf.open({
-                     type: 'error',
-                     message: "Senha antiga inválida!",
-                    });
-                    this.error = true;
-                } else {
-                    await this.$store.dispatch("setUserPass", {pass: this.newPassword});
-                    this.curPassword = null;
-                    this.newPassword = null;
-                    this.confirmNewPassword = null;
-                }
-            }        
+            window.scrollTo(0,0);
         }
     },
 }

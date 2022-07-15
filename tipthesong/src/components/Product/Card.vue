@@ -1,12 +1,12 @@
 <template>
-    <div class="card">
-        <router-link :to="`/product/${product?.id}`">
-            <img class="image" :src="product?.img">
+    <div class="card" :class="{ 'outOfStock': product?.amountInStock === 0 }">
+        <router-link :to="`/product/${product?._id}`">
+            <img class="image" :src="product?.frontCover">
         </router-link>
 
-        <router-link :to="`/product/${product?.id}`">
+        <router-link :to="`/product/${product?._id}`">
             <div class="description">
-                <h3> {{ product?.name }} </h3>
+                <h3> {{ product?.title }} </h3>
                 <p> R${{ product?.price.toFixed(2) }} </p>
             </div>
         </router-link>
@@ -31,28 +31,40 @@
              type: Object,
              required: true,
          },
-         interact:  {
+         interact: {
              type: Boolean,
              required: false,
              default: true,
          },
      },
      methods: {
+         increase() {
+            this.amount++;
+         },
+         decrease() {
+            if (this.amount - 1 < 1)
+                return;
+            else
+                this.amount--;
+         },
          addToCart() {
+             if (this.product.amountInStock === 0) return false;
              this.$store.dispatch('addToCart', {
-                 id: this.product.id,
-                 qnt: 1,
+                 product: this.product,
+                 qnt: this.amount,
              });
-             this.notyf.open({
-                     type: 'success',
-                     message: "Produto adicionado ao carrinho!",
-                    });
+             return true;
          },
          goToCart() {
-            this.addToCart()
-            this.$router.push('/cart')
+            if (this.addToCart())
+                this.$router.push('/cart');
          },
      },
+     data() {
+        return {
+            amount: 1,
+        };
+     }
  }
 </script>
 
@@ -87,6 +99,14 @@
  .card:hover {
      transform: scale(1.02);
      transform-origin: center center;
+ }
+
+ .card.outOfStock {
+     filter: grayscale(0.7);
+ }
+
+ .card.outOfStock:hover {
+     transform: none;
  }
 
  .description {
@@ -143,8 +163,28 @@
      padding: 0;
  }
 
-button {
-    font-size: 0.775rem;
-}
+ button {
+     font-size: 0.775rem;
+ }
+
+ .outOfStock button {
+     pointer-events: none !important;
+ }
+
+ .roundInfo {
+     text-transform: uppercase;
+     border: 0;
+     background: var(--secondary-dark);
+     color: currentColor;
+     padding: 10px;
+     border-radius: 2rem;
+     font-weight: bold;
+     transition: 0.4s;
+     cursor: pointer;
+     width: max-content;
+     color: var(--white);
+     text-align: center;
+     width: 33%;
+ }
 
 </style>

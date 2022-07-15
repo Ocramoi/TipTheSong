@@ -3,13 +3,13 @@
         <div class="card">
             <h2> ÁREA DO ADMINISTRADOR </h2>
             <form method="POST" action="submit">
-                <label for="userMail">Email de Administrador</label>
+                <label for="email">Email de Administrador</label>
                 <br />
                 <input
                     type="text"
-                    name="userMail"
+                    name="email"
                     class="inputFill"
-                    v-model="userMail"
+                    v-model="email"
                     placeholder="Seu email..." 
                     required />
 
@@ -29,11 +29,8 @@
                 <br />
                 <br />
 
-                <input type="checkbox" name="remember" v-model="remember"  />
-                <label for="remember">Lembre-se de mim</label>
-
-                <br />
-                <br />
+                <!-- <input type="checkbox" name="remember" v-model="remember"  />
+                     <label for="remember">Lembre-se de mim</label> -->
 
                 <button type="submit" @click.stop.prevent="login()"> Entrar </button>
             </form>            
@@ -42,26 +39,49 @@
 </template>
 
 <script>
+import useVuelidate from '@vuelidate/core';
+import { required, email, requiredIf} from '@vuelidate/validators';
+
+
 export default {
     inject: ['notyf'],
     data() {
         return {
-            userMail: null,
+            email: null,
             password: null,
             remember: false,
         }
     },
+    setup () {
+        return { v$: useVuelidate()}
+     },
+    validations () {
+        return {
+            email: {required, email},
+            password: {requiredIf: requiredIf(this.email)}
+        }
+    },
     methods: {
         async login() {
-            await this.$store.dispatch("auth", {
-                 user: this.userMail,
-                 pass: this.password,
-            });
+            const isFormCorrect = await this.v$.$validate()
+            if (!isFormCorrect) {
+                this.notyf.open({
+                     type: 'error',
+                     message: "Erro no login: Por favor preencha os campos corretamente!",
+                 });
+                 
+                 return;
+            }
 
+            await this.$store.dispatch("auth", {
+                 email: this.email,
+                 password: this.password,
+            });
+            
             if (!this.$store.getters.getIsLogged) {
                  this.notyf.open({
                      type: 'error',
-                     message: "Erro no login!",
+                     message: "Erro no login: Usuário ou senha inválidos!",
                  });
             } else if (this.$store.getters.getPermDenied == true) {
                 this.notyf.open({
@@ -76,6 +96,11 @@ export default {
                 this.$router.push({ name : 'AdminHomepage'});
              }
          },
+    },
+    beforeCreate() {
+        if (this.$store.getters.getIsLogged && !this.$store.getters.getPermDenied) {
+            this.$router.push({ name : 'AdminHomepage'});
+        }
     },
 }
 </script>

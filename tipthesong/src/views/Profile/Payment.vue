@@ -6,10 +6,13 @@
                 <h2> Meus cartões </h2>
                 <FlexTable
                     v-if="cards.length"
+                    @clicked="handleEvent"
                     :titles="tableTitles"
                     :values="cards" />
                 <span v-else>Nenhum cartão cadastrado por enquanto!</span>
-                <button v-on:click="cardPopup = true">Adicionar cartão</button>
+                <button class="addBtn" v-on:click="cardPopup = true">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
                 <CardUpsertPopup v-if="cardPopup" @togglePopup="TriggerCardPopup" />
             </div>
         </div>
@@ -22,15 +25,17 @@
  import CardUpsertPopup from '../../components/Payment/CardUpsertPopup.vue'
 
  export default {
+     inject: ['notyf'],
      name: "ProfilePayment",
      data() {
          return {
+             cardPopup: false,
              tableTitles: [
+                 "",
                  "Nome do cartão",
                  "Titular",
                  "Vencimento",
              ],
-             cardPopup: false,
          };
      },
      components: {
@@ -42,10 +47,53 @@
         TriggerCardPopup() {
             this.cardPopup = !this.cardPopup;
         },
+        handleEvent(e) {
+            if (e == null) return;
+
+            const [action, id] = e;
+            if (action == 'delete') 
+                return this.deleteCard(id)
+        },
+        async deleteCard(id) {
+            await this.$store.dispatch('deleteCard', {
+                cardId: id
+            });
+
+            const error = this.$store.getters.getUserError;
+            if (error) {
+                this.notyf.open({
+                         type: 'error',
+                         message: error,
+                    });
+            } else {
+                this.notyf.open({
+                         type: 'success',
+                         message: "Cartão deletado com sucesso!",
+                    });
+            }
+        },
      },
      computed: {
+         _cards() {
+            return this.$store.getters.getUser?.cards
+         },
          cards() {
-            return this.$store.getters.getUserInfo.cards;
+            return this._cards.map(card => 
+                [{
+                     id: ['delete', card._id],
+                     content: '<i class="fa-solid fa-trash"></i>',
+                     style: "display: flex; align-items: center; width: 100%; height: 100%; justify-content: center; z-index: 10;",
+                     class: "clickableIcon trashCan",
+                }, {
+                    id: ["", card._id],
+                    content: card.cardNumber.substr(-4)
+                }, {
+                    id: ["", card._id],
+                    content: card.ownerName,     
+                }, {
+                    id: ["", card._id],
+                    content: card.dueData,
+                }]);
          },
      },
  };
