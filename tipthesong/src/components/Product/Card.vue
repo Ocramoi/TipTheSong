@@ -25,6 +25,7 @@
 <script>
  export default {
      name: "Card",
+     inject: ['notyf'],
      props: {
          product: {
              type: Object,

@@ -55,6 +55,7 @@
 
  export default {
      name: "MyCart",
+     inject: ['notyf'],
      components: {
          FlexTable,
      },
